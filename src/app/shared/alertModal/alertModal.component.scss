@@ -1,0 +1,149 @@
+@import 'variables';
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba($negro, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background-color: $background-color;
+    border: 3px solid $verde-agua-marina;
+    max-width: 650px;
+    width: 100%;
+    min-width: 280px;
+    min-height: 300px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 0.8em;
+    border-radius: 15px;
+}
+
+.container-close {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.container-close button {
+    width: auto;
+    height: auto;
+    border: none;
+    background-color: $background-color;
+}
+
+.container-close img {
+    width: 25px;
+    height: 25px;
+}
+
+.container-close img:hover {
+    filter: invert(12%) sepia(100%) saturate(7405%) hue-rotate(9deg) brightness(97%) contrast(118%);
+}
+
+.content {
+    display: flex;
+    padding: 1em 2em;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+}
+
+.container-text {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.container-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1em;
+}
+
+.container-text h1 {
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+}
+
+.container-text p {
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+}
+
+.error {
+    width: 100%;
+    height: auto;
+}
+
+.error p {
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    color: $rojo-texto-error;
+}
+
+.container-buttons {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    padding: 0.5em 0;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.8em;
+}
+
+.container-buttons button {
+    width: 150px;
+    height: 50px;
+    border: none;
+    border-radius: 25px;
+}
+
+.container-buttons .aceptar {
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    background-color: $verde-agua-marina;
+    color: $background-color;
+    text-align: center;
+    transition: filter 0.3s ease;
+}
+
+.container-buttons .cancelar {
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    background-color: $beige;
+    color: $negro;
+    text-align: center;
+}
+
+.container-buttons .aceptar:hover {
+    filter: brightness(1.5);
+}
+
+.container-buttons .cancelar:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}

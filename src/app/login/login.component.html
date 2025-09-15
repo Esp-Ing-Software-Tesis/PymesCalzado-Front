@@ -1,0 +1,47 @@
+<div class="login-container">
+  <div class="container-form">
+    <div class="logo-title">
+      <img src="assets/images/general/logo.webp" class="image_logo" alt="logo" />
+      <h1>BIENVENIDO</h1>
+    </div>
+    <div class="form">
+      <p>Ingresa tus credenciales para acceder al sistema de planificación de producción.</p>
+      <form action="" method="">
+        <div class="inputs">
+          <div class="input">
+            <input type="email" [(ngModel)]="inputEmail" id="user_email" name="user_email" class="user_email" placeholder="Email" required />
+            <img src="assets/icons/login/email.svg" alt="icono email" />
+          </div>
+          <div class="input">
+            <input
+              [type]="passwordVisible ? 'text' : 'password'"
+              [(ngModel)]="inputPassword"
+              id="user_password"
+              name="user_password"
+              class="user_password"
+              placeholder="Contraseña"
+              required
+              minlength="8"
+            />
+            <img
+              src="assets/icons/login/{{ passwordVisible ? 'eye.svg' : 'eye-off.svg' }}"
+              (click)="togglePasswordVisibility()"
+              style="cursor: pointer"
+              alt="icono ojo off"
+            />
+          </div>
+          <div class="mensaje_error" *ngIf="errorMessage !== null">
+            <img src="assets/icons/login/error.svg" alt="icon error" />
+            <p>{{ errorMessage }}</p>
+          </div>
+        </div>
+        <div class="button-container">
+          <button (click)="login()" type="submit" class="button-login">INGRESAR</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="image">
+    <img src="assets/images/login/imageLogin.webp" class="image_general" alt="imagen general" />
+  </div>
+</div>

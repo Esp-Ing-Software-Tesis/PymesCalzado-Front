@@ -1,0 +1,84 @@
+<div class="overlay">
+  <div class="modal">
+    <h1 class="title">{{ inputsFormModal().title }}</h1>
+    <p class="text" *ngIf="inputsFormModal().text">{{ inputsFormModal().text }}</p>
+    <div #errorDiv class="container-error" *ngIf="inputsFormModal().error">
+      <img src="assets/icons/general/alert_triangle.svg" alt="close" class="icon" />
+      <p class="text-error">{{ inputsFormModal().error }}</p>
+    </div>
+    <ng-container *ngFor="let input of inputsFormModal().inputsConfig">
+      <div class="container-inputs" *ngIf="isFieldVisible(input)">
+        <ng-container>
+          <div class="container-text">
+            <label>{{ input.name }}</label>
+            <span *ngIf="input.obligatory">*</span>
+          </div>
+          <!-- Input generico -->
+          <input
+            *ngIf="input.inputType !== 'list' && input.inputType !== 'password'"
+            type="{{ input.inputType }}"
+            id="{{ 'input_' + input.key }}"
+            name="{{ 'input_' + input.key }}"
+            class="{{ 'input_' + input.key }}"
+            placeholder="{{ 'Ingrese ' + input.article + ' ' + (input.key === 'confirmPassword' ? 'contraseña' : input.name.toLowerCase()) }}"
+            [attr.required]="input.obligatory"
+            (input)="onInputChange($event, input.key)"
+          />
+          <!-- Input de tipo password -->
+          <ng-container *ngIf="input.inputType === 'password'">
+            <div class="password-container">
+              <input
+                [type]="passwordVisible[input.key] ? 'text' : 'password'"
+                id="{{ 'input_' + input.key }}"
+                name="{{ 'input_' + input.key }}"
+                class="{{ 'input_' + input.key }}"
+                placeholder="{{ 'Ingrese ' + (input.key === 'confirmPassword' ? 'contraseña nuevamente' : 'contraseña') }}"
+                [attr.required]="input.obligatory"
+                (input)="onInputChange($event, input.key)"
+              />
+              <img
+                src="assets/icons/login/{{ passwordVisible[input.key] ? 'eye.svg' : 'eye-off.svg' }}"
+                (click)="togglePasswordVisibility(input.key)"
+                style="cursor: pointer"
+                alt="icono ojo"
+              />
+            </div>
+          </ng-container>
+          <!-- Select custom General -->
+          <div class="custom-select" (click)="toggleSelect(input.key)" *ngIf="input.inputType === 'list'">
+            <div class="selected" [class.placeholder]="!formValues[input.key]">
+              {{ formValues[input.key] || 'Seleccione ' + input.article + ' ' + input.name.toLowerCase() }}
+            </div>
+            <ul class="options" *ngIf="openSelect === input.key">
+              <li *ngFor="let option of input.options" [class.active]="formValues[input.key] === option" (click)="selectOption(input.key, option)">
+                {{ option }}
+              </li>
+            </ul>
+          </div>
+          <!-- Errores normales -->
+          <p class="error" *ngIf="input.error && input.key !== 'password'">
+            {{ input.error }}
+          </p>
+          <!-- Errores de password (string obligatorio u otro) -->
+          <p class="error" *ngIf="input.key === 'password' && input.error && !isPasswordConditions(input.error)">
+            {{ input.error }}
+          </p>
+          <!-- Validación por condiciones de seguridad -->
+          <div class="error-password" *ngIf="input.key === 'password' && isPasswordConditions(input.error) && inputsFormModal().context === 'USER'">
+            <p>Debe cumplir las siguientes condiciones:</p>
+            <p [class.valid]="input.error.length">Mínimo 8 caracteres</p>
+            <p [class.valid]="input.error.uppercase">Una letra mayúscula</p>
+            <p [class.valid]="input.error.number">Un número</p>
+            <p [class.valid]="input.error.symbol">Un símbolo</p>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+    <div class="container-buttons">
+      <button class="cancelar" (click)="onCloseClick()">Cancelar</button>
+      <button id="aceptar" class="{{ inputsFormModal().textButtonConfirm.toLocaleLowerCase() }}" (click)="setResultsForm($event)">
+        {{ inputsFormModal().textButtonConfirm }}
+      </button>
+    </div>
+  </div>
+</div>

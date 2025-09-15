@@ -1,0 +1,25 @@
+<div class="container-diseños-calzado">
+  <div class="container-page-diseños-calzado" *ngIf="!viewPageChildren">
+    <h1 class="title">Diseños de Calzado</h1>
+    <p class="text">En esta sección podrá visualizar los diseños de calzado registrados en el sistema y crear nuevos diseños.</p>
+    <div class="container-button">
+      <button class="crear-button" (click)="openCreatePage()">
+        <img src="assets/icons/general/add.svg" alt="añadir" class="icon" />
+        <span>Crear nuevo diseño de calzado</span>
+      </button>
+    </div>
+    <div class="container-table" *ngIf="shoesDesign.length > 0; else dataNotFound">
+      <app-tabla-general [items]="shoesDesign" [inputsConfigTable]="tableGeneralConfig" (itemDetail)="getReferenceShoe($event)"> </app-tabla-general>
+    </div>
+    <ng-template #dataNotFound>
+      <app-sin-informacion
+        [title]="'No se encontraron diseños de calzado'"
+        [text]="'Actualmente no hay diseños de calzado registrados en el sistema. Por favor crea un nuevo diseño'"
+      >
+      </app-sin-informacion>
+    </ng-template>
+  </div>
+
+  <!-- Permite llamar paginas hijas -->
+  <router-outlet></router-outlet>
+</div>

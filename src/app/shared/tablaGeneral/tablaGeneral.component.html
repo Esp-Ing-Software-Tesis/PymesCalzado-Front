@@ -1,0 +1,69 @@
+<div class="table-wrapper">
+  <table>
+    <colgroup>
+      <col *ngFor="let col of inputsConfigTable().colums" [style.width]="col.width" />
+    </colgroup>
+    <thead>
+      <tr>
+        <th *ngFor="let col of inputsConfigTable().colums">
+          {{ col.name }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of paginate" [class.inactive-row]="isInactiveRow(item)">
+        <td *ngFor="let col of inputsConfigTable().colums" [ngClass]="['col-' + col.align, col.position ? 'col-' + col.position : '']">
+          <ng-container [ngSwitch]="true">
+            <ng-container *ngSwitchCase="col.isUser && inputsConfigTable().context === 'USER'">
+              <label class="switch">
+                <input type="checkbox" [checked]="getStateUserValue(item, col.key)" (click)="setStateUserValue($event, item, col.key)" />
+                <span class="slider round"></span>
+              </label>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="col.isImage && inputsConfigTable().context === 'SHOEDESIGN'">
+              <label class="image">
+                <img [src]="item[col.key]" alt="Imagen desde base64" />
+              </label>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="col.isShowDetail">
+              <label class="showDetail">
+                <button class="buttonShowDetail" (click)="setShowDetail($event, item, col.key)">Ver Detalle</button>
+              </label>
+            </ng-container>
+
+            <ng-container *ngSwitchDefault>
+              {{ item[col.key] }}
+            </ng-container>
+          </ng-container>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="items().length > inputsConfigTable().itemsPerPage">
+      <tr>
+        <td [attr.colspan]="inputsConfigTable().colums.length">
+          <div class="tfoot-container">
+            <div class="text">
+              <span>{{ firstItemIndex }} - {{ lastItemIndex }} de {{ items().length }}</span>
+            </div>
+            <div class="buttons">
+              <button (click)="setPage(currentPage - 1)" [disabled]="currentPage === 1" class="arrow">
+                <img src="assets/icons/general/back.svg" alt="Retroceder" class="icon" />
+              </button>
+
+              <button *ngFor="let page of visiblePages" (click)="goToPage(page)" [class.active]="page === currentPage" [disabled]="page === 'dots'">
+                <ng-container *ngIf="page === 'dots'">...</ng-container>
+                <ng-container *ngIf="page !== 'dots'">{{ page }}</ng-container>
+              </button>
+
+              <button (click)="setPage(currentPage + 1)" [disabled]="currentPage === totalPages" class="arrow">
+                <img src="assets/icons/general/forward.svg" alt="Avanzar" class="icon" />
+              </button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

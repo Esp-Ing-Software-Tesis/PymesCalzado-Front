@@ -1,0 +1,54 @@
+<div class="header_container">
+  <div class="logo">
+    <img src="assets/images/general/logo.webp" alt="Logo" />
+  </div>
+  <div class="information_container">
+    <div class="user_info">
+      <span class="user_name">Nombre: {{ username$ | async }}</span>
+      <span class="user_role">Rol: {{ role$ | async }}</span>
+      <span class="user_production_line" *ngIf="(role$ | async) === 'Operario'">Línea de Producción: {{ productionLine$ }}</span>
+    </div>
+    <hr class="divider" />
+    <div class="nav_desktop">
+      <nav class="menu">
+        <ul>
+          <li *ngFor="let option of menuOptions">
+            <a [routerLink]="option.route" routerLinkActive="active">
+              <img [src]="option.icon" [alt]="option.label" class="icon" />
+              <span>{{ option.label }}</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="cerrar_sesion">
+        <button (click)="logout()" class="logout-button">
+          <img src="assets/icons/headerAndFooter/cerrarSesion.svg" alt="cerrar sesion" class="icon" />
+          <span>Cerrar Sesión</span>
+        </button>
+      </div>
+    </div>
+    <div class="nav_mobile">
+      <button class="hamburger" (click)="toogleMenu()">
+        <img src="assets/icons/headerAndFooter/menu.svg" alt="menu" class="icon" />
+      </button>
+      <div *ngIf="isOpen" class="mobile_menu">
+        <nav class="menu">
+          <ul>
+            <li *ngFor="let option of menuOptions">
+              <a [routerLink]="option.route" routerLinkActive="active" (click)="isOpen = false">
+                <img [src]="option.icon" [alt]="option.label" class="icon" />
+                <span>{{ option.label }}</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <div class="cerrar_sesion">
+          <button (click)="logout()" class="logout-button">
+            <img src="assets/icons/headerAndFooter/cerrarSesion.svg" alt="cerrar sesion" class="icon" />
+            <span>Cerrar Sesión</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

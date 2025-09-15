@@ -1,0 +1,210 @@
+@import 'variables';
+
+.container-page-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    width: 100%;
+    height: auto;
+    overflow-x: hidden; 
+}
+
+.button-volver {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 160px;
+    height: 40px;
+    border: none;
+    background-color: $beige;
+    gap: 0.2em;
+    border-radius: 20px;
+}
+
+.button-volver img {
+    width: 20px;
+    height: 20px;
+}
+
+.button-volver span {
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.button-volver:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.title {
+    font-family: Inter;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.reference {
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.container-info {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+  padding: 2em 0;
+}
+
+.container-info h3 {
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  width: 100%;
+}
+
+/* la tabla no debe ocupar siempre 100% */
+table {
+  border: 1px solid $negro;
+  border-collapse: collapse;
+  min-width: 450px;
+  width: 100%;
+}
+
+thead {
+    height: auto;
+    background-color: rgba($beige, 0.35);
+}
+thead th {
+    padding: 0.5em;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    text-align: center;
+    border: 1px solid $negro;
+    border-collapse: collapse;
+}
+
+.col-left {
+    text-align: start;
+}
+
+.col-up {
+    vertical-align: top;
+}
+
+.col-center {
+    text-align: center;
+}
+
+tbody {
+    height: auto;
+    width: 100%;
+}
+
+tbody tr td {
+    height: auto;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    border: 1px solid $negro;
+    border-collapse: collapse;
+    padding: 0.5em;
+}
+
+tfoot {
+    background-color: rgba($beige, 0.35);
+    height: auto;
+}
+
+tfoot td {
+  padding: 0.3em;
+  text-align: center;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.container-colors {
+  max-width: 800px;
+}
+
+.container-colors h3 {
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+}
+
+.colors-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5em;
+}
+
+.colors-wrapper span {
+    background: $beige;
+    padding: 0.5em 2em;
+    border-radius: 20px;
+    white-space: nowrap;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.container-tallas {
+  max-width: 800px;
+}
+
+.container-tallas h3 {
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+}
+
+.sizes-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+
+.sizes-wrapper span {
+    background: $beige;
+    padding: 0.5em 1.5em;
+    border-radius: 20px;
+    white-space: nowrap;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+@media (max-width: 768px) {
+
+    .button-volver {
+        margin: 0 auto;
+    }
+
+    .container-info {
+        gap: 1em;
+        padding: 0;
+    }
+
+    .container-table {
+        max-width: 600px;
+    }
+    
+    table {
+        max-width: 450px;
+    }
+}

@@ -1,0 +1,25 @@
+<div class="overlay">
+  <div class="modal">
+    <div class="container-close">
+      <button class="button-close" (click)="onCloseClick()">
+        <img src="assets/icons/general/x.svg" alt="close" class="icon" />
+      </button>
+    </div>
+    <div class="content">
+      <div class="container-text">
+        <div class="container-title">
+          <img src="assets/icons/general/alert_triangle.svg" alt="close" class="icon" />
+          <h1 class="title">{{ inputAlertModal().title }}</h1>
+        </div>
+        <p class="text">{{ inputAlertModal().text }}</p>
+      </div>
+      <div class="error" *ngIf="inputAlertModal().error">
+        <p class="text">{{ inputAlertModal().error }}</p>
+      </div>
+      <div class="container-buttons">
+        <button class="cancelar" (click)="onCloseClick()">Cancelar</button>
+        <button class="aceptar" (click)="onAceptClick()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,266 @@
+@import 'variables';
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba($negro, 0.5);
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    z-index: 1000;
+}
+
+.modal {
+    background-color: $background-color;
+    border: 3px solid $verde-agua-marina;
+    max-width: 400px;
+    width: 100%;
+    min-width: 300px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+    overflow-y: auto;
+    gap: 1.2em;
+}
+
+.modal h1 {
+    font-family: Inter;
+    font-size: 28px;
+    font-style: normal;
+}
+
+.container-error {
+    width: 100%;
+    height: auto;
+    background-color: $beige;
+    display: flex;
+    flex-direction: row;
+    padding: 0.5em 1em;
+    gap: 0.5em;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-error img {
+    width: 25px;
+    height: 25px;
+}
+
+.container-error p {
+    width: 100%;
+    height: auto;
+    color: rgba($negro, 0.7);
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+}
+
+.container-inputs {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    gap: 0.1em;
+}
+
+.container-text {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 0.2em;
+}
+
+.container-text label {
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: bold;
+}
+
+.container-text span {
+    color: $rojo-campos-obligatorios;
+}
+
+.container-inputs input {
+    border: 1px solid $negro;
+    background-color: $background-color;
+    padding: 0.6em;
+    height: auto;
+    border-radius: 12px;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+}
+
+// Logica inputs tipo password
+.password-container {
+  border: 1px solid $negro;
+  border-radius: 12px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+}
+
+.password-container input {
+  background-color: $background-color;
+  padding: 0.6em;
+  width: 100%;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  border: none;
+  outline: none;
+  border-radius: 12px;
+}
+
+.password-container img {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+
+// Aqui se controla el select dinamico
+.container-inputs {
+  .custom-select {
+    position: relative;
+    width: 100%;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    cursor: pointer;
+
+    .selected {
+      border: 1px solid $negro;
+      background-color: $background-color;
+      padding: 0.6em;
+      height: auto;
+      border-radius: 12px;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background: url("/assets/icons/general/arrow_select.svg") no-repeat right 1rem center;
+      background-size: 14px;
+      color: $negro;
+
+      &.placeholder {
+        color: rgba($negro, 0.5);
+      }
+    }
+
+    .options {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      width: 100%;
+      border: 1px solid $negro;
+      border-radius: 12px;
+      background-color: $background-color;
+      max-height: 200px;
+      overflow-y: auto;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      z-index: 1000;
+    }
+
+    .options li {
+      padding: 0.6em;
+      border-radius: 8px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+
+      &.active {
+        background-color: rgba($beige, 0.7);
+      }
+    }
+  }
+}
+
+.container-inputs .error {
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    color: $rojo-texto-error;
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+}
+
+.container-inputs .error-password p {
+  font-family: Inter;
+  font-size: 13px;
+  font-style: normal;
+  color: $rojo-texto-error;
+  margin-top: 0.5em;
+  margin-left: 0.5em;
+}
+
+.container-inputs .error-password p.valid {
+  color: $verde-exitoso;
+}
+
+.container-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-top: 1em;
+    padding-bottom: 0.5em;
+    gap: 2em;
+}
+
+.container-buttons button {
+    width: 150px;
+    height: 50px;
+    border: none;
+    border-radius: 25px;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+}
+
+.container-buttons .cancelar {
+    background-color: $beige;
+    color: $negro;
+}
+
+.container-buttons #aceptar {
+    background-color: $verde-agua-marina;
+    color: $background-color;
+    transition: filter 0.3s ease;
+}
+
+.container-buttons .cancelar:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.container-buttons #aceptar:hover {
+    filter: brightness(1.5);
+}
+
+
+@media (max-width: 768px) {
+    .overlay{
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .modal {
+        border-radius: 15px;
+        height: 100%;
+        max-width: 100%;
+        padding: 0.8em;
+        overflow-y: auto;
+    }
+}

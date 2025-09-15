@@ -1,0 +1,59 @@
+@import 'variables';
+
+.container-usuarios {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    width: 100%;
+    height: auto;
+}
+
+.title {
+    font-family: Inter;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.text {
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+}
+
+.container-button {
+    display: flex;
+    width: 100%;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-button button {
+    width: 220px;
+    height: 40px;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+    background-color: $verde-agua-marina;
+    transition: filter 0.3s ease;
+}
+
+.container-button button:hover {
+    filter: brightness(1.2);
+}
+
+.container-button span {
+    color: $background-color;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+}
+
+.container-button img {
+    height: 30px;
+    width: 30px;
+}

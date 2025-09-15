@@ -1,0 +1,175 @@
+@import 'variables';
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    height: auto;
+    width: 100%;
+    border: 1px solid $negro;
+    border-collapse: collapse;
+}
+
+thead {
+    height: auto;
+    background-color: rgba($beige, 0.35);
+}
+thead th {
+    padding: 0.5em;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    text-align: center;
+    border: 1px solid $negro;
+    border-collapse: collapse;
+}
+
+.col-left {
+    text-align: start;
+}
+
+.col-up {
+    vertical-align: top;
+}
+
+.col-center {
+    text-align: center;
+}
+
+tbody {
+    height: auto;
+    width: 100%;
+}
+
+tbody tr td {
+    height: auto;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    border: 1px solid $negro;
+    border-collapse: collapse;
+    padding: 0.5em;
+}
+
+tbody .image {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+tbody .image img {
+    height: auto;
+    max-height: 120px;
+    width: auto;
+    max-width: 120px;
+}
+
+tbody .buttonShowDetail {
+    width: 100px;
+    height: 25px;
+    background-color: $background-color;
+    border: none;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    color: $verde-agua-marina;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color 0.3s ease, text-decoration-thickness 0.3s ease;
+}
+
+tbody .buttonShowDetail:hover {
+  color: darken($verde-agua-marina, 10%);
+  text-decoration-thickness: 2px;
+}
+
+.tfoot-container {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    gap: 0;
+    background-color: rgba($beige, 0.35);
+    padding: 0.3em 0;
+    width: 100%;
+    height: auto;
+}
+
+.tfoot-container .text {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+}
+
+.tfoot-container .buttons {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tfoot-container button {
+    height: 20px;
+    width: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.tfoot-container button.active {
+    border: 2px solid $verde-agua-marina;
+    color: $verde-agua-marina;
+}
+
+.tfoot-container .arrow:disabled {
+    color: $background-color;
+    background-color: $gris-campo-deshabilitado;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 90px;
+  height: 24px;
+  background-color: $background-color;
+  border-radius: 24px;
+  border: 1px solid $negro;
+  cursor: pointer;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 45px;
+  height: 22px;
+  border-radius: 12px;
+  background-color: $verde-exitoso;
+  transition: 0.4s;
+}
+
+input:not(:checked) + .slider {
+  left: 45px;
+  background-color: $rojo-usuario-deshabilitado;
+}
+
+input:checked + .slider {
+  left: 0;
+  background-color: $verde-exitoso;
+}
+
+.inactive-row {
+  background-color: $gris-campo-deshabilitado;
+}

@@ -1,0 +1,64 @@
+# Salidas de compilación y cachés
+/dist
+/tmp
+/out
+/out-tsc
+/bazel-out
+/.angular/cache
+/.angular/*
+/coverage
+/sass-cache/
+.sass-cache/
+.nyc_output/
+build/
+build-*/
+.cache/
+.cache
+
+# Dependencias
+/node_modules
+/bower_components
+
+# Archivos de logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+testem.log
+libpeerconnection.log
+connect.lock
+
+# Archivos de entorno y configuración sensible
+.env
+.env.*
+!.env.example
+
+# Archivos de tipado y typings
+/typings
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# IDEs y editores
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Otros
+*.log
+*.tgz
+*.gz
+*.zip
+*.min.js
+*.bundle.js

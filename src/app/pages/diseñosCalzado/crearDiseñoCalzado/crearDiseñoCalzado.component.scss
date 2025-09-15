@@ -1,0 +1,729 @@
+@import 'variables';
+
+.container-create-design {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    width: 100%;
+    height: auto;
+    overflow-x: hidden; 
+}
+
+.button-volver {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 160px;
+    height: 40px;
+    border: none;
+    background-color: $beige;
+    gap: 0.2em;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.button-volver img {
+    width: 20px;
+    height: 20px;
+}
+
+.button-volver span {
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.button-volver:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.title {
+    font-family: Inter;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.container-error {
+    width: 100%;
+    height: auto;
+    background-color: $beige;
+    display: flex;
+    flex-direction: row;
+    padding: 0.5em 1em;
+    gap: 0.5em;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    margin: auto;
+}
+
+.container-error img {
+    width: 25px;
+    height: 25px;
+}
+
+.container-error p {
+    width: 100%;
+    height: auto;
+    color: rgba($negro, 0.7);
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.container-form {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5em;
+  padding: 2em 0;
+}
+
+.container-form label {
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.container-form .required {
+    color: $rojo-campos-obligatorios;
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.container-name {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7em;
+    width: 100%;
+}
+
+.container-name input {
+    border: 1px solid $negro;
+    background-color: $background-color;
+    padding: 0.6em;
+    height: auto;
+    border-radius: 12px;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.container-name input::placeholder {
+    color: rgba($negro, 0.3);
+}
+
+.error-message {
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    color: $rojo-texto-error;
+    margin-left: 0.5em;
+}
+
+.container-category {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7em;
+    width: 100%;
+}
+
+.container-description {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7em;
+    width: 100%;
+    min-height: 100px;
+}
+
+.container-description textarea {
+    border: 1px solid $negro;
+    background-color: $background-color;
+    padding: 0.6em;
+    height: auto;
+    border-radius: 12px;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    min-height: 100px;
+    resize: none;
+}
+
+.container-description textarea::placeholder {
+    color: rgba($negro, 0.3);
+}
+
+.container-image {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7em;
+    width: 100%;
+}
+
+.container-upload-image {
+    display: flex;
+    flex-direction: row;
+    gap: 2em;
+    width: 100%;
+    padding: 1em;
+    border: 1px solid $negro;
+    border-radius: 20px;
+    height: auto;
+}
+
+.container-upload-image .container-preview-image {
+    width: 120px;
+    height: 120px;
+    border: 1px solid $negro;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.container-upload-image .container-preview-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+/* Fondo cuando hay imagen */
+.container-preview-image.has-image {
+  background-color: $background-color;
+}
+
+/* Fondo cuando no hay imagen */
+.container-preview-image.no-image {
+  background-color: $beige;
+}
+
+.container-upload-image{
+    .container-column-right{
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        align-items: flex-start;
+        flex: 1;
+        
+        p {
+            font-family: Inter;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 700;
+        }
+
+        .container-buttons {
+            margin-top: 5px ;
+            display: flex;
+            flex-direction: row;
+            gap: 3em;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+
+            button {
+                height: 50px;
+                width: 150px;
+                border: none;
+                border-radius: 25px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 0.6em;
+
+                span {
+                    font-family: Inter;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 700;
+                }
+
+                img {
+                    height: 20px;
+                    width: 20px;
+                }
+            }
+
+            .cargar-imagen{
+                color: $background-color;
+                background-color: $verde-agua-marina;
+                transition: filter 0.3s ease;
+                cursor: pointer;
+            }
+
+            .cargar-imagen:hover{
+                filter: brightness(1.2);
+            }
+
+            .eliminar-imagen:disabled {
+                background-color: $gris-campo-deshabilitado;
+                color: $background-color;
+                cursor: not-allowed;
+            }
+
+            .eliminar-imagen {
+                background-color: $rojo-eliminar-rechazar;
+                color: $background-color;
+                cursor: pointer;
+                transition: filter 0.3s ease;
+            }
+
+            .eliminar-imagen:hover {
+                filter: brightness(1.2);
+            }
+        }
+
+    }
+}
+
+/* la tabla no debe ocupar siempre 100% */
+.container-production-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7em;
+    width: 100%;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+  border: 1px solid $negro;
+  border-collapse: collapse;
+  min-width: 450px;
+  width: 100%;
+
+    thead {
+        height: auto;
+        background-color: rgba($beige, 0.35);
+
+        th {
+            padding: 0.5em;
+            font-family: Inter;
+            font-size: 16px;
+            font-style: normal;
+            text-align: center;
+            font-weight: 700;
+            border: 1px solid $negro;
+            border-collapse: collapse;
+        }
+    }
+
+    .col-left {
+        text-align: start;
+    }
+
+    .col-up {
+        vertical-align: top;
+    }
+
+    .col-center {
+        text-align: center;
+    }
+
+    tbody {
+        tr {
+            height: 40px;
+
+            td {
+                padding: 0;
+                height: 100%;
+                font-family: Inter;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 500;
+                border: 1px solid $negro;
+                border-collapse: collapse;
+
+                .container-apply {
+                    height: 25px;
+                    width: 25px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin: auto;
+
+                    input[type="checkbox"] {
+                        appearance: none;
+                        -webkit-appearance: none;
+                        -moz-appearance: none;
+
+                        height: 100%;
+                        width: 100%;
+                        border: 2px solid $negro;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        background-color: $background-color;
+
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        position: relative;
+
+                        &:checked::after {
+                            content: "✔";
+                            color: $verde-icono-seleccionado;
+                            font-size: 24px;
+                            position: absolute;
+                        }
+
+                        &:disabled {
+                            border-color: $gris-campo-deshabilitado;
+                            background-color: $background-color;
+                            cursor: not-allowed;
+
+                            &::after {
+                                color: $gris-campo-deshabilitado;
+                            }
+                        }
+                    }
+                }
+            }
+
+            td.td-cost {
+                background-color: rgba($gris-campo-deshabilitado, 0.6) ;
+
+                .cost-input input {
+                    margin: 0;
+                    border: none;
+                    line-height: normal;
+                    border-radius: 0;
+                    text-align: center;
+                    height: 30px;
+                    width: 180px;
+                    background: $background-color;
+                }
+            }
+        }
+    }
+
+    tfoot {
+        background-color: rgba($beige, 0.35);
+        height: 40px;
+
+        td {
+            padding: 0.3em;
+            text-align: center;
+            font-family: Inter;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 700;
+        }
+    }
+}
+
+.container-colors {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7em;
+    width: 100%;
+}
+
+.container-sizes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7em;
+    width: 100%;
+}
+
+// Estilos del formulario de creación
+.container-create-design {
+
+    // Adaptación del select personalizado
+    .custom-select-container {
+      position: relative;
+      width: 100%;
+      font-family: Inter;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+
+      .selected {
+        border: 1px solid $negro;
+        background-color: $background-color;
+        padding: 0.6em;
+        border-radius: 12px;
+        background: url("/assets/icons/general/arrow_select.svg") no-repeat right 1rem center;
+        background-size: 14px;
+        color: $negro;
+
+        &.placeholder {
+          color: rgba($negro, 0.3);
+        }
+      }
+
+      .options {
+        position: absolute;
+        top: calc(100% + 4px);
+        left: 0;
+        width: 100%;
+        border: 1px solid $negro;
+        border-radius: 12px;
+        background-color: $background-color;
+        max-height: 200px;
+        overflow-y: auto;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        z-index: 1000;
+
+        li {
+          padding: 0.6em;
+          cursor: pointer;
+
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+          }
+
+          &.active {
+            background-color: rgba($beige, 0.7);
+          }
+        }
+
+        .option-item {
+            padding: 0.6em;
+            cursor: pointer;
+            display: flex;
+            height: 40px;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+            .icon-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                icon {
+                    width: 15px;
+                    height: 15px;
+                }
+            }
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+
+            &.active {
+                background-color: rgba($beige, 0.7);
+            }
+        }
+
+      }
+    }
+}
+
+.container-colors .container-selected-colors {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    padding-top: 1em;
+    width: 100%;
+    height: auto;
+
+    .container-title {
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        white-space: nowrap;
+    }
+
+    .colors-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5em;
+
+        .selected-item {
+            background: $beige;
+            white-space: nowrap;
+            padding: 0.8em;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            min-width: 100px;
+
+            .item-name span {
+                font-family: Inter;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+            }
+
+            .item-action {
+                margin-left: 1em;
+                display: flex;
+                align-items: center;
+
+                button {
+                    border: none;
+                    background-color: none;
+                    cursor: pointer;
+                    height: 18px;
+                    width: 18px;
+
+                    img {
+                        height: 100%;
+                        width: 100%;
+                    }
+                }
+
+                button:hover {
+                    background-color: rgba(0, 0, 0, 0.1);
+                }
+            }
+        }
+    }
+}
+
+.container-sizes .container-selected-sizes {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    padding-top: 1em;
+    width: 100%;
+    height: auto;
+
+    .container-title {
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        white-space: nowrap;
+    }
+
+    .sizes-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5em;
+
+        .selected-item {
+            background: $beige;
+            white-space: nowrap;
+            padding: 0.8em;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            min-width: 60px;
+
+            .item-name span {
+                font-family: Inter;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+            }
+
+            .item-action {
+                margin-left: 1em;
+                display: flex;
+                align-items: center;
+
+                button {
+                    border: none;
+                    background-color: none;
+                    cursor: pointer;
+                    height: 18px;
+                    width: 18px;
+
+                    img {
+                        height: 100%;
+                        width: 100%;
+                    }
+                }
+
+                button:hover {
+                    background-color: rgba(0, 0, 0, 0.1);
+                }
+            }
+        }
+    }
+}
+
+.container-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 2em;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding-top: 1.5em;
+
+    button {
+        width: 200px;
+        height: 50px;
+        border: none;
+        border-radius: 25px;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+    }
+
+    .button-cancel {
+        background-color: $beige;
+        cursor: pointer;
+        color: $negro;
+    }
+
+    .button-cancel:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .button-create {
+        background-color: $verde-agua-marina;
+        cursor: pointer;
+        color: $background-color;
+        transition: filter 0.3s ease;
+    }
+
+    .button-create:hover {
+        filter: brightness(1.2);
+    }
+}
+
+@media (max-width: 768px) {
+
+    .button-volver {
+        margin: 0 auto;
+    }
+
+    .container-upload-image {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .container-column-right{
+        align-items: center;
+        text-align: center;
+    }
+
+    .container-colors .container-selected-colors {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+    }
+
+    .container-sizes .container-selected-sizes {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+    }
+}
