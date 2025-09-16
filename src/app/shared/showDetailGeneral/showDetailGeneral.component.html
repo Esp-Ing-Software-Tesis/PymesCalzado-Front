@@ -1,6 +1,8 @@
 <div class="container-page-detail" *ngIf="inputsConfigPage">
   <button class="button-volver" (click)="onBackAction()">
-    <img src="assets/icons/general/arrow_back.svg" alt="back arrow" class="icon" />
+    <svg class="icon">
+      <use xlink:href="assets/icons-sprite.svg#general-arrow_back"></use>
+    </svg>
     <span>Volver</span>
   </button>
   <h1 class="title">{{ inputsConfigPage.title }}</h1>

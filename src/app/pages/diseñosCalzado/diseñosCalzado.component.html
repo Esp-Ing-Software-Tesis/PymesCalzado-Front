@@ -4,7 +4,9 @@
     <p class="text">En esta sección podrá visualizar los diseños de calzado registrados en el sistema y crear nuevos diseños.</p>
     <div class="container-button">
       <button class="crear-button" (click)="openCreatePage()">
-        <img src="assets/icons/general/add.svg" alt="añadir" class="icon" />
+        <svg class="icon">
+          <use xlink:href="assets/icons-sprite.svg#general-add"></use>
+        </svg>
         <span>Crear nuevo diseño de calzado</span>
       </button>
     </div>

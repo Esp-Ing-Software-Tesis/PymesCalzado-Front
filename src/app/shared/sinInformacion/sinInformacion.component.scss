@@ -1,4 +1,4 @@
-@import 'variables';
+@use 'variables' as *;
 
 .container_sin_informacion {
     padding: 4em 2em;
@@ -9,7 +9,7 @@
     align-items: center;
 }
 
-.container_sin_informacion img {
+.container_sin_informacion svg {
     width: 60px;
     height: 70px;
 }

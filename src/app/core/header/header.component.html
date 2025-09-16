@@ -14,7 +14,9 @@
         <ul>
           <li *ngFor="let option of menuOptions">
             <a [routerLink]="option.route" routerLinkActive="active">
-              <img [src]="option.icon" [alt]="option.label" class="icon" />
+              <svg class="icon" [attr.aria-label]="option.label" role="img">
+                <use [attr.xlink:href]="'assets/icons-sprite.svg#' + option.icon"></use>
+              </svg>
               <span>{{ option.label }}</span>
             </a>
           </li>
@@ -22,21 +24,27 @@
       </nav>
       <div class="cerrar_sesion">
         <button (click)="logout()" class="logout-button">
-          <img src="assets/icons/headerAndFooter/cerrarSesion.svg" alt="cerrar sesion" class="icon" />
+          <svg class="icon">
+            <use xlink:href="assets/icons-sprite.svg#headerAndFooter-cerrarSesion"></use>
+          </svg>
           <span>Cerrar Sesión</span>
         </button>
       </div>
     </div>
     <div class="nav_mobile">
       <button class="hamburger" (click)="toogleMenu()">
-        <img src="assets/icons/headerAndFooter/menu.svg" alt="menu" class="icon" />
+        <svg class="icon">
+          <use xlink:href="assets/icons-sprite.svg#headerAndFooter-menu"></use>
+        </svg>
       </button>
       <div *ngIf="isOpen" class="mobile_menu">
         <nav class="menu">
           <ul>
             <li *ngFor="let option of menuOptions">
               <a [routerLink]="option.route" routerLinkActive="active" (click)="isOpen = false">
-                <img [src]="option.icon" [alt]="option.label" class="icon" />
+                <svg class="icon" [attr.aria-label]="option.label" role="img">
+                  <use [attr.xlink:href]="'assets/icons-sprite.svg#' + option.icon"></use>
+                </svg>
                 <span>{{ option.label }}</span>
               </a>
             </li>
@@ -44,7 +52,9 @@
         </nav>
         <div class="cerrar_sesion">
           <button (click)="logout()" class="logout-button">
-            <img src="assets/icons/headerAndFooter/cerrarSesion.svg" alt="cerrar sesion" class="icon" />
+            <svg class="icon">
+              <use xlink:href="assets/icons-sprite.svg#headerAndFooter-cerrarSesion"></use>
+            </svg>
             <span>Cerrar Sesión</span>
           </button>
         </div>

@@ -2,13 +2,17 @@
   <div class="modal">
     <div class="container-close">
       <button class="button-close" (click)="onCloseClick()">
-        <img src="assets/icons/general/x.svg" alt="close" class="icon" />
+        <svg class="icon">
+          <use xlink:href="assets/icons-sprite.svg#general-x"></use>
+        </svg>
       </button>
     </div>
     <div class="content">
       <div class="container-text">
         <div class="container-title">
-          <img src="assets/icons/general/alert_triangle.svg" alt="close" class="icon" />
+          <svg class="icon">
+            <use xlink:href="assets/icons-sprite.svg#general-alert_triangle"></use>
+          </svg>
           <h1 class="title">{{ inputAlertModal().title }}</h1>
         </div>
         <p class="text">{{ inputAlertModal().text }}</p>

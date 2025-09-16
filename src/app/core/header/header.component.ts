@@ -48,9 +48,9 @@ export class HeaderComponent {
   private setMockMenuOptions(role: string | null) {
     if (role === 'Gerente') {
       this.menuOptions = [
-        { label: 'Usuarios', route: '/usuarios', icon: 'assets/icons/headerAndFooter/user.svg' },
-        { label: 'Diseños de Calzado', route: '/diseños-calzado', icon: 'assets/icons/headerAndFooter/shoe.svg' },
-        { label: 'Pedidos', route: '/pedidos-gerente', icon: 'assets/icons/headerAndFooter/pedido.svg' },
+        { label: 'Usuarios', route: '/usuarios', icon: 'headerAndFooter-user' },
+        { label: 'Diseños de Calzado', route: '/diseños-calzado', icon: 'headerAndFooter-shoe' },
+        { label: 'Pedidos', route: '/pedidos-gerente', icon: 'headerAndFooter-pedido' },
       ];
     } else if (role === 'Administrador') {
       this.menuOptions = [{ label: 'Pedidos', route: '/pedidos-administrador', icon: 'assets/icons/headerAndFooter/pedido.svg' }];

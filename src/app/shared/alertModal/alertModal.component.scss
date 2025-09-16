@@ -1,4 +1,4 @@
-@import 'variables';
+@use 'variables' as *;
 
 .overlay {
     position: fixed;
@@ -43,12 +43,12 @@
     background-color: $background-color;
 }
 
-.container-close img {
+.container-close svg {
     width: 25px;
     height: 25px;
 }
 
-.container-close img:hover {
+.container-close svg:hover {
     filter: invert(12%) sepia(100%) saturate(7405%) hue-rotate(9deg) brightness(97%) contrast(118%);
 }
 
@@ -89,6 +89,12 @@
     font-family: Inter;
     font-size: 16px;
     font-style: normal;
+}
+
+.content .container-title svg {
+  width: 35px;
+  height: 35px;
+  fill: $naranja-alerta !important;
 }
 
 .error {

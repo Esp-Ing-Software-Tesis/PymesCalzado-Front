@@ -10,7 +10,8 @@
     "test": "ng test",
     "serve:ssr:PymesCalzado-Front-General": "node dist/pymes-calzado-front-general/server/server.mjs",
     "lint": "eslint src --ext .ts,.html --max-warnings=0",
-    "format": "prettier --check ."
+    "format": "prettier --check .",
+    "sprite": "node build-sprite.cjs"
   },
   "private": true,
   "dependencies": {
@@ -54,6 +55,8 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "prettier": "^3.6.2",
+    "svgo": "^3.0.2",
+    "svgstore": "^3.0.1",
     "typescript": "~5.7.2",
     "typescript-eslint": "8.34.1"
   }

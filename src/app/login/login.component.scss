@@ -1,4 +1,4 @@
-@import 'variables';
+@use 'variables' as *;
 
 .login-container {
     margin: auto;
@@ -124,9 +124,10 @@ form {
     line-height: normal;
 }
 
-.input img {
+.input svg {
     width: 25px;
     height: 25px;
+    fill: none;
 }
 
 .mensaje_error{
@@ -148,7 +149,7 @@ form {
     flex: 1;
 }
 
-.mensaje_error img {
+.mensaje_error svg {
     flex: 0 0 auto;
     width: 25px;
     height: 25px;

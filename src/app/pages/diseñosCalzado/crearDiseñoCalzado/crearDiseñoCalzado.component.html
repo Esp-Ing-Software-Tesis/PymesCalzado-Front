@@ -1,12 +1,16 @@
 <div class="container-create-design">
   <button class="button-volver" (click)="onBackAction()">
-    <img src="assets/icons/general/arrow_back.svg" alt="back arrow" class="icon" />
+    <svg class="icon">
+      <use xlink:href="assets/icons-sprite.svg#general-arrow_back"></use>
+    </svg>
     <span>Volver</span>
   </button>
   <h1 class="title">Crear Nuevo Diseño de Calzado</h1>
   <div class="container-form">
     <div #errorDiv class="container-error" *ngIf="generalError">
-      <img src="assets/icons/general/alert_triangle.svg" alt="close" class="icon" />
+      <svg class="icon">
+        <use xlink:href="assets/icons-sprite.svg#general-alert_triangle"></use>
+      </svg>
       <p class="text-error">{{ generalError }}</p>
     </div>
     <ng-container>
@@ -28,7 +32,7 @@
           <span>{{ shoeDesignErrors.name_error }}</span>
         </div>
       </div>
-      <!-- Select Categoria -->
+      <!-- Select Categoría -->
       <div class="container-category">
         <div class="container-text">
           <label>Categoría</label>
@@ -37,6 +41,9 @@
         <div class="custom-select-container" (click)="toggleCategory()">
           <div class="selected" [class.placeholder]="!newShoeDesign.category_id">
             {{ getOptionName(shoeCategorys, newShoeDesign.category_id, 'Seleccione la categoría') }}
+            <svg class="icon-arrow">
+              <use xlink:href="assets/icons-sprite.svg#general-arrow_select"></use>
+            </svg>
           </div>
 
           <ul class="options" *ngIf="openCategory">
@@ -80,7 +87,15 @@
         <div class="container-upload-image" (drop)="onDrop($event)" (dragover)="onDragOver($event)">
           <div class="container-column-left">
             <div class="container-preview-image" [ngClass]="{ 'has-image': newShoeDesign.image, 'no-image': !newShoeDesign.image }">
-              <img [src]="newShoeDesign.image ? newShoeDesign.image : 'assets/icons/shoeDesign/imageNull.svg'" alt="imagen preview" />
+              <ng-container *ngIf="newShoeDesign.image; else svgPlaceholder">
+                <img [src]="newShoeDesign.image" alt="imagen preview" />
+              </ng-container>
+
+              <ng-template #svgPlaceholder>
+                <svg class="icon">
+                  <use xlink:href="assets/icons-sprite.svg#shoeDesign-imageNull"></use>
+                </svg>
+              </ng-template>
             </div>
           </div>
           <div class="container-column-right">
@@ -90,12 +105,16 @@
 
               <div class="container-buttons">
                 <button class="cargar-imagen" (click)="fileInput.click()">
-                  <img src="assets/icons/shoeDesign/upload.svg" alt="cargar imagen" class="icon" />
+                  <svg class="icon">
+                    <use xlink:href="assets/icons-sprite.svg#shoeDesign-upload"></use>
+                  </svg>
                   <span class="text">Cargar</span>
                 </button>
 
                 <button class="eliminar-imagen" (click)="removeImage()" [disabled]="!newShoeDesign.image">
-                  <img src="assets/icons/shoeDesign/delete.svg" alt="eliminar imagen" class="icon" />
+                  <svg class="icon">
+                    <use xlink:href="assets/icons-sprite.svg#shoeDesign-delete"></use>
+                  </svg>
                   <span class="text">Borrar</span>
                 </button>
               </div>
@@ -200,6 +219,9 @@
         <div class="custom-select-container" (click)="toggleColors()">
           <div class="selected" [class.placeholder]="!newShoeDesign.colors.length">
             {{ newShoeDesign.colors.length ? 'Puede seleccionar más colores' : 'Seleccione los colores' }}
+            <svg class="icon-arrow">
+              <use xlink:href="assets/icons-sprite.svg#general-arrow_select"></use>
+            </svg>
           </div>
 
           <ul class="options" *ngIf="openColors">
@@ -213,7 +235,9 @@
                 {{ color.nombre }}
               </div>
               <div class="icon-container" *ngIf="newShoeDesign.colors.includes(color.id)">
-                <img src="assets/icons/shoeDesign/checkSelect.svg" alt="icon check" class="icon" />
+                <svg class="icon-check">
+                  <use xlink:href="assets/icons-sprite.svg#shoeDesign-checkSelect"></use>
+                </svg>
               </div>
             </div>
           </ul>
@@ -234,7 +258,9 @@
                 </div>
                 <div class="item-action">
                   <button (click)="removeColor(color.id)">
-                    <img src="assets/icons/general/x.svg" alt="x icon" class="icon" />
+                    <svg class="icon">
+                      <use xlink:href="assets/icons-sprite.svg#general-x"></use>
+                    </svg>
                   </button>
                 </div>
               </div>
@@ -251,6 +277,9 @@
         <div class="custom-select-container" (click)="toggleSizes()">
           <div class="selected" [class.placeholder]="!newShoeDesign.sizes.length">
             {{ newShoeDesign.sizes.length ? 'Puede seleccionar más tallas' : 'Seleccione las tallas' }}
+            <svg class="icon-arrow">
+              <use xlink:href="assets/icons-sprite.svg#general-arrow_select"></use>
+            </svg>
           </div>
 
           <ul class="options" *ngIf="openSizes">
@@ -264,7 +293,9 @@
                 {{ size.id }}
               </div>
               <div class="icon-container" *ngIf="newShoeDesign.sizes.includes(size.id)">
-                <img src="assets/icons/shoeDesign/checkSelect.svg" alt="icon check" class="icon" />
+                <svg class="icon-check">
+                  <use xlink:href="assets/icons-sprite.svg#shoeDesign-checkSelect"></use>
+                </svg>
               </div>
             </div>
           </ul>
@@ -285,7 +316,9 @@
                 </div>
                 <div class="item-action">
                   <button (click)="removeSize(size.id)">
-                    <img src="assets/icons/general/x.svg" alt="x icon" class="icon" />
+                    <svg class="icon">
+                      <use xlink:href="assets/icons-sprite.svg#general-x"></use>
+                    </svg>
                   </button>
                 </div>
               </div>

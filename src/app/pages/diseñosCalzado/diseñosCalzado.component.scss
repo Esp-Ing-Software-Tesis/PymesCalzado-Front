@@ -1,4 +1,4 @@
-@import 'variables';
+@use 'variables' as *;
 
 .container-page-diseños-calzado {
     display: flex;
@@ -53,7 +53,7 @@
     font-style: normal;
 }
 
-.container-button img {
+.container-button svg {
     height: 30px;
     width: 30px;
 }

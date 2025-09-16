@@ -1,8 +1,10 @@
-@import 'variables';
+@use 'variables' as *;
+@use "sass:color";
 
 .table-wrapper {
     width: 100%;
     overflow-x: auto;
+    overflow-y: hidden;
 }
 
 table {
@@ -81,7 +83,7 @@ tbody .buttonShowDetail {
 }
 
 tbody .buttonShowDetail:hover {
-  color: darken($verde-agua-marina, 10%);
+  color: color.adjust($verde-agua-marina, $lightness: -10%);
   text-decoration-thickness: 2px;
 }
 

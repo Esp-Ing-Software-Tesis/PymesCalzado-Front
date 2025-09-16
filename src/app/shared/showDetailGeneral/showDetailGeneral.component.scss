@@ -1,4 +1,4 @@
-@import 'variables';
+@use 'variables' as *;
 
 .container-page-detail {
     display: flex;
@@ -22,7 +22,7 @@
     border-radius: 20px;
 }
 
-.button-volver img {
+.button-volver svg {
     width: 20px;
     height: 20px;
 }

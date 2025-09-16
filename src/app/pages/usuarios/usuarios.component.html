@@ -6,17 +6,14 @@
   </p>
   <div class="container-button">
     <button (click)="onFormModal()" class="crear-button">
-      <img src="assets/icons/general/add.svg" alt="añadir" class="icon" />
+      <svg class="icon">
+        <use xlink:href="assets/icons-sprite.svg#general-add"></use>
+      </svg>
       <span>Crear nuevo usuario</span>
     </button>
   </div>
-  <div class="container-table" *ngIf="users.length > 0; else dataNotFound" >
-    <app-tabla-general 
-    [items]="users" 
-    [inputsConfigTable]="tableGeneralConfig" 
-    (valueChanged)="onValueStateChanged($event)"
-    >
-    </app-tabla-general>
+  <div class="container-table" *ngIf="users.length > 0; else dataNotFound">
+    <app-tabla-general [items]="users" [inputsConfigTable]="tableGeneralConfig" (valueChanged)="onValueStateChanged($event)"> </app-tabla-general>
   </div>
   <ng-template #dataNotFound>
     <app-sin-informacion
@@ -26,12 +23,7 @@
     </app-sin-informacion>
   </ng-template>
   <div class="conatiner-alert-modal" *ngIf="showAlertModal">
-    <app-alert-modal 
-    [inputAlertModal]="alertModalConfig" 
-    (acept)="updtateStateUser()" 
-    (close)="closeAlertModal()"
-    >
-    </app-alert-modal>
+    <app-alert-modal [inputAlertModal]="alertModalConfig" (acept)="updtateStateUser()" (close)="closeAlertModal()"> </app-alert-modal>
   </div>
   <div class="conatiner-form-modal" *ngIf="showFormModal">
     <app-form-modal

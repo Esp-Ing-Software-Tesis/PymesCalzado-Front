@@ -33,10 +33,10 @@ export class ShoeDesignService {
   postCreateShowDesign(diseñoCalzado: ShoeDesignCreateDTO): Observable<ShoeDesignCreateDTO> {
     const nuevoDiseñoCalzado = { ...diseñoCalzado };
     //return throwError(() => ({}))
-    /*return throwError(() => ({
+    return throwError(() => ({
       description: 'diseño de calzado ya existente',
-    }));*/
-    return of(nuevoDiseñoCalzado);
+    }));
+    //return of(nuevoDiseñoCalzado);
   }
 
   // Data Mock Shoe Designs

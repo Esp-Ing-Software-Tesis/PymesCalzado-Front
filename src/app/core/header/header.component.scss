@@ -1,4 +1,4 @@
-@import 'variables';
+@use 'variables' as *;
 
 .header_container {
     display: flex;
@@ -107,9 +107,11 @@
     font-style: normal;
 }
 
-.nav_desktop .menu img {
+.nav_desktop .menu svg {
     width: 30px;
     height: 30px;
+    color: $negro;
+    fill: none;
 }
 
 .nav_desktop .cerrar_sesion {
@@ -144,10 +146,9 @@
     font-style: normal;
 }
 
-.nav_desktop .cerrar_sesion img {
+.nav_desktop .cerrar_sesion svg {
     width: 30px;
     height: 30px;
-    color: $negro;
 }
 
 .nav_desktop .menu li a:hover {
@@ -158,11 +159,12 @@
     color: $verde-agua-marina;
 }
 
-.nav_desktop .menu li a.active img {
-    filter: invert(22%) sepia(99%) saturate(2252%) hue-rotate(169deg) brightness(95%) contrast(101%);
+.nav_desktop .menu li a.active svg {
+    fill: none;
+    color: $verde-agua-marina;
 }
 
-.nav_desktop .cerrar_sesion menu:hover {
+.nav_desktop .cerrar_sesion button:hover {
     filter: brightness(1.2);
 }
 
@@ -252,6 +254,11 @@
         padding: 0.5em;
     }
 
+    .cerrar_sesion svg{
+        fill: none;
+        color: $negro;
+    }
+
     .mobile_menu .cerrar_sesion button {
         display: flex;
         background-color: $background-color;
@@ -261,8 +268,9 @@
         gap: 0.5em;
     }
 
-    .mobile_menu img {
-        filter: brightness(0) saturate(100%);
+    .mobile_menu svg {
+        fill: none;
+        color: $negro;
         width: 25px;
         height: 25px;
     }
@@ -276,8 +284,9 @@
         background-color: $beige;
     }
 
-    .nav_mobile .menu li a.active img {
-        filter: invert(22%) sepia(99%) saturate(2252%) hue-rotate(169deg) brightness(95%) contrast(101%);
+    .nav_mobile .menu li a.active svg {
+        fill: none;
+        color: $verde-agua-marina;
     }
     
 

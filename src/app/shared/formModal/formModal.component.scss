@@ -1,4 +1,4 @@
-@import 'variables';
+@use 'variables' as *;
 
 .overlay {
     position: fixed;
@@ -45,9 +45,10 @@
     align-items: center;
 }
 
-.container-error img {
+.container-error svg {
     width: 25px;
     height: 25px;
+    fill: $naranja-alerta !important;
 }
 
 .container-error p {
@@ -120,15 +121,16 @@
   border-radius: 12px;
 }
 
-.password-container img {
+.password-container svg {
   position: absolute;
   right: 10px;
   cursor: pointer;
   width: 20px;
   height: 20px;
+  fill: none;
 }
 
-// Aqui se controla el select dinamico
+// Aquí se controla el select dinámico
 .container-inputs {
   .custom-select {
     position: relative;
@@ -141,18 +143,23 @@
     .selected {
       border: 1px solid $negro;
       background-color: $background-color;
-      padding: 0.6em;
+      padding: 0.6em 1rem 0.6em 0.6em; // padding-right para el icono
       height: auto;
       border-radius: 12px;
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      background: url("/assets/icons/general/arrow_select.svg") no-repeat right 1rem center;
-      background-size: 14px;
+      display: flex;
+      align-items: center;
       color: $negro;
 
       &.placeholder {
         color: rgba($negro, 0.5);
+      }
+
+      svg.icon-arrow {
+        width: 14px;
+        height: 14px;
+        fill: currentColor;
+        margin-left: auto; // empuja el icono hasta la derecha
+        flex-shrink: 0;
       }
     }
 

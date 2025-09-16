@@ -3,7 +3,9 @@
     <h1 class="title">{{ inputsFormModal().title }}</h1>
     <p class="text" *ngIf="inputsFormModal().text">{{ inputsFormModal().text }}</p>
     <div #errorDiv class="container-error" *ngIf="inputsFormModal().error">
-      <img src="assets/icons/general/alert_triangle.svg" alt="close" class="icon" />
+      <svg class="icon">
+        <use xlink:href="assets/icons-sprite.svg#general-alert_triangle"></use>
+      </svg>
       <p class="text-error">{{ inputsFormModal().error }}</p>
     </div>
     <ng-container *ngFor="let input of inputsFormModal().inputsConfig">
@@ -36,18 +38,20 @@
                 [attr.required]="input.obligatory"
                 (input)="onInputChange($event, input.key)"
               />
-              <img
-                src="assets/icons/login/{{ passwordVisible[input.key] ? 'eye.svg' : 'eye-off.svg' }}"
-                (click)="togglePasswordVisibility(input.key)"
-                style="cursor: pointer"
-                alt="icono ojo"
-              />
+              <svg class="icon cursor-pointer" (click)="togglePasswordVisibility(input.key)">
+                <use
+                  [attr.xlink:href]="passwordVisible[input.key] ? 'assets/icons-sprite.svg#login-eye' : 'assets/icons-sprite.svg#login-eye-off'"
+                ></use>
+              </svg>
             </div>
           </ng-container>
           <!-- Select custom General -->
           <div class="custom-select" (click)="toggleSelect(input.key)" *ngIf="input.inputType === 'list'">
             <div class="selected" [class.placeholder]="!formValues[input.key]">
               {{ formValues[input.key] || 'Seleccione ' + input.article + ' ' + input.name.toLowerCase() }}
+              <svg class="icon-arrow">
+                <use xlink:href="assets/icons-sprite.svg#general-arrow_select"></use>
+              </svg>
             </div>
             <ul class="options" *ngIf="openSelect === input.key">
               <li *ngFor="let option of input.options" [class.active]="formValues[input.key] === option" (click)="selectOption(input.key, option)">
