@@ -19,7 +19,7 @@ interface ProductionLines {
     costPerPair: number;
 }
 
-interface ShoeColors {
+export interface ShoeColors {
     id: number;
     name: string;
 }

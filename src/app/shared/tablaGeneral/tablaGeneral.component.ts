@@ -100,4 +100,16 @@ export class TablaGeneralComponent<Items extends Record<string, any>> implements
     event.preventDefault();
     this.itemDetail.emit({ item, key, context: this.inputsConfigTable().context });
   }
+
+  // Logica para organizar los estados en clases validad para CSS
+  getStateClass(state?: string): string {
+    if (!state) return '';
+    // Limpiar tildes, reemplazar espacios y volver todo en minuscula
+    return state
+      .toString()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/\s+/g, '_')
+      .toLowerCase();
+  }
 }

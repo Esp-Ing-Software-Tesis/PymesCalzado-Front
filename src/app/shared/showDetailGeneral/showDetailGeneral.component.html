@@ -22,22 +22,69 @@
               </th>
             </tr>
           </thead>
-          <tbody>
-            <tr *ngFor="let item of inputsConfigPage.datatable">
-              <td *ngFor="let col of inputsConfigPage.configTable" [ngClass]="['col-' + col.align, col.position ? 'col-' + col.position : '']">
-                <ng-container>
-                  {{ getValue(item, col.key) }}
-                </ng-container>
-              </td>
-            </tr>
+          <!-- Logica para tablas sin paginador -->
+          <tbody *ngIf="inputsConfigPage.context === 'SHOEDESIGN'">
+            <ng-container *ngFor="let wrapper of inputsConfigPage.datatable">
+              <ng-container *ngFor="let item of wrapper.dataTableDetailShoeDesign">
+                <tr>
+                  <td *ngFor="let col of inputsConfigPage.configTable" [ngClass]="['col-' + col.align, col.position ? 'col-' + col.position : '']">
+                    {{ getValue(item, col.key) }}
+                  </td>
+                </tr>
+              </ng-container>
+            </ng-container>
           </tbody>
-          <tfoot *ngIf="inputsConfigPage.showFootTable && inputsConfigPage.context === 'SHOEDESIGN'">
+          <tfoot class="tfoot-simple" *ngIf="inputsConfigPage.showFootTable && inputsConfigPage.context === 'SHOEDESIGN'">
             <tr>
               <td class="text">
                 <span>{{ inputsConfigPage.footTable?.text }}</span>
               </td>
               <td class="cost-total">
                 <span>{{ inputsConfigPage.footTable?.amountFormatted }}</span>
+              </td>
+            </tr>
+          </tfoot>
+          <!-- Logica para tablas con paginador -->
+          <tbody *ngIf="inputsConfigPage.context === 'ORDERGERENT'">
+            <ng-container *ngFor="let item of paginate">
+              <tr>
+                <td *ngFor="let col of inputsConfigPage.configTable" [ngClass]="['col-' + col.align, col.position ? 'col-' + col.position : '']">
+                  {{ getValue(item, col.key) }}
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+          <tfoot class="tfoot-paginated" *ngIf="inputsConfigPage.context === 'ORDERGERENT' && getOrderItems().length > inputsConfigPage.itemsPerPage" >
+            <tr>
+              <td [attr.colspan]="inputsConfigPage.configTable.length">
+                <div class="tfoot-container">
+                  <div class="text">
+                    <span>{{ firstItemIndex }} - {{ lastItemIndex }} de {{ getOrderItems().length }}</span>
+                  </div>
+                  <div class="buttons">
+                    <button (click)="setPage(currentPage - 1)" [disabled]="currentPage === 1" class="arrow">
+                      <svg class="icon">
+                        <use xlink:href="assets/icons-sprite.svg#general-back"></use>
+                      </svg>
+                    </button>
+
+                    <button
+                      *ngFor="let page of visiblePages"
+                      (click)="goToPage(page)"
+                      [class.active]="page === currentPage"
+                      [disabled]="page === 'dots'"
+                    >
+                      <ng-container *ngIf="page === 'dots'">...</ng-container>
+                      <ng-container *ngIf="page !== 'dots'">{{ page }}</ng-container>
+                    </button>
+
+                    <button (click)="setPage(currentPage + 1)" [disabled]="currentPage === totalPages" class="arrow">
+                      <svg class="icon">
+                        <use xlink:href="assets/icons-sprite.svg#general-forward"></use>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
               </td>
             </tr>
           </tfoot>

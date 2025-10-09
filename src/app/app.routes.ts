@@ -2,10 +2,12 @@ import { Routes } from '@angular/router';
 import { AuthGuard } from './services/auth.guard';
 import { UsuariosPageComponent } from './pages/usuarios/usuarios.component';
 import { LoginPageComponent } from './login/login.component';
-import { PedidosAdministradorPageComponent } from './pages/pedidosAdministrador/pedidosAdministrador.component';
+import { PedidosPageComponent } from './pages/pedidos/pedidos.component';
 import { DiseñosCalzadoPageComponent } from './pages/diseñosCalzado/diseñosCalzado.component';
 import { ShowDetailGeneralComponent } from './shared/showDetailGeneral/showDetailGeneral.component';
 import { CrearDiseñosCalzadoPageComponent } from './pages/diseñosCalzado/crearDiseñoCalzado/crearDiseñoCalzado.component';
+import { CrearPedidosPageComponent } from './pages/pedidos/crearPedido/crearPedido.component';
+import { AñadirArticuloPageComponent } from './pages/pedidos/añadirArticulo/añadirArticulo.component';
 
 export const routes: Routes = [
   {
@@ -33,9 +35,25 @@ export const routes: Routes = [
     ],
   },
   {
-    path: 'pedidos-administrador',
-    component: PedidosAdministradorPageComponent,
+    path: 'pedidos',
+    component: PedidosPageComponent,
     canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'detalle',
+        component: ShowDetailGeneralComponent,
+      },
+      {
+        path: 'crear',
+        component: CrearPedidosPageComponent,
+        children: [
+          {
+            path: 'añadir-articulo',
+            component: AñadirArticuloPageComponent,
+          }
+        ]
+      }
+    ]
   },
 
   // Redirige a login en caso de que la ruta este vacia

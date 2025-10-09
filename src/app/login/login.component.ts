@@ -3,13 +3,16 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { Auth } from '../models/auth.model';
 
-interface LoginForm {
+
+// Es solo miestras que se conecta al back
+/*interface LoginForm {
   rol: string;
   username: string;
   productionLine: string | null;
   state: string;
-}
+}*/
 
 @Component({
   selector: 'app-login-page',
@@ -19,11 +22,14 @@ interface LoginForm {
   styleUrls: ['./login.component.scss'],
 })
 export class LoginPageComponent {
-  inputEmail: string = '';
+  inputDocument: string = '';
   inputPassword: string = '';
-  loginForm: LoginForm | null = null;
   passwordVisible: boolean = false;
   errorMessage: string | null = null;
+
+  //datos para utilizar mock
+
+  //loginForm: LoginForm | null = null;
 
   constructor(
     private authservice: AuthService,
@@ -34,8 +40,42 @@ export class LoginPageComponent {
     this.passwordVisible = !this.passwordVisible;
   }
 
+  // Realizar Login
   login() {
-    this.loginForm = this.setMockLoginForm(this.inputEmail, this.inputPassword);
+    const consultToken: Auth = {
+      docNumber: Number(this.inputDocument),
+      password: this.inputPassword,
+    };
+    this.authservice.getAccessToken(consultToken).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.authservice.setRole('Gerente');
+        this.authservice.setUsername('prueba nombre');
+        this.authservice.setUserProductionLine('prueba linea de produccion');
+        let redirectRoute = '';
+        switch ('Gerente') {
+          case 'Gerente':
+            redirectRoute = '/usuarios';
+            break;
+          /*case 'Administrador':
+          redirectRoute = '/pedidos-administrador';
+          break;
+        case 'Operario':
+          redirectRoute = '/tareas';
+          break;*/
+          default:
+            redirectRoute = '/login';
+        }
+        this.router.navigate([redirectRoute]);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  /*login() {
+    this.loginForm = this.setMockLoginForm(this.inputDocument, this.inputPassword);
     if (this.loginForm) {
         if (this.loginForm.state === 'Inactivo') {
             this.errorMessage = 'Tu usuario se encuentra inactivo. Por favor, contacta al administrador del sistema para más información.';
@@ -64,33 +104,33 @@ export class LoginPageComponent {
     } else if (!this.loginForm) {
       this.errorMessage = 'Correo o contraseña incorrectos. Verifica que los datos ingresados sean correctos e inténtalo nuevamente.';
     }
-  }
+  }*/
 
   // Mock de formulario de inicio de sesión
 
-  private setMockLoginForm(inputEmail: string, inputPassword: string) {
-    if (inputEmail === 'gerente@yopmail.com' && inputPassword === '123456') {
+  private setMockLoginForm(inputDocument: string, inputPassword: string) {
+    if ( inputDocument === 'gerente@yopmail.com' && inputPassword === '123456') {
       return {
         rol: 'Gerente',
         username: 'Miguel Herrera',
         productionLine: null,
         state: 'Activo',
       };
-    } else if (inputEmail === 'administrador@yopmail.com' && inputPassword === '654321') {
+    } else if (inputDocument === 'administrador@yopmail.com' && inputPassword === '654321') {
       return {
         rol: 'Administrador',
         username: 'Edwin Paez',
         productionLine: null,
         state: 'Activo',
       };
-    } else if (inputEmail === 'operario@yopmail.com' && inputPassword === 'abc123') {
+    } else if (inputDocument === 'operario@yopmail.com' && inputPassword === 'abc123') {
       return {
         rol: 'Operario',
         username: 'Natalia Herrera',
         productionLine: 'Corte',
         state: 'Activo',
       };
-    } else if (inputEmail === 'inactivo@yopmail.com' && inputPassword === 'abc321') {
+    } else if (inputDocument === 'inactivo@yopmail.com' && inputPassword === 'abc321') {
       return {
         rol: 'Operario',
         username: 'Natalia Herrera',
@@ -102,3 +142,5 @@ export class LoginPageComponent {
     }
   }
 }
+
+

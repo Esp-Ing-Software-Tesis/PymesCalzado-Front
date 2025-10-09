@@ -1,0 +1,181 @@
+<div class="container-order">
+  <div class="container-page-order" *ngIf="!viewPageChildren">
+    <button class="button-volver" (click)="onBackAction()">
+      <svg class="icon">
+        <use xlink:href="assets/icons-sprite.svg#general-arrow_back"></use>
+      </svg>
+      <span>Volver</span>
+    </button>
+    <h1 class="title">Crear Nuevo Pedido</h1>
+    <div class="container-form">
+      <div #errorDiv class="container-error" *ngIf="generalError">
+        <svg class="icon">
+          <use xlink:href="assets/icons-sprite.svg#general-alert_triangle"></use>
+        </svg>
+        <p class="text-error">{{ generalError }}</p>
+      </div>
+      <!-- Select Client -->
+      <div class="container-client">
+        <div class="container-text">
+          <label>Cliente</label>
+          <span class="required"> *</span>
+        </div>
+        <div class="custom-select-container" (click)="toggleCategory()">
+          <div class="selected" [class.placeholder]="!newOrder.customer_id">
+            {{ newOrder.client || 'Seleccione el cliente' }}
+            <svg class="icon-arrow">
+              <use xlink:href="assets/icons-sprite.svg#general-arrow_select"></use>
+            </svg>
+          </div>
+
+          <ul class="options" *ngIf="openClient">
+            <li
+              *ngFor="let option of clients"
+              [class.active]="option.customer_id === newOrder.customer_id"
+              (click)="onFormChange(option.customer_id, 'customer_id')"
+            >
+              {{ `${option.name} - ${option.customer_id}` }}
+            </li>
+          </ul>
+        </div>
+        <div class="error-message" *ngIf="orderErrors.client_error">
+          <span>{{ orderErrors.client_error }}</span>
+        </div>
+      </div>
+      <div class="container-button">
+        <button class="crear-button" (click)="openAddArticlePage()">
+          <svg class="icon">
+            <use xlink:href="assets/icons-sprite.svg#general-add"></use>
+          </svg>
+          <span>Añadir Artículo</span>
+        </button>
+      </div>
+      <!-- tabla articulos -->
+      <div class="container-articles" *ngIf="newOrder.articles.length > 0; else dataNotFound">
+        <label>Artículos</label>
+        <div class="table-wrapper">
+          <table>
+            <colgroup>
+              <col *ngFor="let col of tableConfig" [style.width]="col.width" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th *ngFor="let col of tableConfig">
+                  <ng-container *ngIf="col.key === 'amount'; else noIsObligatory">
+                    <div class="container-header-amount">
+                      <span class="text">{{ col.name }}</span>
+                      <span class="required"> *</span>
+                    </div>
+                  </ng-container>
+
+                  <ng-template #noIsObligatory>
+                    <span class="text">{{ col.name }}</span>
+                  </ng-template>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of paginate; let i = index">
+                <td
+                  *ngFor="let col of tableConfig"
+                  [ngClass]="['col-' + col.align, col.position ? 'col-' + col.position : '', col.key === 'amount' ? 'td-amount' : '']"
+                >
+                  <ng-container [ngSwitch]="col.key">
+                    <!-- Input -->
+                    <ng-container *ngSwitchCase="'amount'">
+                      <div class="amount-input">
+                        <input
+                          type="text"
+                          [(ngModel)]="item.amount"
+                          (ngModelChange)="onCostChange($event, item)"
+                          (keydown)="allowOnlyNumbers($event)"
+                        />
+                      </div>
+                    </ng-container>
+
+                    <!-- Action Delete -->
+                    <ng-container *ngSwitchCase="'delete'">
+                      <div class="action-delete">
+                        <button class="button-delete" (click)="onAlertModal(i)">
+                          <svg class="icon-delete">
+                            <use xlink:href="assets/icons-sprite.svg#shoeDesign-delete"></use>
+                          </svg>
+                        </button>
+                      </div>
+                    </ng-container>
+
+                    <!-- Texto por defecto -->
+                    <ng-container *ngSwitchDefault>
+                      <div *ngIf="col.key !== 'delete'">
+                        {{ item[col.key] }}
+                      </div>
+                    </ng-container>
+                  </ng-container>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot *ngIf="newOrder.articles.length > itemsPerPage">
+              <tr>
+                <td [attr.colspan]="tableConfig.length">
+                  <div class="tfoot-container">
+                    <div class="text">
+                      <span>{{ firstItemIndex }} - {{ lastItemIndex }} de {{ newOrder.articles.length }}</span>
+                    </div>
+                    <div class="buttons">
+                      <button (click)="setPage(currentPage - 1)" [disabled]="currentPage === 1" class="arrow">
+                        <svg class="icon">
+                          <use xlink:href="assets/icons-sprite.svg#general-back"></use>
+                        </svg>
+                      </button>
+
+                      <button
+                        *ngFor="let page of visiblePages"
+                        (click)="goToPage(page)"
+                        [class.active]="page === currentPage"
+                        [disabled]="page === 'dots'"
+                      >
+                        <ng-container *ngIf="page === 'dots'">...</ng-container>
+                        <ng-container *ngIf="page !== 'dots'">{{ page }}</ng-container>
+                      </button>
+
+                      <button (click)="setPage(currentPage + 1)" [disabled]="currentPage === totalPages" class="arrow">
+                        <svg class="icon">
+                          <use xlink:href="assets/icons-sprite.svg#general-forward"></use>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="error-message">
+          <span></span>
+        </div>
+        <div class="error-message" *ngIf="orderErrors.articles_error">
+          <span>{{ orderErrors.articles_error }}</span>
+        </div>
+      </div>
+      <ng-template #dataNotFound>
+        <div class="container-sin-pedidos">
+          <svg class="icon">
+            <use xlink:href="assets/icons-sprite.svg#order-shoppingCart"></use>
+          </svg>
+          <h2 class="error-title">No se han añadido artículos</h2>
+          <p class="error-text">Actualmente no se han agregado artículos al pedido. Para continuar, debe añadir al menos un artículo.</p>
+        </div>
+      </ng-template>
+      <div class="conatiner-buttons">
+        <button class="button-cancel" (click)="onBackAction()">Cancelar</button>
+        <button class="button-create" [disabled]="newOrder.articles.length === 0" (click)="onCreateOrder()">Crear</button>
+      </div>
+      <div class="conatiner-alert-modal" *ngIf="showAlertModal">
+        <app-alert-modal [inputAlertModal]="alertModalConfig" (acept)="deleteArticle()" (close)="closeAlertModal()"> </app-alert-modal>
+      </div>
+    </div>
+  </div>
+
+  <!-- Permite llamar paginas hijas -->
+  <router-outlet></router-outlet>
+</div>

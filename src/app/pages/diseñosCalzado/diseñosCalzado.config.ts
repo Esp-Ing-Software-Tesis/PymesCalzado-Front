@@ -20,6 +20,7 @@ export const SHOW_DETAIL_GENERAL: InputShowDetailGeneral = {
   context: 'SHOEDESIGN',
   reference: '',
   showtable: true,
+  itemsPerPage: 1,
   titletable: 'Líneas de Producción y Costos',
   // la tabla tiene un total de 800px
   configTable: [

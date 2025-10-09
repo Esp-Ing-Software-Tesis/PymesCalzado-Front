@@ -1,11 +1,12 @@
 export interface InputShowDetailGeneral {
   title: string;
-  context: 'USER' | 'SHOEDESIGN';
+  context: '' | 'USER' | 'SHOEDESIGN' | 'ORDERGERENT';
+  itemsPerPage: number;
   reference?: string;
   showtable?: boolean;
   titletable?: string;
-  configTable?: ConfigTable[];
-  datatable?: DataTableDetail[];
+  configTable: ConfigTable[];
+  datatable: DataTableDetail[];
   showFootTable?: boolean;
   footTable?: FootTable;
   showColors?: boolean;
@@ -28,10 +29,23 @@ interface FootTable {
   text: string;
   amount?: number;
   amountFormatted?: string;
+  isPaginate?: boolean;
 }
 
 export interface DataTableDetail {
-    productionLine: string;
-    costPerPair: number;
-    costPerPairFormatted?: string;
+  dataTableDetailShoeDesign?: DataTableDetailShoeDesign[];
+  dataTableDetailOrder?: DataTableDetailOrder[];
+}
+
+export interface DataTableDetailShoeDesign {
+  productionLine: string;
+  costPerPair: number;
+  costPerPairFormatted?: string;
+}
+
+export interface DataTableDetailOrder {
+  ref_design: string;
+  amount: number;
+  name_color: string;
+  cod_size: number;
 }

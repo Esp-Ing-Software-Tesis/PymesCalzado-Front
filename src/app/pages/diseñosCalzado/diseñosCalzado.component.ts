@@ -6,7 +6,7 @@ import { TablaGeneralComponent } from '../../shared/tablaGeneral/tablaGeneral.co
 import { SinInformacionComponent } from '../../shared/sinInformacion/sinInformacion.component';
 import { ShoeDesignService } from '../../services/diseñoCalzado.service';
 import { ShoeDesignDTO } from './diseñosCalzado.interface';
-import { DataTableDetail } from '../../shared/showDetailGeneral/showDetailGeneral.interface';
+import { DataTableDetailShoeDesign } from '../../shared/showDetailGeneral/showDetailGeneral.interface';
 import { map } from 'rxjs';
 import { ValueChangedEvent } from '../../shared/tablaGeneral/tablaGeneral.interface';
 import { DetailConfigService } from '../../services/detailConfig.service';
@@ -30,7 +30,7 @@ export class DiseñosCalzadoPageComponent {
 
   // manejo de datos del detalle del diseño de calzado
   viewPageChildren = false;
-  productionLinesDetail: DataTableDetail[] = [];
+  productionLinesDetail: DataTableDetailShoeDesign[] = [];
   colorsDetail: string[] = [];
   sizesDetail: string[] = [];
 
@@ -81,10 +81,14 @@ export class DiseñosCalzadoPageComponent {
     this.showDetailGeneralConfig.reference = 'Referencia: ' + reference;
     //guardar datos para poblar la tabla
     if (this.showDetailGeneralConfig.datatable) {
-      this.showDetailGeneralConfig.datatable = this.productionLinesDetail.map((item) => ({
-        ...item,
-        costPerPairFormatted: this.currencyFormatter.format(Number(item.costPerPair)),
-      }));
+      this.showDetailGeneralConfig.datatable = [
+        {
+          dataTableDetailShoeDesign: this.productionLinesDetail.map((item) => ({
+            ...item,
+            costPerPairFormatted: this.currencyFormatter.format(Number(item.costPerPair)),
+          })),
+        },
+      ];
     }
     if (this.showDetailGeneralConfig.dataColors) {
       this.showDetailGeneralConfig.dataColors = this.colorsDetail;
@@ -99,7 +103,7 @@ export class DiseñosCalzadoPageComponent {
     }
     //Guardar en el local storage la pantalla actual
     localStorage.setItem('lastContext', this.showDetailGeneralConfig.context);
-    
+
     // Enviar la configuración al servicio
     this.detailConfigService.setConfig(this.showDetailGeneralConfig);
 
@@ -109,7 +113,7 @@ export class DiseñosCalzadoPageComponent {
 
   // abrir pantalla de creacion
   openCreatePage() {
-    // guardar contexto como ya haces
+    // guardar contexto
     localStorage.setItem('lastContext', this.showDetailGeneralConfig.context);
     localStorage.setItem('fromParentCreate', '1');
     // navegar pasando state para identificar que viene del padre

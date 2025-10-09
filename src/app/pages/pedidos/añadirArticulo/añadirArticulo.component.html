@@ -1,0 +1,31 @@
+<div class="container-add-article">
+  <button class="button-volver" (click)="onBackAction()">
+    <svg class="icon">
+      <use xlink:href="assets/icons-sprite.svg#general-arrow_back"></use>
+    </svg>
+    <span>Volver</span>
+  </button>
+  <h1 class="title">Crear Nuevo Pedido - Diseños</h1>
+  <div class="container-table" *ngIf="shoeDesings.length > 0; else dataNotFound">
+    <app-tabla-general [items]="shoeDesings" [inputsConfigTable]="tableGeneralConfig" (itemDetail)="getArticleOrder($event)"> </app-tabla-general>
+  </div>
+  <ng-template #dataNotFound>
+    <app-sin-informacion
+      [title]="'No se encontraron diseños de calzado'"
+      [text]="
+        'Actualmente no hay diseños de calzado registrados. Accede al módulo de Diseños de Calzado para crear uno nuevo, ya que son necesarios para registrar pedidos.'
+      "
+    >
+    </app-sin-informacion>
+  </ng-template>
+  <div class="conatiner-form-modal" *ngIf="showFormModal">
+    <app-form-modal
+      [inputsFormModal]="formModalConfig"
+      (resultsForm)="validateErrors($event)"
+      (fieldChange)="validateField($event)"
+      (optionSelected)="onOptionSelected($event)"
+      (close)="closeFormModal()"
+    >
+    </app-form-modal>
+  </div>
+</div>

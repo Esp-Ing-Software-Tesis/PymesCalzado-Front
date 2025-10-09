@@ -68,7 +68,33 @@ tbody .image img {
     max-width: 120px;
 }
 
-tbody .buttonShowDetail {
+tbody .container_state {
+    height: 25px;
+    width: 110px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+
+    .state.nuevo {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 12px;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+
+        &.nuevo {
+            background-color: $azul-estado-nuevo;
+        }
+    }
+}
+
+tbody .buttonShowDetail, .buttonAddArticle {
     width: 100px;
     height: 25px;
     background-color: $background-color;
@@ -82,7 +108,7 @@ tbody .buttonShowDetail {
     transition: color 0.3s ease, text-decoration-thickness 0.3s ease;
 }
 
-tbody .buttonShowDetail:hover {
+tbody .buttonShowDetail:hover, .buttonAddArticle:hover {
   color: color.adjust($verde-agua-marina, $lightness: -10%);
   text-decoration-thickness: 2px;
 }

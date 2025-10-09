@@ -1,0 +1,54 @@
+@use 'variables' as *;
+
+.container-add-article {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    width: 100%;
+    height: auto;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.button-volver {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 160px;
+    height: 40px;
+    border: none;
+    background-color: $beige;
+    gap: 0.2em;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.button-volver svg {
+    width: 20px;
+    height: 20px;
+}
+
+.button-volver span {
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.button-volver:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.title {
+    font-family: Inter;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    .button-volver {
+        margin: 0 auto;
+    }
+}

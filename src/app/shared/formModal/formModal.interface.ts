@@ -4,7 +4,7 @@ export interface InputsFormModal {
   inputsConfig: InputsConfig[];
   error?: string;
   textButtonConfirm: string;
-  context: 'USER';
+  context: 'USER' | 'ORDERGERENT-ADDARTICLE';
   clearFieldKey?: string;
 }
 
@@ -12,7 +12,7 @@ interface InputsConfig {
   name: string;
   key: string;
   obligatory: boolean;
-  inputType: 'text' | 'list' | 'email' | 'password';
+  inputType: 'text' | 'list' | 'email' | 'password' | 'number';
   error?: string | PasswordConditions;
   article: string;
   options?: string[];

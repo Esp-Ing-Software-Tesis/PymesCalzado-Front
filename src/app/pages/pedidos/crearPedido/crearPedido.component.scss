@@ -1,0 +1,478 @@
+@use 'variables' as *;
+
+.container-page-order {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    width: 100%;
+    height: auto;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.button-volver {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 160px;
+    height: 40px;
+    border: none;
+    background-color: $beige;
+    gap: 0.2em;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.button-volver svg {
+    width: 20px;
+    height: 20px;
+}
+
+.button-volver span {
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.button-volver:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.title {
+    font-family: Inter;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.container-form {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5em;
+  padding: 2em 0;
+}
+
+.container-form label {
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.container-form .required {
+    color: $rojo-campos-obligatorios;
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.container-error {
+    width: 100%;
+    height: auto;
+    background-color: $beige;
+    display: flex;
+    flex-direction: row;
+    padding: 0.5em 1em;
+    gap: 0.5em;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    margin: auto;
+
+    svg {
+      width: 25px;
+      height: 25px;
+      fill: $naranja-alerta !important;
+    }
+
+    p {
+      width: 100%;
+      height: auto;
+      color: rgba($negro, 0.7);
+      font-family: Inter;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 700;
+    }
+}
+
+.container-client{
+// Adaptación del select personalizado
+  .custom-select-container {
+    position: relative;
+    width: 100%;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+
+    .selected {
+      border: 1px solid $negro;
+      background-color: $background-color;
+      padding: 0.6em 2.5em 0.6em 0.6em; // espacio a la derecha para la flecha SVG
+      border-radius: 12px;
+      color: $negro;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .icon-arrow {
+        width: 14px;
+        height: 14px;
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+      }
+
+      &.placeholder {
+        color: rgba($negro, 0.3);
+      }
+    }
+
+    .options {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      width: 100%;
+      border: 1px solid $negro;
+      border-radius: 12px;
+      background-color: $background-color;
+      max-height: 200px;
+      overflow-y: auto;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      z-index: 1000;
+
+      li {
+        padding: 0.6em;
+        cursor: pointer;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        &.active {
+          background-color: rgba($beige, 0.7);
+        }
+      }
+
+      .option-item {
+        padding: 0.6em;
+        cursor: pointer;
+        display: flex;
+        height: 40px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        .icon-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          svg {
+            width: 15px;
+            height: 15px;
+          }
+        }
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        &.active {
+          background-color: rgba($beige, 0.7);
+        }
+      }
+    }
+  }
+}
+
+// Button añadir articulo
+.container-button {
+    display: flex;
+    width: 100%;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+    button {
+        width: 200px;
+        height: 40px;
+        border-radius: 25px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5em;
+        background-color: $verde-agua-marina;
+        transition: filter 0.3s ease;
+        cursor: pointer;
+    }
+
+    button:hover {
+        filter: brightness(1.2);
+    }
+
+    span {
+        color: $background-color;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+    }
+
+    svg {
+        height: 30px;
+        width: 30px;
+    }
+}
+
+.error-message {
+  margin-top: 1em;
+  font-family: Inter;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  color: $rojo-texto-error;
+  margin-left: 0.5em;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  width: 100%;
+  overflow-y: hidden;
+  height: auto;
+}
+
+/* la tabla no debe ocupar siempre 100% */
+table {
+  border: 1px solid $negro;
+  border-collapse: collapse;
+  min-width: 450px;
+  width: 100%;
+  height: auto;
+}
+
+thead {
+    height: auto;
+    background-color: rgba($beige, 0.35);
+
+    th {
+      padding: 0.5em;
+      font-family: Inter;
+      font-size: 16px;
+      font-style: normal;
+      text-align: center;
+      border: 1px solid $negro;
+      border-collapse: collapse;
+    }
+}
+
+.col-left {
+    text-align: start;
+}
+
+.col-up {
+    vertical-align: top;
+}
+
+.col-center {
+    text-align: center;
+}
+
+tbody {
+    height: auto;
+    width: 100%;
+
+    tr {
+        height: auto;
+
+        td {
+          padding: 0;
+          height: 100%;
+          font-family: Inter;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 500;
+          border: 1px solid $negro;
+          border-collapse: collapse;
+
+          .action-delete button {
+            background-color: $background-color;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            height: auto;
+            width: 100%;
+            padding: 0.3em 0;
+
+            svg {
+              height: 30px;
+              width: 30px;
+              stroke: $rojo-eliminar-rechazar;
+              transition: stroke 0.2s ease, filter 0.2s ease;
+            }
+
+            &:hover svg {
+              stroke: lighten($rojo-eliminar-rechazar, 15%);
+              filter: brightness(1);
+            }
+          }
+        }
+
+        td.td-amount {
+                background-color: rgba($gris-campo-deshabilitado, 0.6) ;
+
+                .amount-input input {
+                    margin: 0;
+                    border: none;
+                    line-height: normal;
+                    text-align: center;
+                    height: 25px;
+                    width: 100px;
+                    background: $background-color;
+                    border-radius: 5px;
+                }
+            }
+      }
+}
+
+.tfoot-container {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    gap: 0;
+    background-color: rgba($beige, 0.35);
+    padding: 0.3em 0;
+    width: 100%;
+    height: auto;
+
+    .text {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Inter;
+      font-size: 16px;
+      font-style: normal;
+    }
+
+    .buttons {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    button {
+      height: 20px;
+      width: 20px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+    }
+
+    button.active {
+      border: 2px solid $verde-agua-marina;
+      color: $verde-agua-marina;
+    }
+
+    .arrow:disabled {
+      color: $background-color;
+      background-color: $gris-campo-deshabilitado;
+    }
+}
+
+.container-sin-pedidos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    padding-top: 1em;
+
+    svg {
+        height: 50px;
+        width: 50px;
+    }
+
+    .error-title {
+      font-family: Inter;
+      font-size: 28px;
+      font-style: normal;
+      font-weight: 700;
+    }
+
+    .error-text {
+      font-family: Inter;
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 400;
+      text-align: center;
+    }
+}
+
+.conatiner-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 3em;
+  padding-top: 1.5em;
+
+  button {
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    text-align: center;
+    width: 200px;
+    height: 50px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+  }
+
+  .button-cancel{
+    background-color: $beige;
+    color: $negro;
+  }
+
+  .button-cancel:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .button-create{
+    background-color: $verde-agua-marina;
+    color: $background-color;
+    transition: filter 0.3s ease;
+  }
+
+  .button-create:hover {
+    filter: brightness(1.2);
+  }
+
+  .button-create:disabled {
+    background-color: $gris-campo-deshabilitado;
+    cursor: not-allowed;
+    filter: none;
+  }
+}
+
+@media (max-width: 768px) {
+    .button-volver {
+        margin: 0 auto;
+    }
+}

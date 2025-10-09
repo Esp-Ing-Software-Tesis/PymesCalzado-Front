@@ -60,6 +60,7 @@
   flex-direction: column;
   gap: 1.5em;
   padding: 2em 0;
+  height: auto;
 }
 
 .container-info h3 {
@@ -72,6 +73,8 @@
 .table-wrapper {
   overflow-x: auto;
   width: 100%;
+  overflow-y: hidden;
+  height: auto;
 }
 
 /* la tabla no debe ocupar siempre 100% */
@@ -80,6 +83,7 @@ table {
   border-collapse: collapse;
   min-width: 450px;
   width: 100%;
+  height: auto;
 }
 
 thead {
@@ -113,7 +117,7 @@ tbody {
     width: 100%;
 }
 
-tbody tr td {
+tbody  tr td {
     height: auto;
     font-family: Inter;
     font-size: 14px;
@@ -123,18 +127,67 @@ tbody tr td {
     padding: 0.5em;
 }
 
-tfoot {
-    background-color: rgba($beige, 0.35);
-    height: auto;
+// --- Sin paginador ---
+.tfoot-simple {
+  background-color: rgba($beige, 0.35);
+  height: auto;
+
+  td {
+    padding: 0.3em;
+    text-align: center;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+  }
 }
 
-tfoot td {
-  padding: 0.3em;
-  text-align: center;
-  font-family: Inter;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
+// --- Con paginador ---
+.tfoot-paginated {
+  .tfoot-container {
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+    background-color: rgba($beige, 0.35);
+    padding: 0.3em 0;
+    width: 100%;
+
+    .text {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Inter;
+      font-size: 16px;
+      font-style: normal;
+    }
+
+    .buttons {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    button {
+      height: 20px;
+      width: 20px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+      &.active {
+        border: 2px solid $verde-agua-marina;
+        color: $verde-agua-marina;
+      }
+    }
+
+    .arrow:disabled {
+      color: $background-color;
+      background-color: $gris-campo-deshabilitado;
+    }
+  }
 }
 
 .container-colors {

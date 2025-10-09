@@ -50,7 +50,7 @@ export class HeaderComponent {
       this.menuOptions = [
         { label: 'Usuarios', route: '/usuarios', icon: 'headerAndFooter-user' },
         { label: 'Diseños de Calzado', route: '/diseños-calzado', icon: 'headerAndFooter-shoe' },
-        { label: 'Pedidos', route: '/pedidos-gerente', icon: 'headerAndFooter-pedido' },
+        { label: 'Pedidos', route: '/pedidos', icon: 'headerAndFooter-pedido' },
       ];
     } else if (role === 'Administrador') {
       this.menuOptions = [{ label: 'Pedidos', route: '/pedidos-administrador', icon: 'assets/icons/headerAndFooter/pedido.svg' }];

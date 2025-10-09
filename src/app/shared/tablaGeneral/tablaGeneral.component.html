@@ -21,15 +21,33 @@
               </label>
             </ng-container>
 
-            <ng-container *ngSwitchCase="col.isImage && inputsConfigTable().context === 'SHOEDESIGN'">
+            <ng-container
+              *ngSwitchCase="
+                col.isImage && (inputsConfigTable().context === 'SHOEDESIGN' || inputsConfigTable().context === 'ORDERGERENT-ADDARTICLE')
+              "
+            >
               <label class="image">
                 <img [src]="item[col.key]" alt="Imagen desde base64" />
               </label>
             </ng-container>
 
+            <ng-container *ngSwitchCase="col.isState && inputsConfigTable().context === 'ORDERGERENT'">
+              <div class="container_state">
+                <label [ngClass]="['state', getStateClass(item[col.key])]">
+                  {{ item[col.key] }}
+                </label>
+              </div>
+            </ng-container>
+
             <ng-container *ngSwitchCase="col.isShowDetail">
               <label class="showDetail">
                 <button class="buttonShowDetail" (click)="setShowDetail($event, item, col.key)">Ver Detalle</button>
+              </label>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="col.isShowAddArticle">
+              <label class="addArticle">
+                <button class="buttonAddArticle" (click)="setShowDetail($event, item, col.key)">Añadir</button>
               </label>
             </ng-container>
 
