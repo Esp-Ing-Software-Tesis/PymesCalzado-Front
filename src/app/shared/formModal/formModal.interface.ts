@@ -4,7 +4,7 @@ export interface InputsFormModal {
   inputsConfig: InputsConfig[];
   error?: string;
   textButtonConfirm: string;
-  context: 'USER' | 'ORDERGERENT-ADDARTICLE';
+  context: 'USER' | 'ORDERGERENT-ADDARTICLE' | 'ORDERGERENTADMIN-CREATE-EDIT';
   clearFieldKey?: string;
 }
 

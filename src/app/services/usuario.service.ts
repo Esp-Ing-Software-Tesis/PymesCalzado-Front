@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
-import { Users, UserCreateDTO, UserUpdateDTO } from '../models/usuario.model';
+import { Users, UserCreateDTO, UserUpdateDTO, UsersByProductionLine } from '../models/usuario.model';
 
 @Injectable({ providedIn: 'root' })
 export class UsersService {
@@ -38,6 +38,16 @@ export class UsersService {
       description: 'Usuario ya existente',
     }));*/
     return of(nuevoUsuario);
+  }
+
+  // Mock de get Users por linea de produccion
+  getUsersByProductionLine(productionLine: string): Observable<UsersByProductionLine[]> {
+    const usersMockProductionLine: UsersByProductionLine[] = this.setMockUsersByProductionLine(productionLine);
+    //const usersMock: Users[] = [];
+    /*return throwError(() => ({
+        description: 'No se ha encontrado data'
+    }))*/
+    return of(usersMockProductionLine);
   }
 
   // Data Mock Users
@@ -320,5 +330,28 @@ export class UsersService {
       },
     ];
     return dataUser;
+  }
+
+  // Data Mock Users By Production Line
+  private setMockUsersByProductionLine(productionLine: string): UsersByProductionLine[] {
+    const dataUserByProductionLineCorte: UsersByProductionLine[] = [
+      { name: 'Valentina Sofía', lastname: 'Rincón Lozano', document: 1066331789 },
+      { name: 'Ana Isabel', lastname: 'Díaz Patiño', document: 1021999888 },
+      { name: 'Juliana Teresa', lastname: 'Vargas León', document: 1080765321 },
+      { name: 'Luisa Daniela', lastname: 'Paredes Gómez', document: 1067821344 },
+      { name: 'Esteban Andrés', lastname: 'López', document: 1023345567 },
+    ];
+    const dataUserByProductionLineGuarnicion: UsersByProductionLine[] = [
+      { name: 'Miguel Ángel', lastname: 'Restrepo Londoño', document: 1032445678 },
+      { name: 'Sebastián', lastname: 'Jiménez Carvajal', document: 1091223665 },
+      { name: 'Felipe Andrés', lastname: 'Morales Silva', document: 1061773245 },
+    ];
+    if (productionLine === 'Corte') {
+      return dataUserByProductionLineCorte;
+    }
+    if (productionLine === 'Guarnición') {
+      return dataUserByProductionLineGuarnicion;
+    }
+    return [];
   }
 }

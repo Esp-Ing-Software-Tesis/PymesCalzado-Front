@@ -1,19 +1,20 @@
 export interface Order {
-    id: number,
+    orderId: number,
     nameClient: string,
     customer_id: number,
     created_at: string,
     start_date: string,
     completion_date: string,
-    state: string
+    state: string, // Nuevo, En Progreso, Finalizado
 }
 
 export interface OrderDetail {
-    id: number,
+    orderId: number,
     articles: OrderDetailArticles[]
 }
 
 export interface OrderDetailArticles {
+    articleId: number,
     ref_design: string,
     amount: number,
     color: ShoeColors,
@@ -33,6 +34,7 @@ export interface OrderCreateDTO {
 export interface CreateArticles {
     ref_design: string,
     amount: number,
-    cod_color: number
-    cod_size: number
+    // Json con el color_id y color_name
+    cod_color: number,
+    cod_size: number,
 }

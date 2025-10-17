@@ -8,6 +8,10 @@ import { ShowDetailGeneralComponent } from './shared/showDetailGeneral/showDetai
 import { CrearDiseñosCalzadoPageComponent } from './pages/diseñosCalzado/crearDiseñoCalzado/crearDiseñoCalzado.component';
 import { CrearPedidosPageComponent } from './pages/pedidos/crearPedido/crearPedido.component';
 import { AñadirArticuloPageComponent } from './pages/pedidos/añadirArticulo/añadirArticulo.component';
+import { TareasAdministradorPageComponent } from './pages/tareasAdministrador/tareasAdministrador.component';
+import { CrearEditarTareasComponent } from './pages/tareasAdministrador/crearEditarTareas/crearEditarTareas.component';
+import { VerTareasPageComponent } from './pages/tareasAdministrador/verTareas/verTareas.component';
+import { GestionarTareasAdminPageComponent } from './pages/tareasAdministrador/verTareas/gestionarTareasAdmin/gestionarTareasAdmin.component';
 
 export const routes: Routes = [
   {
@@ -31,7 +35,7 @@ export const routes: Routes = [
       {
         path: 'create',
         component: CrearDiseñosCalzadoPageComponent,
-      }
+      },
     ],
   },
   {
@@ -50,10 +54,37 @@ export const routes: Routes = [
           {
             path: 'añadir-articulo',
             component: AñadirArticuloPageComponent,
-          }
-        ]
-      }
-    ]
+          },
+        ],
+      },
+    ],
+  },
+  {
+    path: 'pedidos-tareas',
+    component: TareasAdministradorPageComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'detalle',
+        component: ShowDetailGeneralComponent,
+        children: [
+          {
+            path: 'crear-editar-tareas',
+            component: CrearEditarTareasComponent,
+          },
+          {
+            path: 'detalle-tareas',
+            component: VerTareasPageComponent,
+            children: [
+              {
+                path: 'gestionar-tareas',
+                component: GestionarTareasAdminPageComponent,
+              },
+            ]
+          },
+        ],
+      },
+    ],
   },
 
   // Redirige a login en caso de que la ruta este vacia

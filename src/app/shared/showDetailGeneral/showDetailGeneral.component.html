@@ -1,111 +1,185 @@
-<div class="container-page-detail" *ngIf="inputsConfigPage">
-  <button class="button-volver" (click)="onBackAction()">
-    <svg class="icon">
-      <use xlink:href="assets/icons-sprite.svg#general-arrow_back"></use>
-    </svg>
-    <span>Volver</span>
-  </button>
-  <h1 class="title">{{ inputsConfigPage.title }}</h1>
-  <h2 class="reference" *ngIf="inputsConfigPage.reference">{{ inputsConfigPage.reference }}</h2>
-  <div class="container-info">
-    <div class="container-table" *ngIf="inputsConfigPage.showtable">
-      <h3>{{ inputsConfigPage.titletable }}</h3>
-      <div class="table-wrapper">
-        <table>
-          <colgroup>
-            <col *ngFor="let col of inputsConfigPage.configTable" [style.width]="col.width" />
-          </colgroup>
-          <thead>
-            <tr>
-              <th *ngFor="let col of inputsConfigPage.configTable">
-                {{ col.name }}
-              </th>
-            </tr>
-          </thead>
-          <!-- Logica para tablas sin paginador -->
-          <tbody *ngIf="inputsConfigPage.context === 'SHOEDESIGN'">
-            <ng-container *ngFor="let wrapper of inputsConfigPage.datatable">
-              <ng-container *ngFor="let item of wrapper.dataTableDetailShoeDesign">
+<div class="container-detail">
+  <div class="conatiner-page" *ngIf="!viewPageChildren">
+    <div class="container-page-detail" *ngIf="inputsConfigPage">
+      <button class="button-volver" (click)="onBackAction()">
+        <svg class="icon">
+          <use xlink:href="assets/icons-sprite.svg#general-arrow_back"></use>
+        </svg>
+        <span>Volver</span>
+      </button>
+      <h1 class="title">{{ inputsConfigPage.title }}</h1>
+      <h2 class="reference" *ngIf="inputsConfigPage.reference">{{ inputsConfigPage.reference }}</h2>
+      <div class="container-info">
+        <div #errorDiv class="container-error" *ngIf="generalError && inputsConfigPage.context === 'ORDERGERENTADMIN' && inputsConfigPage.stateOrder === 'Nuevo'">
+          <svg class="icon">
+            <use xlink:href="assets/icons-sprite.svg#general-alert_triangle"></use>
+          </svg>
+          <p class="text-error">{{ generalError }}</p>
+        </div>
+        <div class="container-table" *ngIf="inputsConfigPage.showtable">
+          <h3>{{ inputsConfigPage.titletable }}</h3>
+          <div class="table-wrapper">
+            <table>
+              <colgroup>
+                <col *ngFor="let col of inputsConfigPage.configTable" [style.width]="col.width" />
+              </colgroup>
+              <thead>
                 <tr>
-                  <td *ngFor="let col of inputsConfigPage.configTable" [ngClass]="['col-' + col.align, col.position ? 'col-' + col.position : '']">
-                    {{ getValue(item, col.key) }}
+                  <th *ngFor="let col of inputsConfigPage.configTable">
+                    {{ col.name }}
+                  </th>
+                </tr>
+              </thead>
+              <!-- Logica para tablas sin paginador -->
+              <tbody *ngIf="inputsConfigPage.context === 'SHOEDESIGN'">
+                <ng-container *ngFor="let wrapper of inputsConfigPage.datatable">
+                  <ng-container *ngFor="let item of wrapper.dataTableDetailShoeDesign">
+                    <tr>
+                      <td
+                        *ngFor="let col of inputsConfigPage.configTable"
+                        [ngClass]="['col-' + col.align, col.position ? 'col-' + col.position : '']"
+                      >
+                        {{ getValue(item, col.key) }}
+                      </td>
+                    </tr>
+                  </ng-container>
+                </ng-container>
+              </tbody>
+              <tfoot class="tfoot-simple" *ngIf="inputsConfigPage.showFootTable && inputsConfigPage.context === 'SHOEDESIGN'">
+                <tr>
+                  <td class="text">
+                    <span>{{ inputsConfigPage.footTable?.text }}</span>
+                  </td>
+                  <td class="cost-total">
+                    <span>{{ inputsConfigPage.footTable?.amountFormatted }}</span>
                   </td>
                 </tr>
-              </ng-container>
-            </ng-container>
-          </tbody>
-          <tfoot class="tfoot-simple" *ngIf="inputsConfigPage.showFootTable && inputsConfigPage.context === 'SHOEDESIGN'">
-            <tr>
-              <td class="text">
-                <span>{{ inputsConfigPage.footTable?.text }}</span>
-              </td>
-              <td class="cost-total">
-                <span>{{ inputsConfigPage.footTable?.amountFormatted }}</span>
-              </td>
-            </tr>
-          </tfoot>
-          <!-- Logica para tablas con paginador -->
-          <tbody *ngIf="inputsConfigPage.context === 'ORDERGERENT'">
-            <ng-container *ngFor="let item of paginate">
-              <tr>
-                <td *ngFor="let col of inputsConfigPage.configTable" [ngClass]="['col-' + col.align, col.position ? 'col-' + col.position : '']">
-                  {{ getValue(item, col.key) }}
-                </td>
-              </tr>
-            </ng-container>
-          </tbody>
-          <tfoot class="tfoot-paginated" *ngIf="inputsConfigPage.context === 'ORDERGERENT' && getOrderItems().length > inputsConfigPage.itemsPerPage" >
-            <tr>
-              <td [attr.colspan]="inputsConfigPage.configTable.length">
-                <div class="tfoot-container">
-                  <div class="text">
-                    <span>{{ firstItemIndex }} - {{ lastItemIndex }} de {{ getOrderItems().length }}</span>
-                  </div>
-                  <div class="buttons">
-                    <button (click)="setPage(currentPage - 1)" [disabled]="currentPage === 1" class="arrow">
-                      <svg class="icon">
-                        <use xlink:href="assets/icons-sprite.svg#general-back"></use>
-                      </svg>
-                    </button>
+              </tfoot>
+              <!-- Logica para tablas con paginador -->
+              <!-- Logica para el manejo de Pedidos creacion -->
+              <tbody *ngIf="inputsConfigPage.context === 'ORDERGERENT'">
+                <ng-container *ngFor="let item of paginate">
+                  <tr>
+                    <td *ngFor="let col of inputsConfigPage.configTable" [ngClass]="['col-' + col.align, col.position ? 'col-' + col.position : '']">
+                      {{ getValue(item, col.key) }}
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+              <!-- Logica para el manejo de Pedidos administrador -->
+              <tbody *ngIf="inputsConfigPage.context === 'ORDERGERENTADMIN'">
+                <ng-container *ngFor="let item of paginate">
+                  <tr>
+                    <td *ngFor="let col of inputsConfigPage.configTable" [ngClass]="['col-' + col.align, col.position ? 'col-' + col.position : '']">
+                      <ng-container [ngSwitch]="true">
+                        <ng-container *ngSwitchCase="col.isState">
+                          <div class="container_state">
+                            <label [ngClass]="['state', getOrderText(item[col.key])]">
+                              {{ item[col.key] }}
+                            </label>
+                          </div>
+                        </ng-container>
 
-                    <button
-                      *ngFor="let page of visiblePages"
-                      (click)="goToPage(page)"
-                      [class.active]="page === currentPage"
-                      [disabled]="page === 'dots'"
-                    >
-                      <ng-container *ngIf="page === 'dots'">...</ng-container>
-                      <ng-container *ngIf="page !== 'dots'">{{ page }}</ng-container>
-                    </button>
+                        <ng-container *ngSwitchCase="col.isShowDetail && inputsConfigPage.isCreate">
+                          <label class="showDetail">
+                            <button
+                              *ngIf="getOrderText(item.state) === 'sin_tareas'"
+                              (click)="openCreateEditPage(item, 'create')"
+                              class="buttonShowDetail"
+                            >
+                              Crear
+                            </button>
+                            <button
+                              *ngIf="getOrderText(item.state) === 'completo'"
+                              (click)="openCreateEditPage(item, 'edit')"
+                              class="buttonShowDetail"
+                            >
+                              Editar
+                            </button>
+                          </label>
+                        </ng-container>
 
-                    <button (click)="setPage(currentPage + 1)" [disabled]="currentPage === totalPages" class="arrow">
-                      <svg class="icon">
-                        <use xlink:href="assets/icons-sprite.svg#general-forward"></use>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-    </div>
-    <div class="container-colors" *ngIf="inputsConfigPage.showColors">
-      <h3>{{ inputsConfigPage.titleColors }}</h3>
-      <div class="colors-wrapper">
-        <span *ngFor="let color of inputsConfigPage.dataColors">
-          {{ color }}
-        </span>
-      </div>
-    </div>
-    <div class="container-tallas" *ngIf="inputsConfigPage.showSizes">
-      <h3>{{ inputsConfigPage.titleSizes }}</h3>
-      <div class="sizes-wrapper">
-        <span *ngFor="let tallas of inputsConfigPage.dataSizes">
-          {{ tallas }}
-        </span>
+                        <ng-container *ngSwitchCase="col.isShowDetail && inputsConfigPage.isView">
+                          <label class="showDetail">
+                            <button class="buttonShowDetail" (click)="openShowTasks(item)">Ver Detalle</button>
+                          </label>
+                        </ng-container>
+
+                        <ng-container *ngSwitchDefault>
+                          {{ getValue(item, col.key) }}
+                        </ng-container>
+                      </ng-container>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+              <tfoot
+                class="tfoot-paginated"
+                *ngIf="
+                  (inputsConfigPage.context === 'ORDERGERENT' || inputsConfigPage.context === 'ORDERGERENTADMIN') &&
+                  getOrderItems().length > inputsConfigPage.itemsPerPage
+                "
+              >
+                <tr>
+                  <td [attr.colspan]="inputsConfigPage.configTable.length">
+                    <div class="tfoot-container">
+                      <div class="text">
+                        <span>{{ firstItemIndex }} - {{ lastItemIndex }} de {{ getOrderItems().length }}</span>
+                      </div>
+                      <div class="buttons">
+                        <button (click)="setPage(currentPage - 1)" [disabled]="currentPage === 1" class="arrow">
+                          <svg class="icon">
+                            <use xlink:href="assets/icons-sprite.svg#general-back"></use>
+                          </svg>
+                        </button>
+
+                        <button
+                          *ngFor="let page of visiblePages"
+                          (click)="goToPage(page)"
+                          [class.active]="page === currentPage"
+                          [disabled]="page === 'dots'"
+                        >
+                          <ng-container *ngIf="page === 'dots'">...</ng-container>
+                          <ng-container *ngIf="page !== 'dots'">{{ page }}</ng-container>
+                        </button>
+
+                        <button (click)="setPage(currentPage + 1)" [disabled]="currentPage === totalPages" class="arrow">
+                          <svg class="icon">
+                            <use xlink:href="assets/icons-sprite.svg#general-forward"></use>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+        <div class="container-colors" *ngIf="inputsConfigPage.showColors">
+          <h3>{{ inputsConfigPage.titleColors }}</h3>
+          <div class="colors-wrapper">
+            <span *ngFor="let color of inputsConfigPage.dataColors">
+              {{ color }}
+            </span>
+          </div>
+        </div>
+        <div class="container-tallas" *ngIf="inputsConfigPage.showSizes">
+          <h3>{{ inputsConfigPage.titleSizes }}</h3>
+          <div class="sizes-wrapper">
+            <span *ngFor="let tallas of inputsConfigPage.dataSizes">
+              {{ tallas }}
+            </span>
+          </div>
+        </div>
+        <div class="conatiner-buttons" *ngIf="inputsConfigPage.context === 'ORDERGERENTADMIN' && inputsConfigPage.stateOrder === 'Nuevo'">
+          <button class="button-cancel" (click)="onBackAction()">Cancelar</button>
+          <button class="button-finish" (click)="onCreateTasks()">Finalizar</button>
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- Permite llamar paginas hijas -->
+  <router-outlet></router-outlet>
 </div>

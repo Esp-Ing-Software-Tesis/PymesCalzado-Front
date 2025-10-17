@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Auth } from '../models/auth.model';
+import { AuthResponse, Auth } from '../models/auth.model';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -14,17 +14,28 @@ export class AuthService {
   private userProductionLine = new BehaviorSubject<string | null>(null);
   userProductionLine$ = this.userProductionLine.asObservable();
 
-  private userState = new BehaviorSubject<string | null>(null);
-  userState$ = this.userState.asObservable();
+  private sessionId = new BehaviorSubject<string | null>(null);
+  sessionId$ = this.sessionId.asObservable();
 
-  private apiUrl = 'https://wn3cev186l.execute-api.us-east-1.amazonaws.com/api/v1';
+  private token = new BehaviorSubject<string | null>(null);
+  token$ = this.token.asObservable();
+
+  private userId = new BehaviorSubject<string | null>(null);
+  userId$ = this.userId.asObservable();
+
+
+  private apiUrl = 'https://1mhslg7415.execute-api.us-east-1.amazonaws.com/production/api/v1';
 
   constructor(
     private http: HttpClient
   ) {
     const storedRole = sessionStorage.getItem('role');
     const storedUsername = sessionStorage.getItem('username');
-    const storedProductionLine = sessionStorage.getItem('userProductionLine');
+    const storedProductionLine = sessionStorage.getItem('productionLine');
+    const storedSessionId = sessionStorage.getItem('sessionId');
+    const storedToken = sessionStorage.getItem('token');
+    const storedUserId = sessionStorage.getItem('userId');
+
     if (storedRole) {
       this.userRole.next(storedRole);
     }
@@ -34,12 +45,27 @@ export class AuthService {
     if (storedProductionLine) {
       this.userProductionLine.next(storedProductionLine);
     }
+    if (storedSessionId) {
+      this.sessionId.next(storedSessionId);
+    }
+    if (storedToken) {
+      this.token.next(storedToken);
+    }
+    if (storedUserId) {
+      this.userId.next(storedUserId);
+    }
   }
 
-  getAccessToken(consultToken: Auth): Observable<Auth> {
-    return this.http.post<Auth>(this.apiUrl + '/auth/login', consultToken);
+  // Ejecucion del EP
+  getAccessToken(consultToken: Auth): Observable<AuthResponse> {
+    const randomNumber = Math.floor(10000000 + Math.random() * 90000000);
+    const  Headers = new HttpHeaders({
+      'x-session-id': `SFA-${randomNumber}`
+    });
+    return this.http.post<AuthResponse>(this.apiUrl + '/auth/login', consultToken, { headers: Headers });
   }
 
+  // Servicios para guardar en el sesion storage
   setRole(role: string) {
     sessionStorage.setItem('role', role);
     this.userRole.next(role);
@@ -51,8 +77,23 @@ export class AuthService {
   }
 
   setUserProductionLine(productionLine: string | null) {
-    sessionStorage.setItem('userProductionLine', productionLine || '');
+    sessionStorage.setItem('productionLine', productionLine || '');
     this.userProductionLine.next(productionLine);
+  }
+
+  setSessionId(sessionId: string) {
+    sessionStorage.setItem('sessionId', sessionId);
+    this.sessionId.next(sessionId);
+  }
+
+  setToken(token: string) {
+    sessionStorage.setItem('token', token);
+    this.token.next(token);
+  }
+
+  setUserId(userId: string) {
+    sessionStorage.setItem('userId', userId);
+    this.userId.next(userId);
   }
 
   clearAll() {
@@ -61,6 +102,8 @@ export class AuthService {
     this.userRole.next(null);
     this.username.next(null);
     this.userProductionLine.next(null);
-    this.userState.next(null);
+    this.sessionId.next(null);
+    this.token.next(null);
+    this.userId.next(null);
   }
 }

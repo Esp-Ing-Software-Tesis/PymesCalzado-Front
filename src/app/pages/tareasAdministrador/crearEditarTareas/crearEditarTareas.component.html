@@ -1,0 +1,146 @@
+<div class="container-crear-editar-tareas">
+  <div class="container-page-crear-editar-tareas">
+    <button class="button-volver" (click)="onBackAction()">
+      <svg class="icon">
+        <use xlink:href="assets/icons-sprite.svg#general-arrow_back"></use>
+      </svg>
+      <span>Volver</span>
+    </button>
+    <h1 *ngIf="configTask?.action === 'create'" class="title">Crear Tareas</h1>
+    <h1 *ngIf="configTask?.action === 'edit'" class="title">Editar Tareas</h1>
+    <div class="container-resumn">
+      <div class="first-row">
+        <h2 class="title-description">Resumen del Artículo</h2>
+      </div>
+      <div class="second-row">
+        <h3 class="text">Referencia: {{ configTask?.articleTaskDTO?.ref_design }}</h3>
+        <h3 class="text">Cantidad de pares: {{ configTask?.articleTaskDTO?.amount }}</h3>
+        <h3 class="text">Color: {{ configTask?.articleTaskDTO?.name_color }}</h3>
+        <h3 class="text">Talla: {{ configTask?.articleTaskDTO?.cod_size }}</h3>
+      </div>
+    </div>
+    <div class="container-button">
+      <button class="crear-button" (click)="onFormModal()">
+        <svg class="icon">
+          <use xlink:href="assets/icons-sprite.svg#general-add"></use>
+        </svg>
+        <span>Añadir Tarea</span>
+      </button>
+    </div>
+    <div class="container-form">
+      <div #errorDiv class="container-error" *ngIf="generalError">
+        <svg class="icon">
+          <use xlink:href="assets/icons-sprite.svg#general-alert_triangle"></use>
+        </svg>
+        <p class="text-error">{{ generalError }}</p>
+      </div>
+      <!-- tabla tareas -->
+      <div class="container-tasks" *ngIf="tasks.length > 0; else dataNotFound">
+        <div class="table-wrapper">
+          <table>
+            <colgroup>
+              <col *ngFor="let col of tableConfig" [style.width]="col.width" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th *ngFor="let col of tableConfig">
+                  <ng-container *ngIf="col.key === 'amount'; else noIsObligatory">
+                    <div class="container-header-amount">
+                      <span class="text">{{ col.name }}</span>
+                      <span class="required"> *</span>
+                    </div>
+                  </ng-container>
+
+                  <ng-template #noIsObligatory>
+                    <span class="text">{{ col.name }}</span>
+                  </ng-template>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of tasks; let i = index">
+                <td
+                  *ngFor="let col of tableConfig"
+                  [ngClass]="['col-' + col.align, col.position ? 'col-' + col.position : '', col.key === 'amount' ? 'td-amount' : '']"
+                >
+                  <ng-container [ngSwitch]="col.key">
+                    <!-- Input -->
+                    <ng-container *ngSwitchCase="'amount'">
+                      <div class="amount-input">
+                        <input
+                          type="text"
+                          [(ngModel)]="item.amount"
+                          (ngModelChange)="onAmountChange($event, item)"
+                          (keydown)="allowOnlyNumbers($event)"
+                        />
+                      </div>
+                    </ng-container>
+
+                    <!-- Action Delete -->
+                    <ng-container *ngSwitchCase="'delete'">
+                      <div class="action-delete">
+                        <button class="button-delete" (click)="onAlertModal(item)">
+                          <svg class="icon-delete">
+                            <use xlink:href="assets/icons-sprite.svg#shoeDesign-delete"></use>
+                          </svg>
+                        </button>
+                      </div>
+                    </ng-container>
+
+                    <!-- Texto por defecto -->
+                    <ng-container *ngSwitchDefault>
+                      <div *ngIf="col.key !== 'delete'">
+                        {{ item[col.key] }}
+                      </div>
+                    </ng-container>
+                  </ng-container>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td class="text">
+                  <span>Total:</span>
+                </td>
+                <td class="cost-total">
+                  <span>{{ totalAmount }}</span>
+                </td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="error-message" *ngIf="taskErrors.amount_error">
+          <span>{{ taskErrors.amount_error }}</span>
+        </div>
+      </div>
+      <ng-template #dataNotFound>
+        <div class="container-sin-tareas">
+          <svg class="icon">
+            <use xlink:href="assets/icons-sprite.svg#orderTasks-sinTarea"></use>
+          </svg>
+          <h2 class="error-title">No se han añadido tareas</h2>
+          <p class="error-text">
+            Este artículo aún no tiene tareas asignadas. Para continuar, debe completar la cantidad total de pares indicada para este artículo.
+          </p>
+        </div>
+      </ng-template>
+      <div class="conatiner-buttons">
+        <button class="button-cancel" (click)="onBackAction()">Cancelar</button>
+        <button class="button-continue" [disabled]="tasks.length === 0" (click)="onSendTasks()">Continuar</button>
+      </div>
+    </div>
+    <div class="conatiner-form-modal" *ngIf="showFormModal">
+      <app-form-modal
+        [inputsFormModal]="formModalConfig"
+        (resultsForm)="validateErrors($event)"
+        (fieldChange)="validateField($event)"
+        (close)="closeFormModal()"
+      >
+      </app-form-modal>
+    </div>
+    <div class="conatiner-alert-modal" *ngIf="showAlertModal">
+      <app-alert-modal [inputAlertModal]="alertModalConfig" (acept)="deleteTask()" (close)="closeAlertModal()"> </app-alert-modal>
+    </div>
+  </div>
+</div>

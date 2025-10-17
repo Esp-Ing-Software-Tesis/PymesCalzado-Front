@@ -31,9 +31,21 @@
               </label>
             </ng-container>
 
-            <ng-container *ngSwitchCase="col.isState && inputsConfigTable().context === 'ORDERGERENT'">
+            <ng-container
+              *ngSwitchCase="col.isState && (inputsConfigTable().context === 'ORDERGERENT' || inputsConfigTable().context === 'ORDERGERENTADMIN')"
+            >
               <div class="container_state">
                 <label [ngClass]="['state', getStateClass(item[col.key])]">
+                  {{ item[col.key] }}
+                </label>
+              </div>
+            </ng-container>
+
+            <ng-container
+              *ngSwitchCase="col.isProductionLine && inputsConfigTable().context === 'ORDERGERENTADMIN-SHOW-TASKS'"
+            >
+              <div class="container_state_production_line">
+                <label [ngClass]="['state_production_line', getStateProductionLine(item[col.key])]">
                   {{ item[col.key] }}
                 </label>
               </div>

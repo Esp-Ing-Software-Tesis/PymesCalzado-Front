@@ -1,0 +1,22 @@
+<div class="container-pedidos-admin">
+  <div class="container-page-pedidos-admin" *ngIf="!viewPageChildren">
+    <h1 class="title">Pedidos</h1>
+    <p class="text">
+      En esta sección podrá visualizar los pedidos, crear y asignar tareas por artículo, hacer seguimiento por etapa de producción y gestionar su
+      ejecución. Podrá agregar comentarios, rechazar tareas o crear tareas adicionales si es necesario.
+    </p>
+    <div class="container-table" *ngIf="order.length > 0; else dataNotFound">
+      <app-tabla-general [items]="order" [inputsConfigTable]="tableGeneralConfig" (itemDetail)="getArticleOrder($event)"> </app-tabla-general>
+    </div>
+    <ng-template #dataNotFound>
+      <app-sin-informacion
+        [title]="'No se encontraron pedidos'"
+        [text]="'Actualmente no hay pedidos registrados en el sistema. Por favor, inténtelo de nuevo más tarde.'"
+      >
+      </app-sin-informacion>
+    </ng-template>
+  </div>
+
+  <!-- Permite llamar paginas hijas -->
+  <router-outlet></router-outlet>
+</div>

@@ -1,6 +1,6 @@
 export interface InputTableGeneral {
     itemsPerPage: number;
-    context: 'USER' | 'SHOEDESIGN' | 'ORDERGERENT' | 'ORDERGERENT-ADDARTICLE';
+    context: 'USER' | 'SHOEDESIGN' | 'ORDERGERENT' | 'ORDERGERENT-ADDARTICLE' | 'ORDERGERENTADMIN' | 'ORDERGERENTADMIN-SHOW-TASKS';
     colums: ColumnConfig[];
 }
 
@@ -13,6 +13,7 @@ interface ColumnConfig {
   isState?: boolean;
   isShowDetail?: boolean;
   isShowAddArticle?: boolean;
+  isProductionLine?: boolean;
   position?: 'up' | 'center' | 'dowm';
   align?: 'left' | 'center' | 'right';
 }

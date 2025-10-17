@@ -26,3 +26,10 @@ export interface UserCreateDTO {
     productionLine?: string;
     password: string;
 }
+
+// Consultar usuarios por linea de produccion
+export interface UsersByProductionLine {
+    name: string;
+    lastname: string;
+    document: number;
+}

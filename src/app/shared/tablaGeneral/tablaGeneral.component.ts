@@ -112,4 +112,23 @@ export class TablaGeneralComponent<Items extends Record<string, any>> implements
       .replace(/\s+/g, '_')
       .toLowerCase();
   }
+
+  // Logica para organizar los estados de las lineas de produccion para las tareas
+  getStateProductionLine(state?: string): string {
+    if (!state) return '';
+
+    const normalized = state
+      .toString()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/\s+/g, '_')
+      .toLowerCase();
+
+    // Si el estado no es 'nuevo' ni 'finalizado', usar 'en_progreso'
+    if (normalized !== 'nuevo' && normalized !== 'finalizado') {
+      return 'en_progreso';
+    }
+
+    return normalized;
+  }
 }

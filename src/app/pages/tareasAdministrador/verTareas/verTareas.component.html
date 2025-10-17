@@ -1,0 +1,38 @@
+<div class="container-ver-detalle-tareas">
+  <div class="container-page-ver-detalle-tareas" *ngIf="!viewPageChildren">
+    <button class="button-volver" (click)="onBackAction()">
+      <svg class="icon">
+        <use xlink:href="assets/icons-sprite.svg#general-arrow_back"></use>
+      </svg>
+      <span>Volver</span>
+    </button>
+    <h1 class="title">Tareas</h1>
+    <div class="container-resumn">
+      <div class="first-row">
+        <h2 class="title-description">Resumen del Artículo</h2>
+      </div>
+      <div class="second-row">
+        <h3 class="text">Referencia: {{ configShowTask?.articleTaskDTO?.ref_design }}</h3>
+        <h3 class="text">Cantidad de pares: {{ configShowTask?.articleTaskDTO?.amount }}</h3>
+        <h3 class="text">Color: {{ configShowTask?.articleTaskDTO?.name_color }}</h3>
+        <h3 class="text">Talla: {{ configShowTask?.articleTaskDTO?.cod_size }}</h3>
+      </div>
+    </div>
+    <div class="container-form">
+      <div class="container-table" *ngIf="tasksByArticle.length > 0; else dataNotFound">
+        <app-tabla-general [items]="tasksByArticle" [inputsConfigTable]="tableGeneralConfig" (itemDetail)="getArticleOrder($event)"> </app-tabla-general>
+      </div>
+      <ng-template #dataNotFound>
+        <div class="container-sin-tareas">
+          <svg class="icon">
+            <use xlink:href="assets/icons-sprite.svg#orderTasks-sinTarea"></use>
+          </svg>
+          <h2 class="error-title">No se pudieron cargar las tareas</h2>
+          <p class="error-text">No se encontraron tareas disponibles en este momento. Por favor, intente nuevamente más tarde.</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  <!-- Permite llamar paginas hijas -->
+  <router-outlet></router-outlet>
+</div>

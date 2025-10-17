@@ -4,31 +4,33 @@ import { Router, ActivatedRoute, RouterOutlet } from '@angular/router';
 import { TablaGeneralComponent } from '../../shared/tablaGeneral/tablaGeneral.component';
 import { SinInformacionComponent } from '../../shared/sinInformacion/sinInformacion.component';
 import { ValueChangedEvent } from '../../shared/tablaGeneral/tablaGeneral.interface';
-import { TABLA_GENERAL, SHOW_DETAIL_GENERAL } from './pedidos.config';
-import { OrderDTO } from './pedidos.interface';
-import { DataTableDetailOrder } from '../../shared/showDetailGeneral/showDetailGeneral.interface';
+import { TABLA_GENERAL, SHOW_DETAIL_CREATE, SHOW_DETAIL_VIEW } from './tareasAdministrador.config';
+import { OrderDTO } from './tareasAdministrador.interface';
+import { DataTableDetailOrderAdmin } from '../../shared/showDetailGeneral/showDetailGeneral.interface';
 import { OrderService } from '../../services/pedidos.service';
 import { DetailConfigService } from '../../services/detailConfig.service';
 import { map } from 'rxjs';
 
 @Component({
-  selector: 'app-pedidos-page',
+  selector: 'app-tareas-administrador-page',
   standalone: true,
   imports: [CommonModule, TablaGeneralComponent, SinInformacionComponent, RouterOutlet],
-  templateUrl: './pedidos.component.html',
-  styleUrls: ['./pedidos.component.scss'],
+  templateUrl: './tareasAdministrador.component.html',
+  styleUrls: ['./tareasAdministrador.component.scss'],
 })
-export class PedidosPageComponent {
+export class TareasAdministradorPageComponent {
   // Variable para manejar los datos generales de la tabla
   order: OrderDTO[] = [];
   // manejo de configuraciones iniciales para la tabla general
   tableGeneralConfig = structuredClone(TABLA_GENERAL);
-  // manejo de configuraciones iniciales para el hijo de visualizar detalle
-  showDetailGeneralConfig = structuredClone(SHOW_DETAIL_GENERAL);
+  // manejo de configuraciones iniciales para el hijo de visualizar detalle cuando el estado es nuevo
+  showDetailGeneralConfigCreate = structuredClone(SHOW_DETAIL_CREATE);
+  // manejo de configuraciones iniciales para el hijo de visualizar detalle cuando el estado es diferente de nuevo
+  showDetailGeneralConfigView = structuredClone(SHOW_DETAIL_VIEW);
   //Varible para manejar visualizacion de hijos
   viewPageChildren = false;
   // Variables para manejar datos del detalle del pedido articulos
-  orderDetail: DataTableDetailOrder[] = [];
+  orderDetail: DataTableDetailOrderAdmin[] = [];
 
   constructor(
     private router: Router,
@@ -40,62 +42,58 @@ export class PedidosPageComponent {
 
   //Poblar data inicial en la tabla
   ngOnInit(): void {
-    // volver a la pagina padre si esta en algun hijo
     this.router.events.subscribe(() => {
       const url = this.router.url;
-      this.viewPageChildren = /(detalle|crear)(?!\/añadir-articulo)/.test(url);
+
+      // Oculta la tabla principal si esta en cualquier hijo
+      this.viewPageChildren = /(detalle|crear-editar-tareas|detalle-tareas|gestionar-tareas)/.test(url);
       this.cdr.detectChanges();
     });
-    // cargar los pedidos
+
     this.loadOrders();
   }
 
   // Recibe el item del que se quiere consultar el detalle
   getArticleOrder(event: ValueChangedEvent<OrderDTO>) {
-    if (event.context === 'ORDERGERENT') {
+    if (event.context === 'ORDERGERENTADMIN') {
       if (event.key === 'showDetails') {
         const getShoeItem = this.order.find((u) => u.id === event.item.id);
         if (getShoeItem) {
           const client = `${getShoeItem.name_client} - ${getShoeItem.customer_id}`;
-          this.openShowDetailPage(getShoeItem.id, client);
+          const state = getShoeItem.state;
+          this.openShowDetailPage(getShoeItem.id, client, state);
         }
       }
     }
   }
 
   // abrir pantalla de detalle
-  openShowDetailPage(id: number, client: string) {
+  openShowDetailPage(id: number, client: string, state: string) {
     //ejecutar EP
     this.loadOrdersDetail(id);
+    const showDetailGeneralConfig = state === 'Nuevo' ? this.showDetailGeneralConfigCreate : this.showDetailGeneralConfigView;
     // asignar data a la informacion que sera enviada al detalle
-    this.showDetailGeneralConfig.reference = 'Cliente: ' + client;
+    showDetailGeneralConfig.reference = 'Cliente: ' + client;
+    // guardar el id del pedido
+    showDetailGeneralConfig.orderId = id;
+    showDetailGeneralConfig.stateOrder = state;
     //guardar datos para poblar la tabla
-    if (this.showDetailGeneralConfig.datatable) {
-      this.showDetailGeneralConfig.datatable = [
+    if (showDetailGeneralConfig.datatable) {
+      showDetailGeneralConfig.datatable = [
         {
           dataTableDetailOrder: this.orderDetail.map((item) => ({
             ...item,
+            state: 'Sin Tareas',
           })),
         },
       ];
     }
     //Guardar en el local storage la pantalla actual
-    localStorage.setItem('lastContext', this.showDetailGeneralConfig.context);
-
+    localStorage.setItem('lastContext', showDetailGeneralConfig.context);
     // Enviar la configuración al servicio
-    this.detailConfigService.setConfig(this.showDetailGeneralConfig);
-
+    this.detailConfigService.setConfig(showDetailGeneralConfig);
     // navegar al hijo
     this.router.navigate(['detalle'], { relativeTo: this.route });
-  }
-
-  // abrir pantalla de creacion
-  openCreatePage() {
-    // guardar contexto
-    localStorage.setItem('lastContext', this.showDetailGeneralConfig.context);
-    localStorage.setItem('fromParentCreate', '1');
-    // navegar pasando state para identificar que viene del padre
-    this.router.navigate(['crear'], { relativeTo: this.route });
   }
 
   // Consulta de EP's
@@ -136,6 +134,7 @@ export class PedidosPageComponent {
       .pipe(
         map((response) =>
           response.map((u) => ({
+            id: u.articleId,
             ref_design: u.ref_design,
             amount: u.amount,
             name_color: u.color.name,

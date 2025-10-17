@@ -28,7 +28,7 @@ export class HeaderComponent {
     this.productionLine$ = this.authService.userProductionLine$;
 
     this.role$.subscribe((role) => {
-      this.setMockMenuOptions(role);
+      this.setOptionsMenu(role);
     });
   }
 
@@ -43,9 +43,8 @@ export class HeaderComponent {
     this.isOpen = !this.isOpen;
   }
 
-  // Mock opciones de menú
-
-  private setMockMenuOptions(role: string | null) {
+  // Informacion de pantallas
+  private setOptionsMenu(role: string | null) {
     if (role === 'Gerente') {
       this.menuOptions = [
         { label: 'Usuarios', route: '/usuarios', icon: 'headerAndFooter-user' },
@@ -53,9 +52,9 @@ export class HeaderComponent {
         { label: 'Pedidos', route: '/pedidos', icon: 'headerAndFooter-pedido' },
       ];
     } else if (role === 'Administrador') {
-      this.menuOptions = [{ label: 'Pedidos', route: '/pedidos-administrador', icon: 'assets/icons/headerAndFooter/pedido.svg' }];
+      this.menuOptions = [{ label: 'Pedidos', route: '/pedidos-tareas', icon: 'headerAndFooter-pedido' }];
     } else if (role === 'Operario') {
-      this.menuOptions = [{ label: 'Tareas', route: '/tareas', icon: 'assets/icons/headerAndFooter/task.svg' }];
+      this.menuOptions = [{ label: 'Tareas', route: '/tareas', icon: 'headerAndFooter-task' }];
     } else {
       this.menuOptions = [];
     }

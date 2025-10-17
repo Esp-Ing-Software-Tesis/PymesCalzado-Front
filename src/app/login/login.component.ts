@@ -4,15 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { Auth } from '../models/auth.model';
-
-
-// Es solo miestras que se conecta al back
-/*interface LoginForm {
-  rol: string;
-  username: string;
-  productionLine: string | null;
-  state: string;
-}*/
+import { jwtDecode } from 'jwt-decode';
+import { JwtPayloadCustom } from './login.interface';
 
 @Component({
   selector: 'app-login-page',
@@ -27,9 +20,11 @@ export class LoginPageComponent {
   passwordVisible: boolean = false;
   errorMessage: string | null = null;
 
-  //datos para utilizar mock
-
-  //loginForm: LoginForm | null = null;
+  // Logica para acomodar los textos
+  private capitalize(word: string): string {
+    if (!word) return '';
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  }
 
   constructor(
     private authservice: AuthService,
@@ -40,6 +35,14 @@ export class LoginPageComponent {
     this.passwordVisible = !this.passwordVisible;
   }
 
+  sortTexts(text: string): string {
+    if (!text) return '';
+    return text
+      .split(' ')
+      .map((word) => this.capitalize(word))
+      .join(' ');
+  }
+
   // Realizar Login
   login() {
     const consultToken: Auth = {
@@ -48,21 +51,38 @@ export class LoginPageComponent {
     };
     this.authservice.getAccessToken(consultToken).subscribe({
       next: (res) => {
-        console.log(res);
-        this.authservice.setRole('Gerente');
-        this.authservice.setUsername('prueba nombre');
-        this.authservice.setUserProductionLine('prueba linea de produccion');
+        // Obtener el token
+        const token = res?.data?.token;
+        if (!token) {
+          return;
+        }
+
+        // Decodificar el token
+        const decoded = jwtDecode<JwtPayloadCustom>(token);
+        const userId = decoded.userId;
+        const username = this.sortTexts(decoded.username);
+        const role = this.sortTexts(decoded.role);
+        const sessionId = decoded.sessionId;
+        const productionLine = decoded.productionLine ? this.sortTexts(decoded.productionLine) : null;
+
+        this.authservice.setRole(role);
+        this.authservice.setUsername(username);
+        this.authservice.setUserProductionLine(productionLine);
+        this.authservice.setSessionId(sessionId);
+        this.authservice.setToken(token);
+        this.authservice.setUserId(userId + '')
+
         let redirectRoute = '';
-        switch ('Gerente') {
+        switch (role) {
           case 'Gerente':
             redirectRoute = '/usuarios';
             break;
-          /*case 'Administrador':
-          redirectRoute = '/pedidos-administrador';
-          break;
-        case 'Operario':
-          redirectRoute = '/tareas';
-          break;*/
+          case 'Administrador':
+            redirectRoute = '/pedidos-tareas';
+            break;
+          case 'Operario':
+            redirectRoute = '/tareas';
+            break;
           default:
             redirectRoute = '/login';
         }
@@ -73,74 +93,4 @@ export class LoginPageComponent {
       },
     });
   }
-
-  /*login() {
-    this.loginForm = this.setMockLoginForm(this.inputDocument, this.inputPassword);
-    if (this.loginForm) {
-        if (this.loginForm.state === 'Inactivo') {
-            this.errorMessage = 'Tu usuario se encuentra inactivo. Por favor, contacta al administrador del sistema para más información.';
-            return;
-        }
-      this.authservice.setRole(this.loginForm.rol);
-      this.authservice.setUsername(this.loginForm.username);
-      this.authservice.setUserProductionLine(this.loginForm.productionLine);
-
-      // Redirigir según el rol (o a una ruta común)
-      let redirectRoute = '';
-      switch (this.loginForm.rol) {
-        case 'Gerente':
-          redirectRoute = '/usuarios';
-          break;
-        case 'Administrador':
-          redirectRoute = '/pedidos-administrador';
-          break;
-        case 'Operario':
-          redirectRoute = '/tareas';
-          break;
-        default:
-          redirectRoute = '/login';
-      }
-      this.router.navigate([redirectRoute]);
-    } else if (!this.loginForm) {
-      this.errorMessage = 'Correo o contraseña incorrectos. Verifica que los datos ingresados sean correctos e inténtalo nuevamente.';
-    }
-  }*/
-
-  // Mock de formulario de inicio de sesión
-
-  private setMockLoginForm(inputDocument: string, inputPassword: string) {
-    if ( inputDocument === 'gerente@yopmail.com' && inputPassword === '123456') {
-      return {
-        rol: 'Gerente',
-        username: 'Miguel Herrera',
-        productionLine: null,
-        state: 'Activo',
-      };
-    } else if (inputDocument === 'administrador@yopmail.com' && inputPassword === '654321') {
-      return {
-        rol: 'Administrador',
-        username: 'Edwin Paez',
-        productionLine: null,
-        state: 'Activo',
-      };
-    } else if (inputDocument === 'operario@yopmail.com' && inputPassword === 'abc123') {
-      return {
-        rol: 'Operario',
-        username: 'Natalia Herrera',
-        productionLine: 'Corte',
-        state: 'Activo',
-      };
-    } else if (inputDocument === 'inactivo@yopmail.com' && inputPassword === 'abc321') {
-      return {
-        rol: 'Operario',
-        username: 'Natalia Herrera',
-        productionLine: 'Corte',
-        state: 'Inactivo',
-      };
-    } else {
-      return null;
-    }
-  }
 }
-
-

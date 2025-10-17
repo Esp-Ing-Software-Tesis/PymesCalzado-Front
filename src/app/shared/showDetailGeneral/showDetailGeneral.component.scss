@@ -1,4 +1,5 @@
 @use 'variables' as *;
+@use "sass:color";
 
 .container-page-detail {
     display: flex;
@@ -50,6 +51,36 @@
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
+}
+
+.container-error {
+    width: 100%;
+    height: auto;
+    background-color: $beige;
+    display: flex;
+    flex-direction: row;
+    padding: 0.5em 1em;
+    gap: 0.5em;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    margin: auto;
+
+    svg {
+      width: 25px;
+      height: 25px;
+      fill: $naranja-alerta !important;
+    }
+
+    p {
+      width: 100%;
+      height: auto;
+      color: rgba($negro, 0.7);
+      font-family: Inter;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 700;
+    }
 }
 
 .container-info {
@@ -125,6 +156,55 @@ tbody  tr td {
     border: 1px solid $negro;
     border-collapse: collapse;
     padding: 0.5em;
+}
+
+tbody .buttonShowDetail {
+    width: 100px;
+    height: 20px;
+    background-color: $background-color;
+    border: none;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    color: $verde-agua-marina;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color 0.3s ease, text-decoration-thickness 0.3s ease;
+}
+
+tbody .buttonShowDetail:hover {
+  color: color.adjust($verde-agua-marina, $lightness: -10%);
+  text-decoration-thickness: 2px;
+}
+
+tbody .container_state {
+  height: 25px;
+  width: 110px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+
+  .state {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  .state.sin_tareas {
+    background-color: $rojo-estado-sin-tareas;
+  }
+
+  .state.completo {
+    background-color: $verde-estado-finalizado;
+  }
 }
 
 // --- Sin paginador ---
@@ -242,6 +322,47 @@ tbody  tr td {
     font-weight: 400;
 }
 
+.conatiner-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 3em;
+  padding-top: 1.5em;
+
+  button {
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    text-align: center;
+    width: 200px;
+    height: 50px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+  }
+
+  .button-cancel{
+    background-color: $beige;
+    color: $negro;
+  }
+
+  .button-cancel:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .button-finish{
+    background-color: $verde-agua-marina;
+    color: $background-color;
+    transition: filter 0.3s ease;
+  }
+
+  .button-finish:hover {
+    filter: brightness(1.2);
+  }
+}
+
 @media (max-width: 768px) {
 
     .button-volver {
@@ -260,4 +381,9 @@ tbody  tr td {
     table {
         max-width: 450px;
     }
+
+    .button-volver {
+        margin: 0 auto;
+    }
+
 }

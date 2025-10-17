@@ -1,0 +1,136 @@
+@use 'variables' as *;
+
+.container-page-ver-detalle-tareas {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    width: 100%;
+    height: auto;
+}
+
+.button-volver {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 160px;
+    height: 40px;
+    border: none;
+    background-color: $beige;
+    gap: 0.2em;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.button-volver svg {
+    width: 20px;
+    height: 20px;
+}
+
+.button-volver span {
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.button-volver:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.title {
+    font-family: Inter;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+// Logica para el espacio de descripcion del articulo
+.container-resumn {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    border: 1px solid $negro;
+    border-radius: 10px;
+    background-color: $beige;
+    padding: 0.5em 4em;
+
+    h2 {
+        font-family: Inter;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 700;
+    }
+
+    .second-row {
+        display: flex;
+        flex-direction: row;
+        gap: 1em;
+        width: 100%;
+        height: auto;
+        justify-content: space-between;
+        align-items: center;
+
+        h3 {
+            font-family: Inter;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 500;
+        }
+    }
+}
+
+.container-sin-tareas {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    padding-top: 1em;
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    margin: 2em auto;
+
+    svg {
+        height: 50px;
+        width: 50px;
+    }
+
+    .error-title {
+      font-family: Inter;
+      font-size: 28px;
+      font-style: normal;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .error-text {
+      font-family: Inter;
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 400;
+      text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .container-resumn {
+        padding: 0.5em;
+
+        .second-row {
+            flex-direction: column;
+            gap: 0.5em;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    .button-volver {
+        margin: 0 auto;
+    }
+}

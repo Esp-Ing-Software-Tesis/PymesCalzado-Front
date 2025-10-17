@@ -1,0 +1,33 @@
+<div class="container-gestionar-tareas">
+  <div class="container-page-gestionar-tareas">
+    <button class="button-volver" (click)="onBackAction()">
+      <svg class="icon">
+        <use xlink:href="assets/icons-sprite.svg#general-arrow_back"></use>
+      </svg>
+      <span>Volver</span>
+    </button>
+    <h1 class="title">Detalle de la Tarea</h1>
+    <div class="container-resumn">
+      <div class="first-row">
+        <h2 class="title-description">Resumen del Artículo</h2>
+      </div>
+      <div class="second-row">
+        <h3 class="text">Referencia: {{ configManageTask?.articleTaskDTO?.ref_design }}</h3>
+        <h3 class="text">Cantidad de pares: {{ configManageTask?.articleTaskDTO?.amount }}</h3>
+        <h3 class="text">Color: {{ configManageTask?.articleTaskDTO?.name_color }}</h3>
+        <h3 class="text">Talla: {{ configManageTask?.articleTaskDTO?.cod_size }}</h3>
+      </div>
+    </div>
+    <div class="container-form">
+      <ng-template #dataNotFound>
+        <div class="container-sin-tareas">
+          <svg class="icon">
+            <use xlink:href="assets/icons-sprite.svg#orderTasks-sinTarea"></use>
+          </svg>
+          <h2 class="error-title">No se pudo cargar el detalle de la tarea</h2>
+          <p class="error-text">No se encontro el detalle de la tarea. Por favor, intente nuevamente más tarde.</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
