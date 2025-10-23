@@ -1,7 +1,12 @@
 <div class="app-container">
   <app-header *ngIf="mostrarheaderandfooter"></app-header>
+
   <main>
     <router-outlet></router-outlet>
   </main>
+
   <app-footer *ngIf="mostrarheaderandfooter"></app-footer>
 </div>
+
+<!-- Loader global -->
+<app-loader></app-loader>

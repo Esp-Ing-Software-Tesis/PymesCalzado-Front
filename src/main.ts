@@ -2,7 +2,8 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { routes } from './app/app.routes';
-import { provideHttpClient } from '@angular/common/http'; 
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { loaderInterceptor } from './app/core/interceptors/loader.interceptor';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -13,6 +14,8 @@ bootstrapApplication(AppComponent, {
         anchorScrolling: 'enabled',
       })
     ),
-    provideHttpClient(),
+    provideHttpClient(
+      withInterceptors([loaderInterceptor])
+    ),
   ],
 }).catch((err) => console.error(err));
