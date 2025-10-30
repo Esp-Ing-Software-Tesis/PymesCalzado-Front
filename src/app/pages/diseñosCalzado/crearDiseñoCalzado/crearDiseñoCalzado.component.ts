@@ -22,7 +22,7 @@ import { ShoeDesignService } from '../../../services/diseñoCalzado.service';
   templateUrl: './crearDiseñoCalzado.component.html',
   styleUrls: ['./crearDiseñoCalzado.component.scss'],
 })
-export class CrearDiseñosCalzadoPageComponent implements OnInit, AfterViewChecked {
+export class CrearDisenosCalzadoPageComponent implements OnInit, AfterViewChecked {
   // Variable que contiene los datos ingresados en el formulario
   newShoeDesign: ShoeDesignCreateDTO = {
     name: '',
@@ -113,14 +113,12 @@ export class CrearDiseñosCalzadoPageComponent implements OnInit, AfterViewCheck
   }
 
   getFallbackRoute(context: string | null): string {
-    switch (context) {
-      case 'SHOEDESIGN':
-        localStorage.removeItem('lastContext');
-        return '/diseños-calzado';
-      default:
-        localStorage.removeItem('lastContext');
-        return '/';
+    if (context === 'SHOEDESIGN') {
+      localStorage.removeItem('lastContext');
+      return '/diseños-calzado';
     }
+    localStorage.removeItem('lastContext');
+    return '/';
   }
 
   // Logica para manejar la tabla de lineas de produccion y costos

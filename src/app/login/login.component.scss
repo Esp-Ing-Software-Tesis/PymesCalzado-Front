@@ -5,7 +5,6 @@
     display: flex;
     flex-direction: row;
     gap: 3em;
-    justify-content: space-between;
     align-items: center;
     justify-content: center;
     padding: clamp(1em, 2vw, 3em);
@@ -49,7 +48,7 @@
   left: 55%;
   transform: translateX(-55%);
   margin: 0;
-  font-family: Rakkas;
+  font-family: Rakkas, serif;
   font-size: 32px;
   font-weight: 400;
   line-height: normal;
@@ -171,7 +170,7 @@ form {
     color: $background-color;
     text-align: center;
     border: none;
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
     font-size: 18px;
     font-style: normal;
     font-weight: 700;
@@ -190,6 +189,26 @@ form {
     width: 100%;
     height: 100%;
     display: block;
+}
+
+.input button.icon-button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+  color: inherit;
+
+  svg {
+    width: 25px;
+    height: 25px;
+    fill: none;
+  }
 }
 
 @media (min-width: 769px) and (max-width: 1360px) {
