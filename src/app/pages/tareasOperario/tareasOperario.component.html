@@ -1,0 +1,62 @@
+<div class="container-tareas-operario">
+  <div class="container-page-tareas-operario" *ngIf="!viewPageChildren">
+    <h1 class="title">Tareas</h1>
+    <p class="text">
+      En esta sección podrá visualizar las tareas que le han sido asignadas y actualizar su estado según el avance en su línea de producción.
+    </p>
+    <div class="container-section-filters">
+      <div class="container-selects">
+        <div class="container-text">
+          <label>Estado</label>
+        </div>
+        <div class="container-items">
+          <div class="custom-select-container" (click)="taskByOperator.length > 0 ? toggleState() : null" [class.disabled]="!taskByOperator.length">
+            <div class="selected" [class.placeholder]="!optionSelect">
+              {{ optionSelect || 'Seleccione el estado' }}
+              <svg class="icon-arrow">
+                <use xlink:href="assets/icons-sprite.svg#general-arrow_select"></use>
+              </svg>
+            </div>
+
+            <ul class="options" *ngIf="openState">
+              <li *ngFor="let option of optionsState" [class.active]="option === optionSelect" (click)="onSelectOption(option)">
+                {{ option }}
+              </li>
+            </ul>
+          </div>
+          <button class="search" [disabled]="!optionSelect" (click)="searchByFilters()">Buscar</button>
+          <button class="clean" [disabled]="!isSearch" (click)="clearFilters()">Limpiar</button>
+        </div>
+      </div>
+    </div>
+    <div class="container-table" *ngIf="taskByOperator.length > 0; else noTasks">
+      <ng-container *ngIf="taskByOperatorFilters.length > 0; else noFilteredResults">
+        <app-tabla-general [items]="taskByOperatorFilters" [inputsConfigTable]="tableGeneralConfig" (itemDetail)="getTaskByOperator($event)">
+        </app-tabla-general>
+      </ng-container>
+    </div>
+
+    <ng-template #noTasks>
+      <app-sin-informacion
+        [title]="'No se encontraron tareas asignadas'"
+        [text]="'Actualmente no cuenta con tareas asignadas en el sistema. Por favor, inténtelo de nuevo más tarde.'"
+      >
+      </app-sin-informacion>
+    </ng-template>
+
+    <ng-template #noFilteredResults>
+      <ng-container *ngIf="isSearch">
+        <app-sin-informacion
+          [title]="'No se encontraron tareas que coincidan con los filtros aplicados'"
+          [text]="
+            'Actualmente no hay tareas que cumplan con los criterios seleccionados. Verifique los filtros aplicados y ajuste los parámetros si desea explorar otras tareas disponibles dentro del sistema.'
+          "
+        >
+        </app-sin-informacion>
+      </ng-container>
+    </ng-template>
+  </div>
+
+  <!-- Permite llamar paginas hijas -->
+  <router-outlet></router-outlet>
+</div>

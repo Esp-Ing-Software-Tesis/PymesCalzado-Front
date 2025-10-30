@@ -339,19 +339,64 @@ export class UsersService {
       { name: 'Ana Isabel', lastname: 'Díaz Patiño', document: 1021999888 },
       { name: 'Juliana Teresa', lastname: 'Vargas León', document: 1080765321 },
       { name: 'Luisa Daniela', lastname: 'Paredes Gómez', document: 1067821344 },
-      { name: 'Esteban Andrés', lastname: 'López', document: 1023345567 },
+      { name: 'Esteban Andrés', lastname: 'López García', document: 1023345567 },
     ];
+
+    const dataUserByProductionLineBordado: UsersByProductionLine[] = [
+      { name: 'Laura', lastname: 'Torres Acosta', document: 1078987654 },
+      { name: 'Mónica', lastname: 'Gómez Pardo', document: 1052231987 },
+      { name: 'Ricardo', lastname: 'Valbuena Ortiz', document: 1045678991 },
+      { name: 'Carolina', lastname: 'Mejía Duarte', document: 1077345632 },
+    ];
+
+    const dataUserByProductionLineTermofijado: UsersByProductionLine[] = [
+      { name: 'Carlos', lastname: 'Gómez Hernández', document: 1034778123 },
+      { name: 'Nicolás', lastname: 'Pérez Quintero', document: 1049987122 },
+      { name: 'Tatiana', lastname: 'Rojas Ramírez', document: 1022778123 },
+    ];
+
+    const dataUserByProductionLineEstampado: UsersByProductionLine[] = [
+      { name: 'David', lastname: 'Rojas Prieto', document: 1014567899 },
+      { name: 'Andrés', lastname: 'Martínez López', document: 1093345566 },
+      { name: 'Camila', lastname: 'Mendoza Torres', document: 1088776655 },
+    ];
+
     const dataUserByProductionLineGuarnicion: UsersByProductionLine[] = [
       { name: 'Miguel Ángel', lastname: 'Restrepo Londoño', document: 1032445678 },
       { name: 'Sebastián', lastname: 'Jiménez Carvajal', document: 1091223665 },
       { name: 'Felipe Andrés', lastname: 'Morales Silva', document: 1061773245 },
+      { name: 'Daniela', lastname: 'Montoya Zapata', document: 1083112245 },
     ];
-    if (productionLine === 'Corte') {
-      return dataUserByProductionLineCorte;
+
+    const dataUserByProductionLineSolador: UsersByProductionLine[] = [
+      { name: 'Juan Esteban', lastname: 'García Soto', document: 1045567812 },
+      { name: 'Sara', lastname: 'Valencia Gómez', document: 1076543221 },
+      { name: 'Mateo', lastname: 'Londoño Pérez', document: 1067885433 },
+    ];
+
+    const dataUserByProductionLineEmplantillado: UsersByProductionLine[] = [
+      { name: 'Diana', lastname: 'Cortés Ramírez', document: 1089987765 },
+      { name: 'Julio', lastname: 'Castro Mejía', document: 1026655432 },
+      { name: 'Natalia', lastname: 'López Herrera', document: 1032245567 },
+    ];
+
+    switch (productionLine) {
+      case 'corte':
+        return dataUserByProductionLineCorte;
+      case 'bordado':
+        return dataUserByProductionLineBordado;
+      case 'termofijado':
+        return dataUserByProductionLineTermofijado;
+      case 'estampado':
+        return dataUserByProductionLineEstampado;
+      case 'guarnicion':
+        return dataUserByProductionLineGuarnicion;
+      case 'solador':
+        return dataUserByProductionLineSolador;
+      case 'emplantillado':
+        return dataUserByProductionLineEmplantillado;
+      default:
+        return [];
     }
-    if (productionLine === 'Guarnición') {
-      return dataUserByProductionLineGuarnicion;
-    }
-    return [];
   }
 }

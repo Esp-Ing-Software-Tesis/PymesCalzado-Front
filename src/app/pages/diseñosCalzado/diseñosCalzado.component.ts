@@ -1,6 +1,6 @@
 import { Router, ActivatedRoute, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { TABLA_GENERAL, SHOW_DETAIL_GENERAL } from './diseñosCalzado.config';
 import { TablaGeneralComponent } from '../../shared/tablaGeneral/tablaGeneral.component';
 import { SinInformacionComponent } from '../../shared/sinInformacion/sinInformacion.component';
@@ -18,7 +18,7 @@ import { DetailConfigService } from '../../services/detailConfig.service';
   templateUrl: './diseñosCalzado.component.html',
   styleUrls: ['./diseñosCalzado.component.scss'],
 })
-export class DiseñosCalzadoPageComponent {
+export class DiseñosCalzadoPageComponent implements OnInit {
   //Almacenar datos de entrada
   shoesDesign: ShoeDesignDTO[] = [];
 
@@ -143,7 +143,6 @@ export class DiseñosCalzadoPageComponent {
         },
         error: (err) => {
           this.shoesDesign = [];
-          console.log(err);
         },
       });
   }
@@ -160,7 +159,6 @@ export class DiseñosCalzadoPageComponent {
         this.sizesDetail = res.sizes.map((u) => '' + u.id);
       },
       error: (err) => {
-        console.log(err);
       },
     });
   }

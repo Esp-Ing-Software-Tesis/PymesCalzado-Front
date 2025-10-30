@@ -115,11 +115,11 @@ export class FormModalComponent implements AfterViewChecked {
     }
   }
 
-  @Output() close = new EventEmitter<void>();
+  @Output() modalClosed = new EventEmitter<void>();
 
   // Accion de cerrar
   onCloseClick() {
-    this.close.emit();
+    this.modalClosed.emit();
   }
 
   // Logica de input tipo password

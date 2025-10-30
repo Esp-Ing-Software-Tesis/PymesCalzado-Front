@@ -63,7 +63,12 @@ export class LoginPageComponent {
         const username = this.sortTexts(decoded.username);
         const role = this.sortTexts(decoded.role);
         const sessionId = decoded.sessionId;
-        const productionLine = decoded.productionLine ? this.sortTexts(decoded.productionLine) : null;
+        let productionLine = decoded.productionLine ? this.sortTexts(decoded.productionLine) : null;
+
+        // Se quita cuando funcione usuarios
+        if(userId === 1024575050){
+          productionLine = 'Corte'
+        }
 
         this.authservice.setRole(role);
         this.authservice.setUsername(username);
@@ -89,7 +94,6 @@ export class LoginPageComponent {
         this.router.navigate([redirectRoute]);
       },
       error: (err) => {
-        console.log(err);
       },
     });
   }

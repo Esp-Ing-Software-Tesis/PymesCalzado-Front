@@ -18,7 +18,7 @@ export const TABLA_GENERAL: InputTableGeneral = {
 };
 
 export const INFO_MANAGE_TASKS: ManageTaskDTO = {
-  context: 'ORDERGERENTADMIN-TASK',
+  context: 'ORDERGERENTADMIN',
   articleTaskDTO: { articleId: 0, ref_design: '', amount: 0, name_color: '', cod_size: 0 },
   taskId: 0,
 };

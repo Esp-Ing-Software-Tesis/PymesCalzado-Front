@@ -131,6 +131,14 @@ tbody .container_state_production_line {
     background-color: $naranja-estado-enprogreso;
   }
 
+  .state_production_line.en_revision {
+    background-color: $amarillo-estado-enrevision;
+  }
+
+  .state_production_line.en_correccion {
+    background-color: $rojo-estado-encorrecion;
+  }
+
   .state_production_line.finalizado {
     background-color: $verde-estado-finalizado;
   }

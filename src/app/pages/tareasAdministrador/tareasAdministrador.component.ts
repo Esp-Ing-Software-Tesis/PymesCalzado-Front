@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, RouterOutlet } from '@angular/router';
 import { TablaGeneralComponent } from '../../shared/tablaGeneral/tablaGeneral.component';
 import { SinInformacionComponent } from '../../shared/sinInformacion/sinInformacion.component';
@@ -18,7 +18,7 @@ import { map } from 'rxjs';
   templateUrl: './tareasAdministrador.component.html',
   styleUrls: ['./tareasAdministrador.component.scss'],
 })
-export class TareasAdministradorPageComponent {
+export class TareasAdministradorPageComponent implements OnInit {
   // Variable para manejar los datos generales de la tabla
   order: OrderDTO[] = [];
   // manejo de configuraciones iniciales para la tabla general
@@ -122,7 +122,6 @@ export class TareasAdministradorPageComponent {
         },
         error: (err) => {
           this.order = [];
-          console.log(err);
         },
       });
   }
@@ -148,7 +147,6 @@ export class TareasAdministradorPageComponent {
         },
         error: (err) => {
           this.order = [];
-          console.log(err);
         },
       });
   }

@@ -6,7 +6,7 @@
     <div class="user_info">
       <span class="user_name">Nombre: {{ username$ | async }}</span>
       <span class="user_role">Rol: {{ role$ | async }}</span>
-      <span class="user_production_line" *ngIf="(role$ | async) === 'Operario'">Línea de Producción: {{ productionLine$ }}</span>
+      <span class="user_production_line" *ngIf="(role$ | async) === 'Operario'">Línea de Producción: {{ productionLine$ | async }}</span>
     </div>
     <hr class="divider" />
     <div class="nav_desktop">

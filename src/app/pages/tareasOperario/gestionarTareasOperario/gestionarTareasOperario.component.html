@@ -1,0 +1,95 @@
+<div class="container-gestionar-tareas-operario">
+  <div class="container-page-gestionar-tareas-operario">
+    <button class="button-volver" (click)="onBackAction()">
+      <svg class="icon">
+        <use xlink:href="assets/icons-sprite.svg#general-arrow_back"></use>
+      </svg>
+      <span>Volver</span>
+    </button>
+    <h1 class="title">Detalle de la Tarea</h1>
+    <div class="container-resumn">
+      <div class="first-row">
+        <h2 class="title-description">Resumen del Artículo</h2>
+      </div>
+      <div class="second-row">
+        <h3 class="text">Referencia: {{ configManageTask?.articleTaskDTO?.ref_design }}</h3>
+        <h3 class="text">Cantidad de pares: {{ configManageTask?.articleTaskDTO?.amount }}</h3>
+        <h3 class="text">Color: {{ configManageTask?.articleTaskDTO?.name_color }}</h3>
+        <h3 class="text">Talla: {{ configManageTask?.articleTaskDTO?.cod_size }}</h3>
+      </div>
+    </div>
+    <div class="container-actions">
+      <!-- Avanzar -->
+      <ng-container *ngIf="['nuevo', 'en_progreso', 'en_correccion'].includes(getTextState(configManageTask?.articleTaskDTO?.state))">
+        <div class="container-action">
+          <h2 class="title">Acciones Disponibles</h2>
+          <p class="text">
+            Puede utilizar esta opción para avanzar la tarea al siguiente estado del flujo de trabajo. Una vez realizada la acción, no podrá
+            retroceder el estado manualmente.
+          </p>
+          <div class="container-states">
+            <div class="current-state">
+              <p class="text">Estado actual:</p>
+              <div class="state" [ngClass]="getTextState(configManageTask?.articleTaskDTO?.state)">
+                <p class="state-text">{{ configManageTask?.articleTaskDTO?.state }}</p>
+              </div>
+            </div>
+            <div class="next-state">
+              <p class="text">Próximo estado:</p>
+              <div class="state" [ngClass]="getTextState(nextState(getTextState(configManageTask?.articleTaskDTO?.state)))">
+                <p class="state-text">{{ nextState(getTextState(configManageTask?.articleTaskDTO?.state)) }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="container-button">
+            <button class="assign-button" (click)="onAlertModal()">Avanzar Estado</button>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- En Revision -->
+      <ng-container *ngIf="getTextState(configManageTask?.articleTaskDTO?.state) === 'en_revision'">
+        <div class="container-action">
+          <h2 class="assign-title">Acciones Disponibles</h2>
+          <p class="assign-text">
+            Para avanzar la tarea al siguiente estado del flujo de trabajo, es necesario que el administrador lo realice, basándose en los resultados
+            del control de calidad.
+          </p>
+          <div class="container-states">
+            <div class="current-state">
+              <p class="text">Estado actual:</p>
+              <div class="state" [ngClass]="getTextState(configManageTask?.articleTaskDTO?.state)">
+                <p class="state-text">{{ configManageTask?.articleTaskDTO?.state }}</p>
+              </div>
+            </div>
+            <div class="next-state">
+              <p class="text">Próximo estado:</p>
+              <div class="state" [ngClass]="getTextState(nextState(getTextState(configManageTask?.articleTaskDTO?.state)))">
+                <p class="state-text">{{ nextState(getTextState(configManageTask?.articleTaskDTO?.state)) }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Finalizado -->
+      <ng-container *ngIf="getTextState(configManageTask?.articleTaskDTO?.state) === 'finalizado'">
+        <div class="container-action">
+          <h2 class="assign-title">Acciones Disponibles</h2>
+          <p class="assign-text">La tarea se encuentra finalizada y no es posible realizar ninguna acción adicional.</p>
+          <div class="container-states">
+            <div class="current-state">
+              <p class="text">Estado actual:</p>
+              <div class="state" [ngClass]="getTextState(configManageTask?.articleTaskDTO?.state)">
+                <p class="state-text">{{ configManageTask?.articleTaskDTO?.state }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div class="conatiner-alert-modal" *ngIf="showAlertModal">
+      <app-alert-modal [inputAlertModal]="alertModalConfig" (acceptModal)="nextStateTask()" (closeModal)="closeAlertModal()"> </app-alert-modal>
+    </div>
+  </div>
+</div>
