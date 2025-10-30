@@ -25,17 +25,11 @@
               required
               minlength="8"
             />
-            <svg
-              class="icon cursor-pointer"
-              tabindex="0"
-              role="button"
-              aria-label="Mostrar u ocultar contraseña"
-              (click)="togglePasswordVisibility()"
-              (keydown.enter)="togglePasswordVisibility()"
-              (keydown.space)="togglePasswordVisibility()"
-            >
-              <use [attr.xlink:href]="passwordVisible ? 'assets/icons-sprite.svg#login-eye' : 'assets/icons-sprite.svg#login-eye-off'"></use>
-            </svg>
+            <button type="button" class="icon-button" aria-label="Mostrar u ocultar contraseña" (click)="togglePasswordVisibility()">
+              <svg class="icon" focusable="false" aria-hidden="true">
+                <use [attr.xlink:href]="passwordVisible ? 'assets/icons-sprite.svg#login-eye' : 'assets/icons-sprite.svg#login-eye-off'"></use>
+              </svg>
+            </button>
           </div>
           <div class="mensaje_error" *ngIf="errorMessage !== null">
             <svg class="icon">

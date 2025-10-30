@@ -81,24 +81,20 @@ export class CrearEditarTareasComponent implements OnInit, AfterViewChecked {
     }
     // Si recarga directamente o entra por URL manual
     if (context) {
-      const fallback = this.getFallbackRoute(context);
-      this.router.navigate(fallback);
+      this.router.navigateByUrl(this.getFallbackRoute(context));
     } else {
-      this.router.navigate(['/']);
+      this.router.navigateByUrl('/');
     }
   }
-  
 
   //Devuelve la ruta a donde debe ir si se recarga o entra manualmente
-  getFallbackRoute(context: string | null): string[] {
-    switch (context) {
-      case 'ORDERGERENTADMIN':
-        localStorage.removeItem('lastContext');
-        return ['/pedidos-tareas'];
-      default:
-        localStorage.removeItem('lastContext');
-        return ['/'];
+  getFallbackRoute(context: string | null): string {
+    if (context === 'ORDERGERENTADMIN') {
+      localStorage.removeItem('lastContext');
+      return '/pedidos-tareas';
     }
+    localStorage.removeItem('lastContext');
+    return '/';
   }
 
   //Acción de volver manualmente
@@ -327,19 +323,18 @@ export class CrearEditarTareasComponent implements OnInit, AfterViewChecked {
     }
 
     // Validar si hay errores
-    if(this.generalError || this.taskErrors.amount_error) {
+    if (this.generalError || this.taskErrors.amount_error) {
       this.numErrorsTable++;
     }
 
     // Devolver tareas al padre
-    if(this.numErrorsTable === 0){
+    if (this.numErrorsTable === 0) {
       const dataTask: TasksDetailDTO = {
         articleId: this.configTask.articleTaskDTO.articleId,
         tasksArticlesDTO: this.tasks,
-      }
+      };
       this.tasksSharedService.sendTaskResponse(dataTask);
       this.onBackAction();
     }
-
   }
 }

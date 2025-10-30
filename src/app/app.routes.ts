@@ -5,7 +5,7 @@ import { LoginPageComponent } from './login/login.component';
 import { PedidosPageComponent } from './pages/pedidos/pedidos.component';
 import { DiseñosCalzadoPageComponent } from './pages/diseñosCalzado/diseñosCalzado.component';
 import { ShowDetailGeneralComponent } from './shared/showDetailGeneral/showDetailGeneral.component';
-import { CrearDiseñosCalzadoPageComponent } from './pages/diseñosCalzado/crearDiseñoCalzado/crearDiseñoCalzado.component';
+import { CrearDisenosCalzadoPageComponent } from './pages/diseñosCalzado/crearDiseñoCalzado/crearDiseñoCalzado.component';
 import { CrearPedidosPageComponent } from './pages/pedidos/crearPedido/crearPedido.component';
 import { AñadirArticuloPageComponent } from './pages/pedidos/añadirArticulo/añadirArticulo.component';
 import { TareasAdministradorPageComponent } from './pages/tareasAdministrador/tareasAdministrador.component';
@@ -36,7 +36,7 @@ export const routes: Routes = [
       },
       {
         path: 'create',
-        component: CrearDiseñosCalzadoPageComponent,
+        component: CrearDisenosCalzadoPageComponent,
       },
     ],
   },

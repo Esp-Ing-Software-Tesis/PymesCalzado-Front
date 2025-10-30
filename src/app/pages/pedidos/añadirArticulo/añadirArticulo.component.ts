@@ -68,23 +68,20 @@ export class AñadirArticuloPageComponent implements OnInit {
     }
     // Si recarga directamente o entra por URL manual
     if (context) {
-      const fallback = this.getFallbackRoute(context);
-      this.router.navigate(fallback);
+      this.router.navigateByUrl(this.getFallbackRoute(context));
     } else {
-      this.router.navigate(['/']);
+      this.router.navigateByUrl('/');
     }
   }
 
   //Devuelve la ruta a donde debe ir si se recarga o entra manualmente
-  getFallbackRoute(context: string | null): string[] {
-    switch (context) {
-      case 'ORDERGERENT':
-        localStorage.removeItem('lastContext');
-        return ['/pedidos'];
-      default:
-        localStorage.removeItem('lastContext');
-        return ['/'];
+  getFallbackRoute(context: string | null): string {
+    if (context === 'ORDERGERENT') {
+      localStorage.removeItem('lastContext');
+      return '/pedidos';
     }
+    localStorage.removeItem('lastContext');
+    return '/';
   }
 
   //Acción de volver manualmente
@@ -147,7 +144,6 @@ export class AñadirArticuloPageComponent implements OnInit {
     ) {
       this.formModalConfig.error =
         'Ya existe un artículo con esa referencia, color y talla en el pedido. Puede modificar la cantidad si lo necesita.';
-
     }
 
     // Limpiar errores
@@ -174,7 +170,7 @@ export class AñadirArticuloPageComponent implements OnInit {
     });
 
     //validar si hay error global
-    if(this.formModalConfig.error){
+    if (this.formModalConfig.error) {
       this.numErrors++;
     }
 
@@ -297,8 +293,7 @@ export class AñadirArticuloPageComponent implements OnInit {
         this.colors = res.colors;
         this.sizes = res.sizes.map((u) => '' + u.id);
       },
-      error: (err) => {
-      },
+      error: (err) => {},
     });
   }
 }
