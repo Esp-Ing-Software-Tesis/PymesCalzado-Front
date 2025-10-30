@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectorRef, HostListener } from '@angular/core';
+import { Component, ChangeDetectorRef, HostListener, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, RouterOutlet } from '@angular/router';
 import { TablaGeneralComponent } from '../../shared/tablaGeneral/tablaGeneral.component';
 import { SinInformacionComponent } from '../../shared/sinInformacion/sinInformacion.component';
@@ -18,7 +18,7 @@ import { map } from 'rxjs';
   templateUrl: './tareasOperario.component.html',
   styleUrls: ['./tareasOperario.component.scss'],
 })
-export class TareasOperarioPageComponent {
+export class TareasOperarioPageComponent implements OnInit {
   // Variable para manejar las tareas del operario
   taskByOperator: OperatorTasksDTO[] = [];
   // manejo de configuraciones iniciales para la tabla general
