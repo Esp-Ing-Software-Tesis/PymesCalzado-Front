@@ -4,7 +4,7 @@ import angularEslint from '@angular-eslint/eslint-plugin';
 import angularTemplateEslint from '@angular-eslint/eslint-plugin-template';
 import angularTemplateParser from '@angular-eslint/template-parser';
 import prettier from 'eslint-config-prettier';
-import { off } from 'process';
+import { off } from 'node:process';
 
 export default [
   {
