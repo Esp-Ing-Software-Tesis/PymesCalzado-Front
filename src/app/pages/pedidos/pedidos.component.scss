@@ -9,14 +9,14 @@
 }
 
 .title {
-    font-family: Inter;
+    font-family: Inter, sans-serif;
     font-size: 40px;
     font-style: normal;
     font-weight: 700;
 }
 
 .text {
-    font-family: Inter;
+    font-family: Inter, sans-serif;
     font-size: 24px;
     font-style: normal;
 }
@@ -48,7 +48,7 @@
 
 .container-button span {
     color: $background-color;
-    font-family: Inter;
+    font-family: Inter, sans-serif;
     font-size: 16px;
     font-style: normal;
 }

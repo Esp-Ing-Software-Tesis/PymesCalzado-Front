@@ -30,7 +30,7 @@
 }
 
 .button-volver span {
-    font-family: Inter;
+    font-family: Inter, sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
@@ -41,7 +41,7 @@
 }
 
 .title {
-    font-family: Inter;
+    font-family: Inter, sans-serif;
     font-size: 40px;
     font-style: normal;
     font-weight: 700;
@@ -58,7 +58,7 @@
 }
 
 .container-form label {
-    font-family: Inter;
+    font-family: Inter, sans-serif;
     font-size: 24px;
     font-style: normal;
     font-weight: 600;
@@ -66,7 +66,7 @@
 
 .container-form .required {
     color: $rojo-campos-obligatorios;
-    font-family: Inter;
+    font-family: Inter, sans-serif;
     font-size: 24px;
     font-style: normal;
     font-weight: 600;
@@ -95,7 +95,7 @@
       width: 100%;
       height: auto;
       color: rgba($negro, 0.7);
-      font-family: Inter;
+      font-family: Inter, sans-serif;
       font-size: 14px;
       font-style: normal;
       font-weight: 700;
@@ -107,7 +107,7 @@
   .custom-select-container {
     position: relative;
     width: 100%;
-    font-family: Inter;
+    font-family: Inter, sans-serif;
     font-size: 16px;
     font-weight: 700;
     cursor: pointer;
@@ -225,7 +225,7 @@
 
     span {
         color: $background-color;
-        font-family: Inter;
+        font-family: Inter, sans-serif;
         font-size: 16px;
         font-style: normal;
     }
@@ -238,7 +238,7 @@
 
 .error-message {
   margin-top: 1em;
-  font-family: Inter;
+  font-family: Inter, sans-serif;
   font-size: 13px;
   font-style: normal;
   font-weight: 400;
@@ -268,7 +268,7 @@ thead {
 
     th {
       padding: 0.5em;
-      font-family: Inter;
+      font-family: Inter, sans-serif;
       font-size: 16px;
       font-style: normal;
       text-align: center;
@@ -299,7 +299,7 @@ tbody {
         td {
           padding: 0;
           height: 100%;
-          font-family: Inter;
+          font-family: Inter, sans-serif;
           font-size: 14px;
           font-style: normal;
           font-weight: 500;
@@ -363,7 +363,7 @@ tbody {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: Inter;
+      font-family: Inter, sans-serif;
       font-size: 16px;
       font-style: normal;
     }
@@ -409,14 +409,14 @@ tbody {
     }
 
     .error-title {
-      font-family: Inter;
+      font-family: Inter, sans-serif;
       font-size: 28px;
       font-style: normal;
       font-weight: 700;
     }
 
     .error-text {
-      font-family: Inter;
+      font-family: Inter, sans-serif;
       font-size: 24px;
       font-style: normal;
       font-weight: 400;
@@ -433,7 +433,7 @@ tbody {
   padding-top: 1.5em;
 
   button {
-    font-family: Inter;
+    font-family: Inter, sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
