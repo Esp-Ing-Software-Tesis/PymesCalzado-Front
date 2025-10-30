@@ -42,11 +42,11 @@ export class DiseñosCalzadoPageComponent implements OnInit {
   });
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private shoeDesignService: ShoeDesignService,
-    private detailConfigService: DetailConfigService,
-    private cdr: ChangeDetectorRef,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
+    private readonly shoeDesignService: ShoeDesignService,
+    private readonly detailConfigService: DetailConfigService,
+    private readonly cdr: ChangeDetectorRef,
   ) {}
 
   //Poblar data inicial en la tabla

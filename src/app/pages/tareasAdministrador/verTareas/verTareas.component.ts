@@ -29,10 +29,10 @@ export class VerTareasPageComponent implements OnInit {
   manageTaskConfig = structuredClone(INFO_MANAGE_TASKS);
 
   constructor(
-    private tasksSharedService: TasksSharedService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private tasksService: TasksService,
+    private readonly tasksSharedService: TasksSharedService,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
+    private readonly tasksService: TasksService,
   ) {}
 
   ngOnInit(): void {

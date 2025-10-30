@@ -78,12 +78,12 @@ export class CrearDiseñosCalzadoPageComponent implements OnInit, AfterViewCheck
   private hasScrolled = false;
 
   constructor(
-    private router: Router,
-    private shoeCategorysService: ShoeCategorysService,
-    private productionLinesService: ProductionLinesService,
-    private shoeColorsService: ShoeColorsService,
-    private shoeSizesService: ShoeSizesService,
-    private shoeDesignService: ShoeDesignService,
+    private readonly router: Router,
+    private readonly shoeCategorysService: ShoeCategorysService,
+    private readonly productionLinesService: ProductionLinesService,
+    private readonly shoeColorsService: ShoeColorsService,
+    private readonly shoeSizesService: ShoeSizesService,
+    private readonly shoeDesignService: ShoeDesignService,
   ) {}
 
   ngOnInit(): void {

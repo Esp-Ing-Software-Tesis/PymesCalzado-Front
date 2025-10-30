@@ -56,9 +56,9 @@ export class CrearEditarTareasComponent implements OnInit, AfterViewChecked {
   numErrorsTable: number = 0;
 
   constructor(
-    private tasksSharedService: TasksSharedService,
-    private router: Router,
-    private route: ActivatedRoute,
+    private readonly tasksSharedService: TasksSharedService,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {

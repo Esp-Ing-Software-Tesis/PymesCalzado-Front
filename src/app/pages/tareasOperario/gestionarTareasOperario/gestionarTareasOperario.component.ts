@@ -23,10 +23,10 @@ export class GestionarTareasOperarioPageComponent implements OnInit {
   showAlertModal: boolean = false;
 
   constructor(
-    private tasksSharedService: TasksSharedService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private tasksService: TasksService,
+    private readonly tasksSharedService: TasksSharedService,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
+    private readonly tasksService: TasksService,
   ) {}
 
   ngOnInit(): void {
