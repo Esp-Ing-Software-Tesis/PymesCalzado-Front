@@ -17,7 +17,7 @@ export class AppComponent {
   mostrarheaderandfooter = true;
 
   constructor(
-    private router: Router,
+    private readonly router: Router,
   ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
