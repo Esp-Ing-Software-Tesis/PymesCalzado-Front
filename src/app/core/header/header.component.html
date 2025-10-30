@@ -31,14 +31,14 @@
         </button>
       </div>
     </div>
-    <div class="nav_mobile" aria-label="Menu versio resposive">
+    <div class="nav_mobile" aria-label="Menu version resposive">
       <button class="hamburger" (click)="toogleMenu()">
         <svg class="icon">
           <use xlink:href="assets/icons-sprite.svg#headerAndFooter-menu"></use>
         </svg>
       </button>
       <div *ngIf="isOpen" class="mobile_menu">
-        <nav class="menu">
+        <nav class="menu" aria-label="Menu version resposive">
           <ul>
             <li *ngFor="let option of menuOptions">
               <a [routerLink]="option.route" routerLinkActive="active" (click)="isOpen = false">
