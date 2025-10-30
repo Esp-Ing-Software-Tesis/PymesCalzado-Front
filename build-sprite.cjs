@@ -28,19 +28,16 @@ function walk(dir) {
       walk(full);
     } else if (entry.isFile() && path.extname(entry.name).toLowerCase() === '.svg') {
       // id = ruta relativa sin .svg, slash → guion
-      const rel = path
-        .relative(iconsDir, full)
-        .replace(/\\/g, '/')
-        .replace(/\.svg$/, '');
-      const id = rel.replace(/\//g, '-');
+      const rel = path.relative(iconsDir, full).replaceAll('\\', '/').replaceAll('.svg', '');
+      const id = rel.replaceAll('/', '-');
 
       let content = fs.readFileSync(full, 'utf8');
       // Limpiar cabeceras XML/DOCTYPE
-      content = content.replace(/<\?xml[\s\S]*?\?>\s*/g, '').replace(/<!DOCTYPE[\s\S]*?>\s*/g, '');
+      content = content.replaceAll(/<\?xml[\s\S]*?\?>\s*/g, '').replaceAll(/<!DOCTYPE[\s\S]*?>\s*/g, '');
 
       // Aplicar currentColor solo a los íconos definidos en el Set
       if (iconsWithCurrentColor.has(id)) {
-        content = content.replace(/fill=".*?"/g, 'fill="currentColor"').replace(/stroke=".*?"/g, 'stroke="currentColor"');
+        content = content.replaceAll(/fill=".*?"/g, 'fill="currentColor"').replaceAll(/stroke=".*?"/g, 'stroke="currentColor"');
       }
 
       sprites.add(id, content);
@@ -59,7 +56,7 @@ let sprite = sprites.toString({ inline: true });
 
 // Asegurar que tenga xmlns
 if (!sprite.includes('xmlns=')) {
-  sprite = sprite.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
+  sprite = sprite.replaceAll('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
 }
 
 // Guardar el sprite resultante

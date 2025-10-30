@@ -31,11 +31,11 @@ export class PedidosPageComponent implements OnInit {
   orderDetail: DataTableDetailOrder[] = [];
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private orderService: OrderService,
-    private detailConfigService: DetailConfigService,
-    private cdr: ChangeDetectorRef,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
+    private readonly orderService: OrderService,
+    private readonly detailConfigService: DetailConfigService,
+    private readonly cdr: ChangeDetectorRef,
   ) {}
 
   //Poblar data inicial en la tabla

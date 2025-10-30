@@ -53,10 +53,10 @@ export class UsuariosPageComponent implements OnInit {
   numErrors: number = 0;
 
   constructor(
-    private usersService: UsersService,
-    private documentTypeService: DocumentTypeService,
-    private rolsService: RolsService,
-    private productionLinesService: ProductionLinesService,
+    private readonly usersService: UsersService,
+    private readonly documentTypeService: DocumentTypeService,
+    private readonly rolsService: RolsService,
+    private readonly productionLinesService: ProductionLinesService,
   ) {}
 
   //Poblar data inicial en la tabla

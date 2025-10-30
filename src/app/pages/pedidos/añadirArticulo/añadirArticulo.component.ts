@@ -44,10 +44,10 @@ export class AñadirArticuloPageComponent implements OnInit {
   articles: ArticlesDTO[] = [];
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private shoeDesignService: ShoeDesignService,
-    private articlesSharedService: ArticlesSharedService,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
+    private readonly shoeDesignService: ShoeDesignService,
+    private readonly articlesSharedService: ArticlesSharedService,
   ) {}
 
   ngOnInit(): void {

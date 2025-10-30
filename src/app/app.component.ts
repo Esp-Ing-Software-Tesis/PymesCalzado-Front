@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet, NavigationEnd, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './core/header/header.component';

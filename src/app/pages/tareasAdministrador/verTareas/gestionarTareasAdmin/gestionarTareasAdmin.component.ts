@@ -54,11 +54,11 @@ export class GestionarTareasAdminPageComponent implements OnInit {
   currentAction: string = '';
 
   constructor(
-    private tasksSharedService: TasksSharedService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private tasksService: TasksService,
-    private usersService: UsersService,
+    private readonly tasksSharedService: TasksSharedService,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
+    private readonly tasksService: TasksService,
+    private readonly usersService: UsersService,
   ) {}
 
   ngOnInit(): void {
