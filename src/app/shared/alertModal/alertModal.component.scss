@@ -80,13 +80,13 @@
 }
 
 .container-text h1 {
-    font-family: Inter;
+    font-family: Inter, sans-serif;
     font-size: 24px;
     font-style: normal;
 }
 
 .container-text p {
-    font-family: Inter;
+    font-family: Inter, sans-serif;
     font-size: 16px;
     font-style: normal;
 }
@@ -103,7 +103,7 @@
 }
 
 .error p {
-    font-family: Inter;
+    font-family: Inter, sans-serif;
     font-size: 12px;
     font-style: normal;
     color: $rojo-texto-error;
@@ -128,7 +128,7 @@
 }
 
 .container-buttons .aceptar {
-    font-family: Inter;
+    font-family: Inter, sans-serif;
     font-size: 16px;
     font-style: normal;
     background-color: $verde-agua-marina;
@@ -138,7 +138,7 @@
 }
 
 .container-buttons .cancelar {
-    font-family: Inter;
+    font-family: Inter, sans-serif;
     font-size: 16px;
     font-style: normal;
     background-color: $beige;
