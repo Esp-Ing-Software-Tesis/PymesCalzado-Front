@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ManageTaskOperatorDTO } from './gestionarTareasOperario.interface';
 import { TasksSharedService } from '../../../services/tasksShared.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -15,7 +15,7 @@ import { NextStateTask } from '../../../models/tareas.model';
   templateUrl: './gestionarTareasOperario.component.html',
   styleUrls: ['./gestionarTareasOperario.component.scss'],
 })
-export class GestionarTareasOperarioPageComponent {
+export class GestionarTareasOperarioPageComponent implements OnInit {
   // Variable para manejar los datos enviados desde el padre
   configManageTask: ManageTaskOperatorDTO | null = null;
   // manejo de configuraciones de entrada para el modal de alerta
