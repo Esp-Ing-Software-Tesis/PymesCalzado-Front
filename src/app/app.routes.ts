@@ -12,6 +12,9 @@ import { TareasAdministradorPageComponent } from './pages/tareasAdministrador/ta
 import { CrearEditarTareasComponent } from './pages/tareasAdministrador/crearEditarTareas/crearEditarTareas.component';
 import { VerTareasPageComponent } from './pages/tareasAdministrador/verTareas/verTareas.component';
 import { GestionarTareasAdminPageComponent } from './pages/tareasAdministrador/verTareas/gestionarTareasAdmin/gestionarTareasAdmin.component';
+import { TareasOperarioPageComponent } from './pages/tareasOperario/tareasOperario.component';
+import { GestionarTareasOperarioPageComponent } from './pages/tareasOperario/gestionarTareasOperario/gestionarTareasOperario.component';
+import path from 'path';
 
 export const routes: Routes = [
   {
@@ -79,10 +82,22 @@ export const routes: Routes = [
               {
                 path: 'gestionar-tareas',
                 component: GestionarTareasAdminPageComponent,
+                canActivate: [AuthGuard],
               },
-            ]
+            ],
           },
         ],
+      },
+    ],
+  },
+  {
+    path: 'tareas',
+    component: TareasOperarioPageComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'gestionar-tareas-operario',
+        component: GestionarTareasOperarioPageComponent,
       },
     ],
   },

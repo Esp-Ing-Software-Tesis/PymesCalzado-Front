@@ -1,0 +1,193 @@
+@use 'variables' as *;
+
+.container-page-gestionar-tareas-operario {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    width: 100%;
+    height: auto;
+}
+
+.button-volver {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 160px;
+    height: 40px;
+    border: none;
+    background-color: $beige;
+    gap: 0.2em;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.button-volver svg {
+    width: 20px;
+    height: 20px;
+}
+
+.button-volver span {
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.button-volver:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.title {
+    font-family: Inter;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+// Logica para el espacio de descripcion del articulo
+.container-resumn {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    border: 1px solid $negro;
+    border-radius: 10px;
+    background-color: $beige;
+    padding: 0.5em 4em;
+
+    h2 {
+        font-family: Inter;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 700;
+    }
+
+    .second-row {
+        display: flex;
+        flex-direction: row;
+        gap: 1em;
+        width: 100%;
+        height: auto;
+        justify-content: space-between;
+        align-items: center;
+
+        h3 {
+            font-family: Inter;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 500;
+        }
+    }
+}
+
+.container-action {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    gap: 2em;
+    justify-content: center;
+    align-items: center;
+
+    h2 {
+      font-family: Inter;
+      font-size: 28px;
+      font-style: normal;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    p {
+      font-family: Inter;
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 400;
+      text-align: center;
+    }
+
+    .container-button {
+        height: auto;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        button {
+            width: 180px;
+            height: 40px;
+            border: none;
+            background-color: $verde-agua-marina;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: filter 0.3s ease;
+            color: $background-color;
+            font-family: Inter;
+            font-size: 16px;
+            font-style: normal;
+            text-align: center;
+        }
+
+        button:hover {
+            filter: brightness(1.2);
+        }
+    }
+
+    .container-states {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: auto;
+        gap: 2em;
+
+        .current-state, .next-state {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 1em;
+
+            p {
+                font-family: Inter;
+                font-size: 20px;
+                font-style: normal;
+                font-weight: 400;
+            }
+
+            .state {
+                height: 25px;
+                width: 160px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 13px;
+            }
+
+            .state.nuevo {
+                background-color: $azul-estado-nuevo;
+            }
+
+            .state.en_progreso {
+                background-color: $naranja-estado-enprogreso;
+            }
+
+            .state.en_revision {
+                background-color: $amarillo-estado-enrevision;
+            }
+
+            .state.en_correccion {
+                background-color: $rojo-estado-encorrecion;
+            }
+
+            .state.finalizado {
+                background-color: $verde-estado-finalizado;
+            }
+        }
+    }
+}

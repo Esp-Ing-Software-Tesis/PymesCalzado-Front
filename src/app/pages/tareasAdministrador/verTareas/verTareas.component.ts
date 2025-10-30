@@ -1,6 +1,6 @@
 import { TablaGeneralComponent } from './../../../shared/tablaGeneral/tablaGeneral.component';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TaskShowDatilDTO, TasksDetailByArticleDTO } from './verTareas.interface';
 import { TasksSharedService } from '../../../services/tasksShared.service';
 import { Router, ActivatedRoute, RouterOutlet } from '@angular/router';
@@ -16,7 +16,7 @@ import { map } from 'rxjs';
   templateUrl: './verTareas.component.html',
   styleUrls: ['./verTareas.component.scss'],
 })
-export class VerTareasPageComponent {
+export class VerTareasPageComponent implements OnInit {
   // Variable para manejar los datos enviados desde el padre
   configShowTask: TaskShowDatilDTO | null = null;
   //Varible para manejar visualizacion de hijos
@@ -115,8 +115,10 @@ export class VerTareasPageComponent {
     localStorage.setItem('fromParentCreate', '1');
     // Enviar la configuración al servicio
     this.tasksSharedService.setTaskInfoManage(this.manageTaskConfig);
-    // navegar al hijo
-    this.router.navigate(['gestionar-tareas'], { relativeTo: this.route });
+    this.router.navigate(['gestionar-tareas'], {
+      relativeTo: this.route,
+      state: { fromParent: true },
+    });
   }
 
   // Consulta de EP's
@@ -145,7 +147,6 @@ export class VerTareasPageComponent {
         },
         error: (err) => {
           this.tasksByArticle = [];
-          console.log(err);
         },
       });
   }

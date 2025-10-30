@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TablaGeneralComponent } from '../../../shared/tablaGeneral/tablaGeneral.component';
 import { SinInformacionComponent } from '../../../shared/sinInformacion/sinInformacion.component';
@@ -21,7 +21,7 @@ import { map } from 'rxjs';
   templateUrl: './añadirArticulo.component.html',
   styleUrls: ['./añadirArticulo.component.scss'],
 })
-export class AñadirArticuloPageComponent {
+export class AñadirArticuloPageComponent implements OnInit {
   //Variable para manejar los diseños de calzado
   shoeDesings: ShoeDesignDTO[] = [];
   //Variables para manejar datos del diseño
@@ -286,7 +286,6 @@ export class AñadirArticuloPageComponent {
         },
         error: (err) => {
           this.shoeDesings = [];
-          console.log(err);
         },
       });
   }
@@ -299,7 +298,6 @@ export class AñadirArticuloPageComponent {
         this.sizes = res.sizes.map((u) => '' + u.id);
       },
       error: (err) => {
-        console.log(err);
       },
     });
   }

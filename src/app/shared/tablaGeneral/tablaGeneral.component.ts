@@ -124,8 +124,10 @@ export class TablaGeneralComponent<Items extends Record<string, any>> implements
       .replace(/\s+/g, '_')
       .toLowerCase();
 
-    // Si el estado no es 'nuevo' ni 'finalizado', usar 'en_progreso'
-    if (normalized !== 'nuevo' && normalized !== 'finalizado') {
+    const nonProgressStates = ['nuevo', 'finalizado', 'en_revision', 'en_correccion', 'cancelado'];
+
+    // Si el estado no es alguno valido pone en_progreso
+    if (!nonProgressStates.includes(normalized)) {
       return 'en_progreso';
     }
 

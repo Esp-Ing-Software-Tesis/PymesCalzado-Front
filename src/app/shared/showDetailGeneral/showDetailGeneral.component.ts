@@ -1,5 +1,5 @@
 import { Router, ActivatedRoute, RouterOutlet } from '@angular/router';
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, AfterViewChecked } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InputShowDetailGeneral } from './showDetailGeneral.interface';
 import { DetailConfigService } from '../../services/detailConfig.service';
@@ -19,7 +19,7 @@ import { filter } from 'rxjs/operators';
   templateUrl: './showDetailGeneral.component.html',
   styleUrls: ['./showDetailGeneral.component.scss'],
 })
-export class ShowDetailGeneralComponent {
+export class ShowDetailGeneralComponent implements OnInit, AfterViewChecked {
   inputsConfigPage!: InputShowDetailGeneral;
 
   // Variable para manejar las tareas a crear
@@ -314,7 +314,6 @@ export class ShowDetailGeneralComponent {
 
     this.tasksService.postCreateTasks(dataTasks).subscribe({
       next: (res) => {
-        console.log('Tareas creadas con éxito', res);
         this.onBackAction();
       },
       error: (err) => {

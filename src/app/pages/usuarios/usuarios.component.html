@@ -23,7 +23,7 @@
     </app-sin-informacion>
   </ng-template>
   <div class="conatiner-alert-modal" *ngIf="showAlertModal">
-    <app-alert-modal [inputAlertModal]="alertModalConfig" (acept)="updtateStateUser()" (close)="closeAlertModal()"> </app-alert-modal>
+    <app-alert-modal [inputAlertModal]="alertModalConfig" (acceptModal)="updtateStateUser()" (closeModal)="closeAlertModal()"> </app-alert-modal>
   </div>
   <div class="conatiner-form-modal" *ngIf="showFormModal">
     <app-form-modal
@@ -31,7 +31,7 @@
       (resultsForm)="validateErrors($event)"
       (fieldChange)="validateField($event)"
       (optionSelected)="onOptionSelected($event)"
-      (close)="closeFormModal()"
+      (modalClosed)="closeFormModal()"
     >
     </app-form-modal>
   </div>

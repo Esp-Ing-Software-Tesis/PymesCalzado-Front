@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, ChangeDetectorRef, ViewChild, ElementRef  } from '@angular/core';
+import { Component, HostListener, ChangeDetectorRef, ViewChild, ElementRef, OnInit, AfterViewChecked, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, RouterOutlet, NavigationEnd } from '@angular/router';
 import { ClientsService } from '../../../services/clientes.service';
 import { ArticlesSharedService } from '../../../services/articlesShared.service';
@@ -19,7 +19,7 @@ import { filter } from 'rxjs/operators';
   templateUrl: './crearPedido.component.html',
   styleUrls: ['./crearPedido.component.scss'],
 })
-export class CrearPedidosPageComponent {
+export class CrearPedidosPageComponent implements OnInit, AfterViewChecked, OnDestroy {
   //Varible para almacenar los clientes
   clients: ClientsDTO[] = [];
   // variable para saber cuando el hijo cargo un nuevo articulo
@@ -63,7 +63,6 @@ export class CrearPedidosPageComponent {
   generalError = '';
   //Variables para scroll automatico al error
   private hasScrolled = false;
-
 
   constructor(
     private router: Router,
@@ -340,9 +339,7 @@ export class CrearPedidosPageComponent {
         next: (res) => {
           this.clients = res;
         },
-        error: (err) => {
-          console.log(err);
-        },
+        error: (err) => {},
       });
   }
 
@@ -362,7 +359,6 @@ export class CrearPedidosPageComponent {
 
     this.orderService.postCreateOrder(dataCreate).subscribe({
       next: (res) => {
-        console.log('Pedido creado con éxito', res);
         this.onBackAction();
       },
       error: (err) => {
