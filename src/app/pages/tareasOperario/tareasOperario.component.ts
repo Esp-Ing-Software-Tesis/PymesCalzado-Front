@@ -39,11 +39,11 @@ export class TareasOperarioPageComponent implements OnInit {
   taskByOperatorFilters: OperatorTasksDTO[] = [];
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private cdr: ChangeDetectorRef,
-    private tasksSharedService: TasksSharedService,
-    private tasksService: TasksService,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
+    private readonly cdr: ChangeDetectorRef,
+    private readonly tasksSharedService: TasksSharedService,
+    private readonly tasksService: TasksService,
   ) {}
 
   //Poblar data inicial en la tabla

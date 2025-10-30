@@ -20,8 +20,8 @@ export class HeaderComponent {
   isOpen: boolean = false;
 
   constructor(
-    private authService: AuthService,
-    private router: Router,
+    private readonly authService: AuthService,
+    private readonly router: Router,
   ) {
     this.role$ = this.authService.userRole$;
     this.username$ = this.authService.username$;
