@@ -25,7 +25,15 @@
               required
               minlength="8"
             />
-            <svg class="icon cursor-pointer" (click)="togglePasswordVisibility()">
+            <svg
+              class="icon cursor-pointer"
+              tabindex="0"
+              role="button"
+              aria-label="Mostrar u ocultar contraseña"
+              (click)="togglePasswordVisibility()"
+              (keydown.enter)="togglePasswordVisibility()"
+              (keydown.space)="togglePasswordVisibility()"
+            >
               <use [attr.xlink:href]="passwordVisible ? 'assets/icons-sprite.svg#login-eye' : 'assets/icons-sprite.svg#login-eye-off'"></use>
             </svg>
           </div>
@@ -43,6 +51,6 @@
     </div>
   </div>
   <div class="image">
-    <img src="assets/images/login/imageLogin.webp" class="image_general" alt="imagen general" />
+    <img src="assets/images/login/imageLogin.webp" class="image_general" alt="collage-lineas-produccion" />
   </div>
 </div>
