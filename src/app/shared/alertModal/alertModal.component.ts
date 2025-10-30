@@ -13,16 +13,16 @@ import { InputAlertModal } from './alertModal.interface';
 export class AlertModalComponent {
     inputAlertModal = input.required<InputAlertModal>();
 
-    @Output() acept = new EventEmitter<void>();
-    @Output() close = new EventEmitter<void>();
+    @Output() acceptModal = new EventEmitter<void>();
+    @Output() closeModal = new EventEmitter<void>();
 
     // Accion de aceptar
     onAceptClick() {
-        this.acept.emit();
+        this.acceptModal.emit();
     }
 
     // Accion de cerrar
     onCloseClick() {
-        this.close.emit();
+        this.closeModal.emit();
     }
 }

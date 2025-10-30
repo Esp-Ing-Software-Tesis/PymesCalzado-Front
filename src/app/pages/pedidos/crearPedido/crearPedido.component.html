@@ -168,7 +168,7 @@
         <button class="button-create" [disabled]="newOrder.articles.length === 0" (click)="onCreateOrder()">Crear</button>
       </div>
       <div class="conatiner-alert-modal" *ngIf="showAlertModal">
-        <app-alert-modal [inputAlertModal]="alertModalConfig" (acept)="deleteArticle()" (close)="closeAlertModal()"> </app-alert-modal>
+        <app-alert-modal [inputAlertModal]="alertModalConfig" (acceptModal)="deleteArticle()" (closeModal)="closeAlertModal()"> </app-alert-modal>
       </div>
     </div>
   </div>

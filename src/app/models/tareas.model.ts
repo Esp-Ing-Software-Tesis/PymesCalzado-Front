@@ -20,9 +20,6 @@ export interface TaskDetailArticles {
 // Este se borará cuando se integre con el backend
 export interface TaskDetailsMock {
   task_id: number;
-  LineasProduccion: TaskDetail[];
-}
-export interface TaskDetail {
   LineasProduccion: TaskProductionLine[];
 }
 

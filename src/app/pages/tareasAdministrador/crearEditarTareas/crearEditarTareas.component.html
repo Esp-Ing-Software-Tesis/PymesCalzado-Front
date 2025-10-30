@@ -135,12 +135,12 @@
         [inputsFormModal]="formModalConfig"
         (resultsForm)="validateErrors($event)"
         (fieldChange)="validateField($event)"
-        (close)="closeFormModal()"
+        (modalClosed)="closeFormModal()"
       >
       </app-form-modal>
     </div>
     <div class="conatiner-alert-modal" *ngIf="showAlertModal">
-      <app-alert-modal [inputAlertModal]="alertModalConfig" (acept)="deleteTask()" (close)="closeAlertModal()"> </app-alert-modal>
+      <app-alert-modal [inputAlertModal]="alertModalConfig" (acceptModal)="deleteTask()" (closeModal)="closeAlertModal()"> </app-alert-modal>
     </div>
   </div>
 </div>
