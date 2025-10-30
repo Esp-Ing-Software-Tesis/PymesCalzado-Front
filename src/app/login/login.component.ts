@@ -27,8 +27,8 @@ export class LoginPageComponent {
   }
 
   constructor(
-    private authservice: AuthService,
-    private router: Router,
+    private readonly authservice: AuthService,
+    private readonly router: Router,
   ) {}
 
   togglePasswordVisibility() {

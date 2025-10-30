@@ -65,12 +65,12 @@ export class CrearPedidosPageComponent implements OnInit, AfterViewChecked, OnDe
   private hasScrolled = false;
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private clienteService: ClientsService,
-    private articlesSharedService: ArticlesSharedService,
-    private orderService: OrderService,
-    private cdr: ChangeDetectorRef,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
+    private readonly clienteService: ClientsService,
+    private readonly articlesSharedService: ArticlesSharedService,
+    private readonly orderService: OrderService,
+    private readonly cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {

@@ -48,11 +48,11 @@ export class ShowDetailGeneralComponent implements OnInit, AfterViewChecked {
   private hasScrolled = false;
 
   constructor(
-    private detailConfigService: DetailConfigService,
-    private tasksSharedService: TasksSharedService,
-    private router: Router,
-    private tasksService: TasksService,
-    private route: ActivatedRoute,
+    private readonly detailConfigService: DetailConfigService,
+    private readonly tasksSharedService: TasksSharedService,
+    private readonly router: Router,
+    private readonly tasksService: TasksService,
+    private readonly route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
