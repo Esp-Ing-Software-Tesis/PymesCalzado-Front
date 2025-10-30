@@ -14,7 +14,6 @@ import { VerTareasPageComponent } from './pages/tareasAdministrador/verTareas/ve
 import { GestionarTareasAdminPageComponent } from './pages/tareasAdministrador/verTareas/gestionarTareasAdmin/gestionarTareasAdmin.component';
 import { TareasOperarioPageComponent } from './pages/tareasOperario/tareasOperario.component';
 import { GestionarTareasOperarioPageComponent } from './pages/tareasOperario/gestionarTareasOperario/gestionarTareasOperario.component';
-import path from 'path';
 
 export const routes: Routes = [
   {
