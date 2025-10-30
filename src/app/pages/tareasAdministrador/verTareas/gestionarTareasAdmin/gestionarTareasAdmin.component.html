@@ -19,6 +19,49 @@
       </div>
     </div>
     <div class="container-form">
+      <div class="container-title">
+        <h2 class="title-table">Progreso</h2>
+      </div>
+      <!-- tabla tareas -->
+      <div class="container-tasks" *ngIf="detailTasksByTask.length > 0; else dataNotFound">
+        <div class="table-wrapper">
+          <table>
+            <colgroup>
+              <col *ngFor="let col of tableConfig" [style.width]="col.width" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th *ngFor="let col of tableConfig">
+                  <span class="text">{{ col.name }}</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of detailTasksByTask; let i = index" [ngClass]="{ 'row-highlight': shouldHighlightRow(item) }">
+                <td *ngFor="let col of tableConfig" [ngClass]="['col-' + col.align, col.position ? 'col-' + col.position : '']">
+                  <ng-container [ngSwitch]="col.key">
+                    <!-- Estado -->
+                    <ng-container *ngSwitchCase="'state'">
+                      <div class="container_state">
+                        <label [ngClass]="['state', getStateClass(item[col.key])]">
+                          {{ item[col.key] }}
+                        </label>
+                      </div>
+                    </ng-container>
+
+                    <!-- Texto por defecto -->
+                    <ng-container *ngSwitchDefault>
+                      <div *ngIf="col.key !== 'state'">
+                        {{ item[col.key] }}
+                      </div>
+                    </ng-container>
+                  </ng-container>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
       <ng-template #dataNotFound>
         <div class="container-sin-tareas">
           <svg class="icon">
@@ -28,6 +71,68 @@
           <p class="error-text">No se encontro el detalle de la tarea. Por favor, intente nuevamente más tarde.</p>
         </div>
       </ng-template>
+    </div>
+    <div
+      class="container-actions"
+      *ngIf="logicActionsProductionLine() === 'asignar' || logicActionsProductionLine() === 'revisar' || logicActionsProductionLine() === 'reasignar'"
+    >
+      <ng-container [ngSwitch]="logicActionsProductionLine()">
+        <!-- Asignar -->
+        <ng-container *ngSwitchCase="'asignar'">
+          <div class="container-action">
+            <h2 class="assign-title">Acciones Disponibles</h2>
+            <p class="assign-text">
+              Puede avanzar esta tarea a la siguiente etapa de producción, asignarla a un operario de esa etapa y añadir un comentario opcional.
+            </p>
+            <div class="container-button">
+              <button class="assign-button" (click)="onFormModal('asignar')">Asignar tarea y avanzar</button>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- Reasignar -->
+        <ng-container *ngSwitchCase="'reasignar'">
+          <div class="container-action">
+            <h2 class="assign-title">Acciones Disponibles</h2>
+            <p class="assign-text">
+              Puede reasignar esta tarea a otro operario mientras esté en estado Nuevo. Una vez que el operario la marque como En progreso, ya no
+              podrás modificar la asignación.
+            </p>
+            <div class="container-button">
+              <button class="assign-button" (click)="onFormModal('reasignar')">Reasignar Tarea</button>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- Aprobar o Rechazar -->
+        <ng-container *ngSwitchCase="'revisar'">
+          <div class="container-action">
+            <h2 class="assign-title">Acciones Disponibles</h2>
+            <p class="assign-text">
+              Puede aprobar o rechazar esta tarea según el resultado de la revisión manual realizada durante el control de calidad.
+            </p>
+            <div class="container-buttons">
+              <button class="reject-button" (click)="onAlertModal('Rechazar')">Rechazar</button>
+              <button class="approve-button" (click)="onAlertModal('Aprobar')">Aprobar</button>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngSwitchDefault> </ng-container>
+      </ng-container>
+    </div>
+    <div class="conatiner-alert-modal" *ngIf="showAlertModal"></div>
+    <div class="conatiner-form-modal" *ngIf="showFormModal">
+      <app-form-modal
+        [inputsFormModal]="formModalConfig"
+        (resultsForm)="validateErrors($event)"
+        (optionSelected)="onOptionSelected($event)"
+        (modalClosed)="closeFormModal()"
+      >
+      </app-form-modal>
+    </div>
+    <div class="conatiner-alert-modal" *ngIf="showAlertModal">
+      <app-alert-modal [inputAlertModal]="alertModalConfig" (acceptModal)="reviewAction()" (closeModal)="closeAlertModal()"> </app-alert-modal>
     </div>
   </div>
 </div>

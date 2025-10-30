@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, AfterViewChecked } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TasksSharedService } from '../../../services/tasksShared.service';
 import { TaskDTO, TasksArticlesDTO, TasksDetailDTO } from '../crearEditarTareas/crearEditarTareas.interface';
@@ -15,7 +15,7 @@ import { AlertModalComponent } from '../../../shared/alertModal/alertModal.compo
   templateUrl: './crearEditarTareas.component.html',
   styleUrls: ['./crearEditarTareas.component.scss'],
 })
-export class CrearEditarTareasComponent {
+export class CrearEditarTareasComponent implements OnInit, AfterViewChecked {
   // Variable para manejar las tareas a crear o editar
   configTask: TaskDTO | null = null;
   tasks: TasksArticlesDTO[] = [];

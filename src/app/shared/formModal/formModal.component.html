@@ -8,30 +8,33 @@
       </svg>
       <p class="text-error">{{ inputsFormModal().error }}</p>
     </div>
-    <ng-container *ngFor="let input of inputsFormModal().inputsConfig">
+
+    <ng-container *ngFor="let input of inputsFormModal().inputsConfig; let i = index">
       <div class="container-inputs" *ngIf="isFieldVisible(input)">
         <ng-container>
           <div class="container-text">
-            <label>{{ input.name }}</label>
+            <label [for]="'input_' + input.key + '_' + i">{{ input.name }}</label>
             <span *ngIf="input.obligatory">*</span>
           </div>
-          <!-- Input generico -->
+
+          <!-- Input genérico -->
           <input
             *ngIf="input.inputType !== 'list' && input.inputType !== 'password'"
             type="{{ input.inputType }}"
-            id="{{ 'input_' + input.key }}"
+            id="{{ 'input_' + input.key + '_' + i }}"
             name="{{ 'input_' + input.key }}"
             class="{{ 'input_' + input.key }}"
             placeholder="{{ 'Ingrese ' + input.article + ' ' + (input.key === 'confirmPassword' ? 'contraseña' : input.name.toLowerCase()) }}"
             [attr.required]="input.obligatory"
             (input)="onInputChange($event, input.key)"
           />
+
           <!-- Input de tipo password -->
           <ng-container *ngIf="input.inputType === 'password'">
             <div class="password-container">
               <input
                 [type]="passwordVisible[input.key] ? 'text' : 'password'"
-                id="{{ 'input_' + input.key }}"
+                id="{{ 'input_' + input.key + '_' + i }}"
                 name="{{ 'input_' + input.key }}"
                 class="{{ 'input_' + input.key }}"
                 placeholder="{{ 'Ingrese ' + (input.key === 'confirmPassword' ? 'contraseña nuevamente' : 'contraseña') }}"
@@ -45,7 +48,8 @@
               </svg>
             </div>
           </ng-container>
-          <!-- Select custom General -->
+
+          <!-- Select custom general -->
           <div class="custom-select" (click)="toggleSelect(input.key)" *ngIf="input.inputType === 'list'">
             <div class="selected" [class.placeholder]="!formValues[input.key]">
               {{ formValues[input.key] || 'Seleccione ' + input.article + ' ' + input.name.toLowerCase() }}
@@ -54,21 +58,32 @@
               </svg>
             </div>
             <ul class="options" *ngIf="openSelect === input.key">
-              <li *ngFor="let option of input.options" [class.active]="formValues[input.key] === option" (click)="selectOption(input.key, option)">
+              <li
+                *ngFor="let option of input.options; let j = index"
+                [class.active]="formValues[input.key] === option"
+                (click)="selectOption(input.key, option)"
+                [id]="'option_' + input.key + '_' + j"
+              >
                 {{ option }}
               </li>
             </ul>
           </div>
+
           <!-- Errores normales -->
           <p class="error" *ngIf="input.error && input.key !== 'password'">
             {{ input.error }}
           </p>
-          <!-- Errores de password (string obligatorio u otro) -->
+
+          <!-- Errores de password -->
           <p class="error" *ngIf="input.key === 'password' && input.error && !isPasswordConditions(input.error)">
             {{ input.error }}
           </p>
-          <!-- Validación por condiciones de seguridad -->
-          <div class="error-password" *ngIf="input.key === 'password' && isPasswordConditions(input.error) && inputsFormModal().context === 'USER'">
+
+          <!-- Validación de condiciones de seguridad -->
+          <div
+            class="error-password"
+            *ngIf="input.key === 'password' && isPasswordConditions(input.error) && inputsFormModal().context === 'USER'"
+          >
             <p>Debe cumplir las siguientes condiciones:</p>
             <p [class.valid]="input.error.length">Mínimo 8 caracteres</p>
             <p [class.valid]="input.error.uppercase">Una letra mayúscula</p>
@@ -78,9 +93,14 @@
         </ng-container>
       </div>
     </ng-container>
+
     <div class="container-buttons">
       <button class="cancelar" (click)="onCloseClick()">Cancelar</button>
-      <button id="aceptar" class="{{ inputsFormModal().textButtonConfirm.toLocaleLowerCase() }}" (click)="setResultsForm($event)">
+      <button
+        id="aceptar"
+        class="{{ inputsFormModal().textButtonConfirm.toLocaleLowerCase() }}"
+        (click)="setResultsForm($event)"
+      >
         {{ inputsFormModal().textButtonConfirm }}
       </button>
     </div>

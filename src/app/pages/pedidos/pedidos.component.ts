@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, RouterOutlet } from '@angular/router';
 import { TablaGeneralComponent } from '../../shared/tablaGeneral/tablaGeneral.component';
 import { SinInformacionComponent } from '../../shared/sinInformacion/sinInformacion.component';
@@ -18,7 +18,7 @@ import { map } from 'rxjs';
   templateUrl: './pedidos.component.html',
   styleUrls: ['./pedidos.component.scss'],
 })
-export class PedidosPageComponent {
+export class PedidosPageComponent implements OnInit {
   // Variable para manejar los datos generales de la tabla
   order: OrderDTO[] = [];
   // manejo de configuraciones iniciales para la tabla general
@@ -124,7 +124,6 @@ export class PedidosPageComponent {
         },
         error: (err) => {
           this.order = [];
-          console.log(err);
         },
       });
   }
@@ -149,7 +148,6 @@ export class PedidosPageComponent {
         },
         error: (err) => {
           this.order = [];
-          console.log(err);
         },
       });
   }

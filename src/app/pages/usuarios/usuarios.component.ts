@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SinInformacionComponent } from '../../shared/sinInformacion/sinInformacion.component';
 import { TablaGeneralComponent } from '../../shared/tablaGeneral/tablaGeneral.component';
@@ -22,7 +22,7 @@ import { UserCreateDTO, UserUpdateDTO } from '../../models/usuario.model';
   templateUrl: './usuarios.component.html',
   styleUrls: ['./usuarios.component.scss'],
 })
-export class UsuariosPageComponent {
+export class UsuariosPageComponent implements OnInit {
   //Almacenar datos de entrada
   users: UsersEventDTO[] = [];
   documentTypeNames: string[] = [];
@@ -217,64 +217,79 @@ export class UsuariosPageComponent {
   validateErrorBusinessLogic(values: { [key: string]: string }) {
     Object.entries(values).forEach(([key, value]) => {
       const input = this.formModalConfig.inputsConfig.find((i) => i.key === key);
-      const passwordValue = values['password'];
-      const confirmPasswordValue = values['confirmPassword'];
-
-      if (!input) {
-        return;
-      }
+      if (!input) return;
 
       switch (key) {
         case 'name':
-          if (value.length < 5 || value.length > 100) {
-            input.error = 'Debe tener entre 5 y 100 caracteres';
-          } else if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(value)) {
-            input.error = 'El campo solo debe contener letras';
-          }
+          this.validateNameField(input, value);
           break;
         case 'document':
-          if (value.length < 6 || value.length > 10) {
-            input.error = 'Debe tener entre 6 y 10 dígitos';
-          } else if (!/^[0-9]+$/.test(value)) {
-            input.error = 'El campo solo debe contener numeros';
-          }
+          this.validateDocumentField(input, value);
           break;
         case 'email':
-          const emailRegex = /^[^\s@]+@[^\s@]+\.(com|co|es)$/i;
-          if (!emailRegex.test(value)) {
-            input.error = 'Ingrese un correo válido';
-          }
+          this.validateEmailField(input, value);
           break;
         case 'phone':
-          if (value.length !== 10) {
-            input.error = 'Debe tener 10 dígitos';
-          } else if (!/^[0-9]+$/.test(value)) {
-            input.error = 'El campo solo debe contener numeros';
-          }
+          this.validatePhoneField(input, value);
           break;
         case 'password':
-          const conditions: PasswordConditions = {
-            length: value.length >= 8,
-            uppercase: /[A-Z]/.test(value),
-            number: /[0-9]/.test(value),
-            symbol: /[!@#$%^&*(),.?":{}|<>]/.test(value),
-          };
-
-          if (conditions.length && conditions.uppercase && conditions.number && conditions.symbol) {
-            input.error = undefined;
-          } else {
-            input.error = conditions;
-          }
+          this.validatePasswordField(input, value);
           break;
         case 'confirmPassword':
-          if (confirmPasswordValue !== passwordValue) {
-            input.error = 'Las contraseñas no coinciden';
-          } else {
-            input.error = undefined;
-          }
+          this.validateConfirmPasswordField(input, values['password'], value);
           break;
       }
     });
+  }
+
+  private validateNameField(input: any, value: string) {
+    if (value.length < 5 || value.length > 100) {
+      input.error = 'Debe tener entre 5 y 100 caracteres';
+    } else if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(value)) {
+      input.error = 'El campo solo debe contener letras';
+    } else {
+      input.error = undefined;
+    }
+  }
+
+  private validateDocumentField(input: any, value: string) {
+    if (value.length < 6 || value.length > 10) {
+      input.error = 'Debe tener entre 6 y 10 dígitos';
+    } else if (!/^[0-9]+$/.test(value)) {
+      input.error = 'El campo solo debe contener números';
+    } else {
+      input.error = undefined;
+    }
+  }
+
+  private validateEmailField(input: any, value: string) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.(com|co|es)$/i;
+    input.error = emailRegex.test(value) ? undefined : 'Ingrese un correo válido';
+  }
+
+  private validatePhoneField(input: any, value: string) {
+    if (value.length !== 10) {
+      input.error = 'Debe tener 10 dígitos';
+    } else if (!/^[0-9]+$/.test(value)) {
+      input.error = 'El campo solo debe contener números';
+    } else {
+      input.error = undefined;
+    }
+  }
+
+  private validatePasswordField(input: any, value: string) {
+    const conditions: PasswordConditions = {
+      length: value.length >= 8,
+      uppercase: /[A-Z]/.test(value),
+      number: /[0-9]/.test(value),
+      symbol: /[!@#$%^&*(),.?":{}|<>]/.test(value),
+    };
+    const isValid = Object.values(conditions).every(Boolean);
+    input.error = isValid ? undefined : conditions;
+  }
+
+  private validateConfirmPasswordField(input: any, password: string, confirmPassword: string) {
+    input.error = confirmPassword !== password ? 'Las contraseñas no coinciden' : undefined;
   }
 
   // Cerrar el modal del formulario
@@ -342,11 +357,9 @@ export class UsuariosPageComponent {
       .subscribe({
         next: (res) => {
           this.users = res;
-          console.log('ususarios cargados', res);
         },
         error: (err) => {
           this.users = [];
-          console.log(err);
         },
       });
   }
@@ -356,11 +369,9 @@ export class UsuariosPageComponent {
     this.documentTypeService.getDocumentsType().subscribe({
       next: (res) => {
         this.documentTypeNames = res.map((d) => d.codigo + ' - ' + d.nombre);
-        console.log('tipos de documento cargados', this.documentTypeNames);
       },
       error: (err) => {
         this.users = [];
-        console.log(err);
       },
     });
   }
@@ -370,11 +381,9 @@ export class UsuariosPageComponent {
     this.rolsService.getRols().subscribe({
       next: (res) => {
         this.rolNames = res.map((d) => d.nombre);
-        console.log('roles cargados', this.rolNames);
       },
       error: (err) => {
         this.users = [];
-        console.log(err);
       },
     });
   }
@@ -384,11 +393,9 @@ export class UsuariosPageComponent {
     this.productionLinesService.getProductionLines().subscribe({
       next: (res) => {
         this.productionLineNames = res.map((d) => d.nombre);
-        console.log('lineas de produccion cargados', this.productionLineNames);
       },
       error: (err) => {
         this.users = [];
-        console.log(err);
       },
     });
   }
@@ -406,10 +413,8 @@ export class UsuariosPageComponent {
       password: this.setDataForm['password'],
       ...(this.setDataForm['productionLine'] && { productionLine: this.setDataForm['productionLine'] }),
     };
-    console.log(dataSendCreate);
     this.usersService.postUser(dataSendCreate).subscribe({
       next: (res) => {
-        console.log('usuario creado', res);
         // Insertar el nuevo usuario en el front sin consultar el Back
         const newuser: UsersEventDTO = {
           name: `${dataSendCreate.name} ${dataSendCreate.lastname}`,
@@ -446,9 +451,10 @@ export class UsuariosPageComponent {
 
       this.usersService.updateUser(updateData).subscribe({
         next: (res) => {
-          console.log('usuario actualizado', res);
           // Actualizar el estado ya existente en el front
-          this.users = this.users.map((u) => (u.document === this.dataUpdateState.document ? { ...u, state: this.dataUpdateState.state ?? false  } : { ...u }));
+          this.users = this.users.map((u) =>
+            u.document === this.dataUpdateState.document ? { ...u, state: this.dataUpdateState.state ?? false } : { ...u },
+          );
           this.closeAlertModal();
         },
         error: (err) => {

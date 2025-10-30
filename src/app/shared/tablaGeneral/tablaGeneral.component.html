@@ -42,7 +42,7 @@
             </ng-container>
 
             <ng-container
-              *ngSwitchCase="col.isProductionLine && inputsConfigTable().context === 'ORDERGERENTADMIN-SHOW-TASKS'"
+              *ngSwitchCase="col.isProductionLine && (inputsConfigTable().context === 'ORDERGERENTADMIN-SHOW-TASKS'  || inputsConfigTable().context === 'TASKOPERATOR')"
             >
               <div class="container_state_production_line">
                 <label [ngClass]="['state_production_line', getStateProductionLine(item[col.key])]">

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, ViewChild, ElementRef } from '@angular/core';
+import { Component, HostListener, ViewChild, ElementRef, OnInit, AfterViewChecked } from '@angular/core';
 import { Router } from '@angular/router';
 import { ShoeDesignCreateDTO } from '../../../models/diseñosCalzado.model';
 import { ShoeCategorys } from '../../../models/categoriasCalzado.model';
@@ -22,7 +22,7 @@ import { ShoeDesignService } from '../../../services/diseñoCalzado.service';
   templateUrl: './crearDiseñoCalzado.component.html',
   styleUrls: ['./crearDiseñoCalzado.component.scss'],
 })
-export class CrearDiseñosCalzadoPageComponent {
+export class CrearDiseñosCalzadoPageComponent implements OnInit, AfterViewChecked {
   // Variable que contiene los datos ingresados en el formulario
   newShoeDesign: ShoeDesignCreateDTO = {
     name: '',
@@ -401,25 +401,39 @@ export class CrearDiseñosCalzadoPageComponent {
 
   //Validacion de errores al crear el diseño
   onSubmit() {
-    // Limpiar error genérico al intentar enviar
+    this.resetGeneralErrorIfNeeded();
+    this.runValidations();
+
+    if (this.hasNoErrors()) {
+      this.createNewShoeDesign();
+    }
+  }
+
+  private resetGeneralErrorIfNeeded() {
     if (this.generalError && !this.generalError.includes('Ya existe un diseño')) {
       this.generalError = '';
     }
+  }
 
+  private runValidations() {
     this.clearErrors();
     this.validateRequiredFields();
     this.validateErrorsTableProductionLines();
+    this.validateDynamicFields();
+    this.countErrors();
+  }
 
-    // Validaciones dinámicas de longitud
+  private validateDynamicFields() {
     this.onFileChange('name', this.newShoeDesign.name);
     this.onFileChange('description', this.newShoeDesign.description);
+  }
 
-    // Contar errores reales
+  private countErrors() {
     this.counterErrors = Object.values(this.shoeDesignErrors).filter((error) => error).length;
+  }
 
-    if (this.counterErrors === 0) {
-      this.createNewShoeDesign();
-    }
+  private hasNoErrors(): boolean {
+    return this.counterErrors === 0;
   }
 
   //limpiar errores
@@ -490,11 +504,8 @@ export class CrearDiseñosCalzadoPageComponent {
     this.shoeCategorysService.getShoesCategory().subscribe({
       next: (res) => {
         this.shoeCategorys = res;
-        console.log('categorias cargadas', this.shoeCategorys);
       },
-      error: (err) => {
-        console.log(err);
-      },
+      error: (err) => {},
     });
   }
   // get lineas de produccion
@@ -502,11 +513,8 @@ export class CrearDiseñosCalzadoPageComponent {
     this.productionLinesService.getProductionLines().subscribe({
       next: (res) => {
         this.productionLines = res;
-        console.log('lineas de produccion cargadas cargadas', this.productionLines);
       },
-      error: (err) => {
-        console.log(err);
-      },
+      error: (err) => {},
     });
   }
   // get colores de calzado
@@ -514,11 +522,8 @@ export class CrearDiseñosCalzadoPageComponent {
     this.shoeColorsService.getShoeColors().subscribe({
       next: (res) => {
         this.shoeColors = res;
-        console.log('colores cargados', this.shoeColors);
       },
-      error: (err) => {
-        console.log(err);
-      },
+      error: (err) => {},
     });
   }
   // get tallas de calzado
@@ -526,18 +531,14 @@ export class CrearDiseñosCalzadoPageComponent {
     this.shoeSizesService.getShoeSizes().subscribe({
       next: (res) => {
         this.shoeSizes = res;
-        console.log('tallas cargadas', this.shoeSizes);
       },
-      error: (err) => {
-        console.log(err);
-      },
+      error: (err) => {},
     });
   }
   // crear diseño de calzado
   createNewShoeDesign() {
     this.shoeDesignService.postCreateShowDesign(this.newShoeDesign).subscribe({
       next: (res) => {
-        console.log('Diseño creado con éxito', res);
         this.onBackAction();
       },
       error: (err) => {

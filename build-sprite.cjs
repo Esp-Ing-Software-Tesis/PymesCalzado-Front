@@ -49,7 +49,6 @@ function walk(dir) {
 }
 
 if (!fs.existsSync(iconsDir)) {
-  console.error('❌ No se encontró la carpeta de íconos:', iconsDir);
   process.exit(1);
 }
 
@@ -62,4 +61,3 @@ if (!sprite.includes('xmlns=')) {
 }
 
 fs.writeFileSync(outFile, sprite);
-console.log('✅ Sprite generado en:', outFile);

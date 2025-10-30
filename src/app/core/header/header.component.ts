@@ -26,7 +26,6 @@ export class HeaderComponent {
     this.role$ = this.authService.userRole$;
     this.username$ = this.authService.username$;
     this.productionLine$ = this.authService.userProductionLine$;
-
     this.role$.subscribe((role) => {
       this.setOptionsMenu(role);
     });

@@ -1,6 +1,6 @@
 export interface InputTableGeneral {
     itemsPerPage: number;
-    context: 'USER' | 'SHOEDESIGN' | 'ORDERGERENT' | 'ORDERGERENT-ADDARTICLE' | 'ORDERGERENTADMIN' | 'ORDERGERENTADMIN-SHOW-TASKS';
+    context: 'USER' | 'SHOEDESIGN' | 'ORDERGERENT' | 'ORDERGERENT-ADDARTICLE' | 'ORDERGERENTADMIN' | 'ORDERGERENTADMIN-SHOW-TASKS' | 'TASKOPERATOR';
     colums: ColumnConfig[];
 }
 
