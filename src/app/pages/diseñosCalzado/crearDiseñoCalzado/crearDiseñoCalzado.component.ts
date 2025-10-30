@@ -208,37 +208,42 @@ export class CrearDiseñosCalzadoPageComponent implements OnInit, AfterViewCheck
   }
 
   // Almacenar los datos del formulario
-  onFormChange(eventOrValue: Event | number | string, key: keyof ShoeDesignCreateDTO) {
-    let value: any;
-
-    if (eventOrValue instanceof Event) {
-      const inputElement = eventOrValue.target as HTMLInputElement;
-      value = inputElement.value;
-    } else {
-      value = eventOrValue;
-    }
-
+  // Almacenar los datos del formulario
+  onFormChange(eventOrValue: Event | number | string, key: keyof ShoeDesignCreateDTO): void {
+    const value = this.extractValue(eventOrValue);
     (this.newShoeDesign as any)[key] = value;
 
-    // Limpiar error de nombre duplicado si cambia el name
     if (key === 'name') {
-      if (this.generalError && this.generalError.includes('Ya existe un diseño')) {
-        this.generalError = '';
-      }
+      this.clearDuplicateNameError();
     }
 
-    // Validación dinámica
     if (key === 'name' || key === 'description') {
       this.onFileChange(key, value);
     } else {
-      const errorKey = `${key}_error` as keyof typeof this.shoeDesignErrors;
-      if (this.shoeDesignErrors[errorKey]) {
-        if (Array.isArray(value)) {
-          this.shoeDesignErrors[errorKey] = value.length ? '' : this.shoeDesignErrors[errorKey];
-        } else if (value) {
-          this.shoeDesignErrors[errorKey] = '';
-        }
-      }
+      this.validateDynamicField(key, value);
+    }
+  }
+
+  private extractValue(eventOrValue: Event | number | string): any {
+    return eventOrValue instanceof Event ? (eventOrValue.target as HTMLInputElement).value : eventOrValue;
+  }
+
+  private clearDuplicateNameError(): void {
+    if (this.generalError?.includes('Ya existe un diseño')) {
+      this.generalError = '';
+    }
+  }
+
+  private validateDynamicField(key: keyof ShoeDesignCreateDTO, value: any): void {
+    const errorKey = `${key}_error` as keyof typeof this.shoeDesignErrors;
+    const currentError = this.shoeDesignErrors[errorKey];
+
+    if (!currentError) return;
+
+    if (Array.isArray(value)) {
+      this.shoeDesignErrors[errorKey] = value.length ? '' : currentError;
+    } else if (value) {
+      this.shoeDesignErrors[errorKey] = '';
     }
   }
 

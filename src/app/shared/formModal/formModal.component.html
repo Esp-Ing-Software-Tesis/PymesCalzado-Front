@@ -2,6 +2,7 @@
   <div class="modal">
     <h1 class="title">{{ inputsFormModal().title }}</h1>
     <p class="text" *ngIf="inputsFormModal().text">{{ inputsFormModal().text }}</p>
+
     <div #errorDiv class="container-error" *ngIf="inputsFormModal().error">
       <svg class="icon">
         <use xlink:href="assets/icons-sprite.svg#general-alert_triangle"></use>
@@ -13,7 +14,17 @@
       <div class="container-inputs" *ngIf="isFieldVisible(input)">
         <ng-container>
           <div class="container-text">
-            <label [for]="'input_' + input.key + '_' + i">{{ input.name }}</label>
+            <label
+              [for]="
+                input.inputType === 'password'
+                  ? 'input_password_' + input.key + '_' + i
+                  : input.inputType === 'list'
+                    ? 'input_list_' + input.key + '_' + i
+                    : 'input_generic_' + input.key + '_' + i
+              "
+            >
+              {{ input.name }}
+            </label>
             <span *ngIf="input.obligatory">*</span>
           </div>
 
@@ -21,7 +32,7 @@
           <input
             *ngIf="input.inputType !== 'list' && input.inputType !== 'password'"
             type="{{ input.inputType }}"
-            id="{{ 'input_' + input.key + '_' + i }}"
+            [id]="'input_generic_' + input.key + '_' + i"
             name="{{ 'input_' + input.key }}"
             class="{{ 'input_' + input.key }}"
             placeholder="{{ 'Ingrese ' + input.article + ' ' + (input.key === 'confirmPassword' ? 'contraseña' : input.name.toLowerCase()) }}"
@@ -34,7 +45,7 @@
             <div class="password-container">
               <input
                 [type]="passwordVisible[input.key] ? 'text' : 'password'"
-                id="{{ 'input_' + input.key + '_' + i }}"
+                [id]="'input_password_' + input.key + '_' + i"
                 name="{{ 'input_' + input.key }}"
                 class="{{ 'input_' + input.key }}"
                 placeholder="{{ 'Ingrese ' + (input.key === 'confirmPassword' ? 'contraseña nuevamente' : 'contraseña') }}"
@@ -80,10 +91,7 @@
           </p>
 
           <!-- Validación de condiciones de seguridad -->
-          <div
-            class="error-password"
-            *ngIf="input.key === 'password' && isPasswordConditions(input.error) && inputsFormModal().context === 'USER'"
-          >
+          <div class="error-password" *ngIf="input.key === 'password' && isPasswordConditions(input.error) && inputsFormModal().context === 'USER'">
             <p>Debe cumplir las siguientes condiciones:</p>
             <p [class.valid]="input.error.length">Mínimo 8 caracteres</p>
             <p [class.valid]="input.error.uppercase">Una letra mayúscula</p>
@@ -96,11 +104,7 @@
 
     <div class="container-buttons">
       <button class="cancelar" (click)="onCloseClick()">Cancelar</button>
-      <button
-        id="aceptar"
-        class="{{ inputsFormModal().textButtonConfirm.toLocaleLowerCase() }}"
-        (click)="setResultsForm($event)"
-      >
+      <button id="aceptar" class="{{ inputsFormModal().textButtonConfirm.toLocaleLowerCase() }}" (click)="setResultsForm($event)">
         {{ inputsFormModal().textButtonConfirm }}
       </button>
     </div>

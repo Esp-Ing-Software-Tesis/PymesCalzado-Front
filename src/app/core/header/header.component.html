@@ -10,11 +10,11 @@
     </div>
     <hr class="divider" />
     <div class="nav_desktop">
-      <nav class="menu">
+      <nav class="menu" aria-label="Menú principal">
         <ul>
           <li *ngFor="let option of menuOptions">
             <a [routerLink]="option.route" routerLinkActive="active">
-              <svg class="icon" [attr.aria-label]="option.label" role="img">
+              <svg class="icon" [attr.aria-label]="option.label" title="opciones del menu" aria-label="opciones del menu">
                 <use [attr.xlink:href]="'assets/icons-sprite.svg#' + option.icon"></use>
               </svg>
               <span>{{ option.label }}</span>
@@ -24,14 +24,14 @@
       </nav>
       <div class="cerrar_sesion">
         <button (click)="logout()" class="logout-button">
-          <svg class="icon">
+          <svg class="icon" aria-label="cerrar sesion">
             <use xlink:href="assets/icons-sprite.svg#headerAndFooter-cerrarSesion"></use>
           </svg>
           <span>Cerrar Sesión</span>
         </button>
       </div>
     </div>
-    <div class="nav_mobile">
+    <div class="nav_mobile" aria-label="Menu versio resposive">
       <button class="hamburger" (click)="toogleMenu()">
         <svg class="icon">
           <use xlink:href="assets/icons-sprite.svg#headerAndFooter-menu"></use>
@@ -42,7 +42,7 @@
           <ul>
             <li *ngFor="let option of menuOptions">
               <a [routerLink]="option.route" routerLinkActive="active" (click)="isOpen = false">
-                <svg class="icon" [attr.aria-label]="option.label" role="img">
+                <svg class="icon" [attr.aria-label]="option.label" title="opciones del menu" aria-label="icono del menu">
                   <use [attr.xlink:href]="'assets/icons-sprite.svg#' + option.icon"></use>
                 </svg>
                 <span>{{ option.label }}</span>
