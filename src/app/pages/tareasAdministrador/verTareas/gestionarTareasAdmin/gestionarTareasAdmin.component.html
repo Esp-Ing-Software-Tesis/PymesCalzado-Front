@@ -43,7 +43,7 @@
                     <!-- Estado -->
                     <ng-container *ngSwitchCase="'state'">
                       <div class="container_state">
-                        <label [ngClass]="['state', getStateClass(item[col.key])]">
+                        <label for="input-state" [ngClass]="['state', getStateClass(item[col.key])]">
                           {{ item[col.key] }}
                         </label>
                       </div>

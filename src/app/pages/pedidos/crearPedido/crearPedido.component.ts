@@ -155,6 +155,7 @@ export class CrearPedidosPageComponent implements OnInit, AfterViewChecked, OnDe
     }
 
     (this.newOrder as any)[key] = value;
+    this.openClient = false;
   }
 
   // abrir pantalla de añadir articulos
@@ -171,7 +172,7 @@ export class CrearPedidosPageComponent implements OnInit, AfterViewChecked, OnDe
     this.articlesSharedService.clear();
   }
 
-  toggleCategory() {
+  toggleClient() {
     this.openClient = !this.openClient;
   }
 

@@ -3,11 +3,11 @@ import { AuthGuard } from './services/auth.guard';
 import { UsuariosPageComponent } from './pages/usuarios/usuarios.component';
 import { LoginPageComponent } from './login/login.component';
 import { PedidosPageComponent } from './pages/pedidos/pedidos.component';
-import { DiseñosCalzadoPageComponent } from './pages/diseñosCalzado/diseñosCalzado.component';
+import { DisenosCalzadoPageComponent } from './pages/diseñosCalzado/diseñosCalzado.component';
 import { ShowDetailGeneralComponent } from './shared/showDetailGeneral/showDetailGeneral.component';
 import { CrearDisenosCalzadoPageComponent } from './pages/diseñosCalzado/crearDiseñoCalzado/crearDiseñoCalzado.component';
 import { CrearPedidosPageComponent } from './pages/pedidos/crearPedido/crearPedido.component';
-import { AñadirArticuloPageComponent } from './pages/pedidos/añadirArticulo/añadirArticulo.component';
+import { AnadirArticuloPageComponent } from './pages/pedidos/añadirArticulo/añadirArticulo.component';
 import { TareasAdministradorPageComponent } from './pages/tareasAdministrador/tareasAdministrador.component';
 import { CrearEditarTareasComponent } from './pages/tareasAdministrador/crearEditarTareas/crearEditarTareas.component';
 import { VerTareasPageComponent } from './pages/tareasAdministrador/verTareas/verTareas.component';
@@ -27,7 +27,7 @@ export const routes: Routes = [
   },
   {
     path: 'diseños-calzado',
-    component: DiseñosCalzadoPageComponent,
+    component: DisenosCalzadoPageComponent,
     canActivate: [AuthGuard],
     children: [
       {
@@ -55,7 +55,7 @@ export const routes: Routes = [
         children: [
           {
             path: 'añadir-articulo',
-            component: AñadirArticuloPageComponent,
+            component: AnadirArticuloPageComponent,
           },
         ],
       },
