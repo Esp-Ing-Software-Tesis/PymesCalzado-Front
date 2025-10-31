@@ -210,8 +210,8 @@ export class ShowDetailGeneralComponent implements OnInit, AfterViewChecked {
     return state
       .toString()
       .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/\s+/g, '_')
+      .replaceAll(/[\u0300-\u036f]/g, '')
+      .replaceAll(/\s+/g, '_')
       .toLowerCase();
   }
 

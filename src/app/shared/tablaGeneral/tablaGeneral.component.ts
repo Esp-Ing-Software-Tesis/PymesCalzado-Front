@@ -108,8 +108,8 @@ export class TablaGeneralComponent<Items extends Record<string, any>> implements
     return state
       .toString()
       .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/\s+/g, '_')
+      .replaceAll(/[\u0300-\u036f]/g, '')
+      .replaceAll(/\s+/g, '_')
       .toLowerCase();
   }
 
@@ -120,8 +120,8 @@ export class TablaGeneralComponent<Items extends Record<string, any>> implements
     const normalized = state
       .toString()
       .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/\s+/g, '_')
+      .replaceAll(/[\u0300-\u036f]/g, '')
+      .replaceAll(/\s+/g, '_')
       .toLowerCase();
 
     const nonProgressStates = ['nuevo', 'finalizado', 'en_revision', 'en_correccion', 'cancelado'];
