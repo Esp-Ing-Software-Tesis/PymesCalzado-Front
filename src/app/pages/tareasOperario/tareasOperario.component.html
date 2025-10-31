@@ -10,16 +10,33 @@
           <label for="input-state">Estado</label>
         </div>
         <div class="container-items">
-          <div class="custom-select-container" (click)="taskByOperator.length > 0 ? toggleState() : null" [class.disabled]="!taskByOperator.length">
-            <div class="selected" [class.placeholder]="!optionSelect">
-              {{ optionSelect || 'Seleccione el estado' }}
-              <svg class="icon-arrow">
-                <use xlink:href="assets/icons-sprite.svg#general-arrow_select"></use>
-              </svg>
-            </div>
+          <div class="custom-select-container">
+            <button
+              type="button"
+              class="custom-select-container-button"
+              aria-label="Desplegar estados"
+              (click)="taskByOperator.length > 0 ? toggleState() : null"
+              (keydown.enter)="taskByOperator.length > 0 ? toggleState() : null"
+              (keydown.space)="taskByOperator.length > 0 ? toggleState() : null"
+              [disabled]="!taskByOperator.length"
+            >
+              <div class="selected" [class.placeholder]="!optionSelect">
+                {{ optionSelect || 'Seleccione el estado' }}
+                <svg class="icon-arrow">
+                  <use xlink:href="assets/icons-sprite.svg#general-arrow_select"></use>
+                </svg>
+              </div>
+            </button>
 
             <ul class="options" *ngIf="openState">
-              <li *ngFor="let option of optionsState" [class.active]="option === optionSelect" (click)="onSelectOption(option)">
+              <li
+                *ngFor="let option of optionsState"
+                [class.active]="option === optionSelect"
+                (click)="onSelectOption(option)"
+                (keydown.enter)="onSelectOption(option)"
+                (keydown.space)="onSelectOption(option)"
+                tabindex="0"
+              >
                 {{ option }}
               </li>
             </ul>

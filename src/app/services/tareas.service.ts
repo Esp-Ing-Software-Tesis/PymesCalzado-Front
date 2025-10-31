@@ -534,7 +534,7 @@ export class TasksService {
         ],
       },
 
-      // --- 2: Todo en Finalizado ---
+      // --- 2: Finalizado ---
       {
         task_id: 12,
         LineasProduccion: [

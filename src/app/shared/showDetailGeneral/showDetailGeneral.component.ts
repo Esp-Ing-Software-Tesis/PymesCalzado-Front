@@ -206,7 +206,7 @@ export class ShowDetailGeneralComponent implements OnInit, AfterViewChecked {
   //Logica para organizar el texto
   getOrderText(state?: string): string {
     if (!state) return '';
-    // Limpiar tildes, reemplazar espacios y volver todo en minuscula
+    // Limpiar tildes, reemplazar espacios y volver en minuscula
     return state
       .toString()
       .normalize('NFD')
