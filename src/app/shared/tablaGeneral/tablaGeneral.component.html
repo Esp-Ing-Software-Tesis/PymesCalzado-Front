@@ -16,7 +16,13 @@
           <ng-container [ngSwitch]="true">
             <ng-container *ngSwitchCase="col.isUser && inputsConfigTable().context === 'USER'">
               <label id="input-switch" class="switch">
-                <input type="checkbox" [checked]="getStateUserValue(item, col.key)" (click)="setStateUserValue($event, item, col.key)" />
+                <input
+                  type="checkbox"
+                  [checked]="getStateUserValue(item, col.key)"
+                  (click)="setStateUserValue($event, item, col.key)"
+                  (keydown.enter)="setStateUserValue($event, item, col.key)"
+                  (keydown.space)="setStateUserValue($event, item, col.key)"
+                />
                 <span class="slider round"></span>
               </label>
             </ng-container>
@@ -27,7 +33,7 @@
               "
             >
               <label for="input-image" class="image">
-                <img [src]="item[col.key]" alt="Imagen desde base64" />
+                <img [src]="item[col.key]" alt="Base64" />
               </label>
             </ng-container>
 

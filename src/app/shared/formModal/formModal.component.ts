@@ -64,7 +64,7 @@ export class FormModalComponent implements AfterViewChecked {
   @HostListener('document:click', ['$event'])
   clickOut(event: Event) {
     const target = event.target as HTMLElement;
-    if (!target.closest('.custom-select')) {
+    if (!target.closest('.custom-select-container')) {
       this.openSelect = null;
     }
   }
