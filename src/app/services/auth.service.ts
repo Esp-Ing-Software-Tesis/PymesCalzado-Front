@@ -5,29 +5,29 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private userRole = new BehaviorSubject<string | null>(null);
+  private readonly userRole = new BehaviorSubject<string | null>(null);
   userRole$ = this.userRole.asObservable();
 
-  private username = new BehaviorSubject<string | null>(null);
+  private readonly username = new BehaviorSubject<string | null>(null);
   username$ = this.username.asObservable();
 
-  private userProductionLine = new BehaviorSubject<string | null>(null);
+  private readonly userProductionLine = new BehaviorSubject<string | null>(null);
   userProductionLine$ = this.userProductionLine.asObservable();
 
-  private sessionId = new BehaviorSubject<string | null>(null);
+  private readonly sessionId = new BehaviorSubject<string | null>(null);
   sessionId$ = this.sessionId.asObservable();
 
-  private token = new BehaviorSubject<string | null>(null);
+  private readonly token = new BehaviorSubject<string | null>(null);
   token$ = this.token.asObservable();
 
-  private userId = new BehaviorSubject<string | null>(null);
+  private readonly userId = new BehaviorSubject<string | null>(null);
   userId$ = this.userId.asObservable();
 
 
-  private apiUrl = 'https://1mhslg7415.execute-api.us-east-1.amazonaws.com/production/api/v1';
+  private readonly apiUrl = 'https://1mhslg7415.execute-api.us-east-1.amazonaws.com/production/api/v1';
 
   constructor(
-    private http: HttpClient
+    private readonly http: HttpClient
   ) {
     const storedRole = sessionStorage.getItem('role');
     const storedUsername = sessionStorage.getItem('username');

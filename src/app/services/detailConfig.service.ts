@@ -4,7 +4,7 @@ import { InputShowDetailGeneral } from '../shared/showDetailGeneral/showDetailGe
 
 @Injectable({ providedIn: 'root' })
 export class DetailConfigService {
-  private configSubject = new BehaviorSubject<InputShowDetailGeneral | null>(null);
+  private readonly configSubject = new BehaviorSubject<InputShowDetailGeneral | null>(null);
   config$ = this.configSubject.asObservable();
 
   // Actualizar la data que consultara el hijo 
