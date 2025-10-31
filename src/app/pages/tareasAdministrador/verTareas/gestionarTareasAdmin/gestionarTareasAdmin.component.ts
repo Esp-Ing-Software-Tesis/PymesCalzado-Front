@@ -128,8 +128,8 @@ export class GestionarTareasAdminPageComponent implements OnInit {
     return state
       .toString()
       .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/\s+/g, '_')
+      .replaceAll(/[\u0300-\u036f]/g, '')
+      .replaceAll(/\s+/g, '_')
       .toLowerCase();
   }
 
@@ -139,8 +139,8 @@ export class GestionarTareasAdminPageComponent implements OnInit {
       (str ?? '')
         .toString()
         .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '') // elimina tildes
-        .replace(/\s+/g, '_') // reemplaza espacios por guion bajo
+        .replaceAll(/[\u0300-\u036f]/g, '') // elimina tildes
+        .replaceAll(/\s+/g, '_') // reemplaza espacios por guion bajo
         .toLowerCase(); // pasa todo a minúsculas
 
     const lastProdLine = normalize(this.lastState?.productionLine);
@@ -165,8 +165,8 @@ export class GestionarTareasAdminPageComponent implements OnInit {
       (str ?? '')
         .toString()
         .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '') // elimina tildes
-        .replace(/\s+/g, '_') // reemplaza espacios por guion bajo
+        .replaceAll(/[\u0300-\u036f]/g, '') // elimina tildes
+        .replaceAll(/\s+/g, '_') // reemplaza espacios por guion bajo
         .toLowerCase(); // pasa todo a minúsculas
 
     const lastProdLine = normalize(this.lastState?.productionLine);
@@ -220,8 +220,8 @@ export class GestionarTareasAdminPageComponent implements OnInit {
       ? targetLine
           .toString()
           .normalize('NFD')
-          .replace(/[\u0300-\u036f]/g, '')
-          .replace(/\s+/g, '_')
+          .replaceAll(/[\u0300-\u036f]/g, '')
+          .replaceAll(/\s+/g, '_')
           .toLowerCase()
       : null;
 

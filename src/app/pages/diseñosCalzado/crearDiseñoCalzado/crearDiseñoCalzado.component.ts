@@ -130,7 +130,6 @@ export class CrearDisenosCalzadoPageComponent implements OnInit, AfterViewChecke
       costPerPair: '',
       isObligatory: line.isObligatory,
     }));
-    this.newShoeDesign.productionLines;
   }
 
   // Logica para cuando se genere un error global lo lleve al mensaje
@@ -152,7 +151,7 @@ export class CrearDisenosCalzadoPageComponent implements OnInit, AfterViewChecke
       .filter((item) => item.apply)
       .map((item) => ({
         id: item.id,
-        costPerPair: Number(item.costPerPair.replace(/\D/g, '')) || 0,
+        costPerPair: Number(item.costPerPair.replaceAll(/\D/g, '')) || 0,
       }));
 
     // calcular total
@@ -167,7 +166,7 @@ export class CrearDisenosCalzadoPageComponent implements OnInit, AfterViewChecke
   formatCurrency(value: any): string {
     if (value == null || value === '') return '';
     // Si el valor ya viene como string con símbolos, limpiamos primero
-    const clean = String(value).replace(/\D/g, '');
+    const clean = String(value).replaceAll(/\D/g, '');
     if (!clean) return '';
     return '$' + new Intl.NumberFormat('es-CO').format(Number(clean));
   }
@@ -175,7 +174,7 @@ export class CrearDisenosCalzadoPageComponent implements OnInit, AfterViewChecke
   // Manejar el cambio en el input de costo
   onCostChange(value: string, item: any) {
     // limpiar todo lo que no sea número
-    const clean = value.replace(/\D/g, '');
+    const clean = value.replaceAll(/\D/g, '');
     item.costPerPair = clean;
     // recalcular producción
     this.syncProductionLines();
@@ -185,7 +184,7 @@ export class CrearDisenosCalzadoPageComponent implements OnInit, AfterViewChecke
   allowOnlyNumbers(event: KeyboardEvent) {
     const allowedKeys = ['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete', 'Enter'];
 
-    if (!/[0-9]/.test(event.key) && !allowedKeys.includes(event.key)) {
+    if (!/\d/.test(event.key) && !allowedKeys.includes(event.key)) {
       event.preventDefault();
     }
   }
@@ -237,15 +236,19 @@ export class CrearDisenosCalzadoPageComponent implements OnInit, AfterViewChecke
   }
 
   private validateDynamicField(key: keyof ShoeDesignCreateDTO, value: any): void {
-    const errorKey = `${key}_error` as keyof typeof this.shoeDesignErrors;
-    const currentError = this.shoeDesignErrors[errorKey];
+    const errorKey = `${key}_error`;
 
-    if (!currentError) return;
+    if (errorKey in this.shoeDesignErrors) {
+      const typedKey = errorKey as keyof typeof this.shoeDesignErrors;
+      const currentError = this.shoeDesignErrors[typedKey];
 
-    if (Array.isArray(value)) {
-      this.shoeDesignErrors[errorKey] = value.length ? '' : currentError;
-    } else if (value) {
-      this.shoeDesignErrors[errorKey] = '';
+      if (!currentError) return;
+
+      if (Array.isArray(value)) {
+        this.shoeDesignErrors[typedKey] = value.length ? '' : currentError;
+      } else if (value) {
+        this.shoeDesignErrors[typedKey] = '';
+      }
     }
   }
 

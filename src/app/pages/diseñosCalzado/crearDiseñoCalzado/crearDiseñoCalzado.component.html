@@ -58,7 +58,6 @@
           <ul class="options" *ngIf="openCategory">
             <li
               *ngFor="let option of shoeCategorys"
-              tabindex="0"
               [class.active]="option.id === newShoeDesign.category_id"
               (click)="onFormChange(option.id, 'category_id')"
               (keydown.enter)="onFormChange(option.id, 'category_id')"
@@ -250,7 +249,6 @@
             <div
               class="option-item"
               *ngFor="let color of shoeColors"
-              tabindex="0"
               [class.active]="newShoeDesign.colors.includes(color.id)"
               (click)="toggleColor(color.id)"
               (keydown.enter)="toggleColor(color.id)"
@@ -319,7 +317,6 @@
             <div
               class="option-item"
               *ngFor="let size of shoeSizes"
-              tabindex="0"
               [class.active]="newShoeDesign.sizes.includes(size.id)"
               (click)="toggleSize(size.id)"
               (keydown.enter)="toggleSize(size.id)"
