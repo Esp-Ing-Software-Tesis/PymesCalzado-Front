@@ -295,7 +295,7 @@ export class CrearPedidosPageComponent implements OnInit, AfterViewChecked, OnDe
     this.generalError = '';
     this.validateRequiredFields();
     // Contar errores reales
-    this.counterErrors = Object.values(this.orderErrors).filter((error) => error).length;
+    this.counterErrors = Object.values(this.orderErrors).filter(Boolean).length;
 
     if (this.counterErrors === 0) {
       this.createNewOrder();

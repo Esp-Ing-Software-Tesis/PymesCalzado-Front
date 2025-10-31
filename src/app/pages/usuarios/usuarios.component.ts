@@ -49,7 +49,7 @@ export class UsuariosPageComponent implements OnInit {
   //Datos ingresados desde el formulario
   setDataForm: { [key: string]: string } = {};
 
-  // contador de errores
+  // contador de erroresa
   numErrors: number = 0;
 
   constructor(
@@ -111,7 +111,7 @@ export class UsuariosPageComponent implements OnInit {
         productionLineSelect.options = dataLineaProduccion;
       }
       // borra si no se tiene nada
-      if (!this.setDataForm['productionLine']) {
+      if (this.setDataForm['productionLine'] === undefined || this.setDataForm['productionLine'] === '') {
         this.setDataForm['productionLine'] = '';
       }
     } else if (change.key === 'rol') {
@@ -132,11 +132,11 @@ export class UsuariosPageComponent implements OnInit {
     }
 
     //Limpiar los campos que no esten si hay dependientes
-    Object.keys(this.setDataForm).forEach((key) => {
-      if (!(key in values)) {
+    for (const key of Object.keys(this.setDataForm)) {
+      if (key in values === false) {
         delete this.setDataForm[key];
       }
-    });
+    }
 
     // Almacenar data de forma dinamica
     this.setDataForm = {
@@ -148,9 +148,9 @@ export class UsuariosPageComponent implements OnInit {
     this.cleanErrors();
 
     // Validar obligarotio
-    this.formModalConfig.inputsConfig.forEach((i) => {
+    for (const i of this.formModalConfig.inputsConfig) {
       if (i.obligatory) {
-        const visible = !i.dependsOn || this.setDataForm[i.dependsOn.key] === i.dependsOn.value;
+        const visible = i.dependsOn ? this.setDataForm[i.dependsOn.key] === i.dependsOn.value : true;
         if (visible) {
           const value = this.setDataForm[i.key];
           if (!value) {
@@ -158,17 +158,17 @@ export class UsuariosPageComponent implements OnInit {
           }
         }
       }
-    });
+    }
 
     // LLamar a errores de logica de negocio para confirmar
     this.validateErrorBusinessLogic(values);
 
     // Validar si hay errores
-    this.formModalConfig.inputsConfig.forEach((i) => {
+    for (const i of this.formModalConfig.inputsConfig) {
       if (i.error) {
         this.numErrors++;
       }
-    });
+    }
 
     // Enviar a creacion
     if (this.numErrors === 0) {
@@ -179,9 +179,9 @@ export class UsuariosPageComponent implements OnInit {
   // Limpiar los errores
   cleanErrors() {
     this.numErrors = 0;
-    this.formModalConfig.inputsConfig.forEach((i) => {
+    for (const i of this.formModalConfig.inputsConfig) {
       i.error = '';
-    });
+    }
   }
 
   // Validar dinamicamente los errores de logica de negocio
@@ -215,9 +215,9 @@ export class UsuariosPageComponent implements OnInit {
 
   // Errores de Logica de negocio
   validateErrorBusinessLogic(values: { [key: string]: string }) {
-    Object.entries(values).forEach(([key, value]) => {
+    for (const [key, value] of Object.entries(values)) {
       const input = this.formModalConfig.inputsConfig.find((i) => i.key === key);
-      if (!input) return;
+      if (!input) continue;
 
       switch (key) {
         case 'name':
@@ -239,7 +239,7 @@ export class UsuariosPageComponent implements OnInit {
           this.validateConfirmPasswordField(input, values['password'], value);
           break;
       }
-    });
+    }
   }
 
   private validateNameField(input: any, value: string) {
@@ -255,7 +255,7 @@ export class UsuariosPageComponent implements OnInit {
   private validateDocumentField(input: any, value: string) {
     if (value.length < 6 || value.length > 10) {
       input.error = 'Debe tener entre 6 y 10 dígitos';
-    } else if (!/^[0-9]+$/.test(value)) {
+    } else if (!/^\d+$/.test(value)) {
       input.error = 'El campo solo debe contener números';
     } else {
       input.error = undefined;
@@ -281,7 +281,7 @@ export class UsuariosPageComponent implements OnInit {
     const conditions: PasswordConditions = {
       length: value.length >= 8,
       uppercase: /[A-Z]/.test(value),
-      number: /[0-9]/.test(value),
+      number: /\d/.test(value),
       symbol: /[!@#$%^&*(),.?":{}|<>]/.test(value),
     };
     const isValid = Object.values(conditions).every(Boolean);

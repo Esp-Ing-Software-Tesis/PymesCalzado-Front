@@ -104,7 +104,7 @@ export class TablaGeneralComponent<Items extends Record<string, any>> implements
   // Logica para organizar los estados en clases validad para CSS
   getStateClass(state?: string): string {
     if (!state) return '';
-    // Limpiar tildes, reemplazar espacios y volver todo en minuscula
+    // Limpiar tildes, reemplazar espacios y volver en minuscula
     return state
       .toString()
       .normalize('NFD')
