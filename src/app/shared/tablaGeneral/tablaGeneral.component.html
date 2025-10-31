@@ -15,7 +15,7 @@
         <td *ngFor="let col of inputsConfigTable().colums" [ngClass]="['col-' + col.align, col.position ? 'col-' + col.position : '']">
           <ng-container [ngSwitch]="true">
             <ng-container *ngSwitchCase="col.isUser && inputsConfigTable().context === 'USER'">
-              <label for="input-swich" class="switch">
+              <label id="input-switch" class="switch">
                 <input type="checkbox" [checked]="getStateUserValue(item, col.key)" (click)="setStateUserValue($event, item, col.key)" />
                 <span class="slider round"></span>
               </label>
@@ -42,7 +42,10 @@
             </ng-container>
 
             <ng-container
-              *ngSwitchCase="col.isProductionLine && (inputsConfigTable().context === 'ORDERGERENTADMIN-SHOW-TASKS'  || inputsConfigTable().context === 'TASKOPERATOR')"
+              *ngSwitchCase="
+                col.isProductionLine &&
+                (inputsConfigTable().context === 'ORDERGERENTADMIN-SHOW-TASKS' || inputsConfigTable().context === 'TASKOPERATOR')
+              "
             >
               <div class="container_state_production_line">
                 <label for="input-production-line" [ngClass]="['state_production_line', getStateProductionLine(item[col.key])]">

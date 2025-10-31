@@ -5,11 +5,11 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class ArticlesSharedService {
   // Lista enviada desde el padre
-  private articlesListSubject = new BehaviorSubject<ArticlesDTO[]>([]);
+  private readonly articlesListSubject = new BehaviorSubject<ArticlesDTO[]>([]);
   articlesList$ = this.articlesListSubject.asObservable();
 
   // Articulo nuevo enviado desde el hijo
-  private newArticleSubject = new BehaviorSubject<ArticlesDTO | null>(null);
+  private readonly newArticleSubject = new BehaviorSubject<ArticlesDTO | null>(null);
   newArticle$ = this.newArticleSubject.asObservable();
 
   // Metodos

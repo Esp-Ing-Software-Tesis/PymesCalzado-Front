@@ -126,53 +126,54 @@ export class UsuariosPageComponent implements OnInit {
 
   //Validar errores de los campos con el boton
   validateErrors(values: { [key: string]: string }) {
-    //eliminar error general si existe
+    this.clearGlobalError();
+    this.removeUnusedFields(values);
+    this.mergeFormValues(values);
+    this.cleanErrors();
+
+    this.validateRequiredFields();
+    this.validateErrorBusinessLogic(values);
+    this.countErrors();
+
+    if (this.numErrors === 0) {
+      this.createNewUser();
+    }
+  }
+
+  // --- Subfunciones privadas para reducir complejidad ---
+
+  private clearGlobalError() {
     if (this.formModalConfig.error) {
       this.formModalConfig.error = undefined;
     }
+  }
 
-    //Limpiar los campos que no esten si hay dependientes
+  private removeUnusedFields(values: { [key: string]: string }) {
     for (const key of Object.keys(this.setDataForm)) {
-      if (key in values === false) {
+      if (!(key in values)) {
         delete this.setDataForm[key];
       }
     }
+  }
 
-    // Almacenar data de forma dinamica
-    this.setDataForm = {
-      ...this.setDataForm,
-      ...values,
-    };
+  private mergeFormValues(values: { [key: string]: string }) {
+    this.setDataForm = { ...this.setDataForm, ...values };
+  }
 
-    // Limpiar errores
-    this.cleanErrors();
-
-    // Validar obligarotio
+  private validateRequiredFields() {
     for (const i of this.formModalConfig.inputsConfig) {
-      if (i.obligatory) {
-        const visible = i.dependsOn ? this.setDataForm[i.dependsOn.key] === i.dependsOn.value : true;
-        if (visible) {
-          const value = this.setDataForm[i.key];
-          if (!value) {
-            i.error = 'Este campo es obligatorio';
-          }
-        }
+      if (!i.obligatory) continue;
+      const visible = i.dependsOn ? this.setDataForm[i.dependsOn.key] === i.dependsOn.value : true;
+      if (visible && !this.setDataForm[i.key]) {
+        i.error = 'Este campo es obligatorio';
       }
     }
+  }
 
-    // LLamar a errores de logica de negocio para confirmar
-    this.validateErrorBusinessLogic(values);
-
-    // Validar si hay errores
+  private countErrors() {
+    this.numErrors = 0;
     for (const i of this.formModalConfig.inputsConfig) {
-      if (i.error) {
-        this.numErrors++;
-      }
-    }
-
-    // Enviar a creacion
-    if (this.numErrors === 0) {
-      this.createNewUser();
+      if (i.error) this.numErrors++;
     }
   }
 
@@ -245,7 +246,7 @@ export class UsuariosPageComponent implements OnInit {
   private validateNameField(input: any, value: string) {
     if (value.length < 5 || value.length > 100) {
       input.error = 'Debe tener entre 5 y 100 caracteres';
-    } else if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(value)) {
+    } else if (/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(value) === false) {
       input.error = 'El campo solo debe contener letras';
     } else {
       input.error = undefined;
@@ -255,7 +256,7 @@ export class UsuariosPageComponent implements OnInit {
   private validateDocumentField(input: any, value: string) {
     if (value.length < 6 || value.length > 10) {
       input.error = 'Debe tener entre 6 y 10 dígitos';
-    } else if (!/^\d+$/.test(value)) {
+    } else if (/^\d+$/.test(value) === false) {
       input.error = 'El campo solo debe contener números';
     } else {
       input.error = undefined;
@@ -270,7 +271,7 @@ export class UsuariosPageComponent implements OnInit {
   private validatePhoneField(input: any, value: string) {
     if (value.length !== 10) {
       input.error = 'Debe tener 10 dígitos';
-    } else if (!/^[0-9]+$/.test(value)) {
+    } else if (/^\d+$/.test(value) === false) {
       input.error = 'El campo solo debe contener números';
     } else {
       input.error = undefined;
@@ -289,7 +290,7 @@ export class UsuariosPageComponent implements OnInit {
   }
 
   private validateConfirmPasswordField(input: any, password: string, confirmPassword: string) {
-    input.error = confirmPassword !== password ? 'Las contraseñas no coinciden' : undefined;
+    input.error = confirmPassword === password ? undefined : 'Las contraseñas no coinciden';
   }
 
   // Cerrar el modal del formulario
