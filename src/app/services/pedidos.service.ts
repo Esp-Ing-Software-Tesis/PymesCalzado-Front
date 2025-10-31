@@ -9,10 +9,6 @@ export class OrderService {
   // Mock de get orders
   getOrder(): Observable<Order[]> {
     const orderMock: Order[] = this.setMockOrdersOptions();
-    //const orderMock: Order[] = [];
-    /*return throwError(() => ({
-        description: 'No se ha encontrado data'
-    }))*/
     return of(orderMock);
   }
 
@@ -31,7 +27,6 @@ export class OrderService {
   // Mock de create pedorderIdos
   postCreateOrder(pedorderIdo: OrderCreateDTO): Observable<OrderCreateDTO> {
     const nuevoPedorderIdo = { ...pedorderIdo };
-    //return throwError(() => ({}))
     return of(nuevoPedorderIdo);
   }
 
