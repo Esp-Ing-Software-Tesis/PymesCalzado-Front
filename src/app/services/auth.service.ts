@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AuthResponse, Auth } from '../models/auth.model';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  private readonly http = inject(HttpClient);
+
   private readonly userRole = new BehaviorSubject<string | null>(null);
   userRole$ = this.userRole.asObservable();
 
@@ -23,12 +25,9 @@ export class AuthService {
   private readonly userId = new BehaviorSubject<string | null>(null);
   userId$ = this.userId.asObservable();
 
-
   private readonly apiUrl = 'https://1mhslg7415.execute-api.us-east-1.amazonaws.com/production/api/v1';
 
-  constructor(
-    private readonly http: HttpClient
-  ) {
+  constructor() {
     const storedRole = sessionStorage.getItem('role');
     const storedUsername = sessionStorage.getItem('username');
     const storedProductionLine = sessionStorage.getItem('productionLine');
@@ -58,9 +57,14 @@ export class AuthService {
 
   // Ejecucion del EP
   getAccessToken(consultToken: Auth): Observable<AuthResponse> {
-    const randomNumber = Math.floor(10000000 + Math.random() * 90000000);
-    const  Headers = new HttpHeaders({
-      'x-session-id': `SFA-${randomNumber}`
+    const cryptoObj: Crypto = (window.crypto ?? (window as unknown as { msCrypto?: Crypto }).msCrypto)!;
+
+    const array = new Uint32Array(1);
+    cryptoObj.getRandomValues(array);
+
+    const randomNumber = array[0];
+    const Headers = new HttpHeaders({
+      'x-session-id': `SFA-${randomNumber}`,
     });
     return this.http.post<AuthResponse>(this.apiUrl + '/auth/login', consultToken, { headers: Headers });
   }
