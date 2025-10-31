@@ -55,12 +55,10 @@
             </div>
           </button>
 
-          <ul class="options" *ngIf="openCategory" role="listbox">
+          <ul class="options" *ngIf="openCategory">
             <li
               *ngFor="let option of shoeCategorys"
               tabindex="0"
-              role="option"
-              [attr.aria-selected]="option.id === newShoeDesign.category_id"
               [class.active]="option.id === newShoeDesign.category_id"
               (click)="onFormChange(option.id, 'category_id')"
               (keydown.enter)="onFormChange(option.id, 'category_id')"
@@ -248,13 +246,11 @@
             </div>
           </button>
 
-          <ul class="options" *ngIf="openColors" role="listbox">
+          <ul class="options" *ngIf="openColors">
             <div
               class="option-item"
               *ngFor="let color of shoeColors"
               tabindex="0"
-              role="option"
-              [attr.aria-selected]="newShoeDesign.colors.includes(color.id)"
               [class.active]="newShoeDesign.colors.includes(color.id)"
               (click)="toggleColor(color.id)"
               (keydown.enter)="toggleColor(color.id)"
@@ -319,13 +315,11 @@
             </div>
           </button>
 
-          <ul class="options" *ngIf="openSizes" role="listbox">
+          <ul class="options" *ngIf="openSizes">
             <div
               class="option-item"
               *ngFor="let size of shoeSizes"
               tabindex="0"
-              role="option"
-              [attr.aria-selected]="newShoeDesign.sizes.includes(size.id)"
               [class.active]="newShoeDesign.sizes.includes(size.id)"
               (click)="toggleSize(size.id)"
               (keydown.enter)="toggleSize(size.id)"
