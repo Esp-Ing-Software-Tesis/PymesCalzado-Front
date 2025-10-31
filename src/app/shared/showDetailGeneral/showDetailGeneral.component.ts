@@ -142,7 +142,10 @@ export class ShowDetailGeneralComponent implements OnInit, AfterViewChecked {
   // Extraer strings para llenar la tabla
   getValue(item: any, key: string): string {
     const value = item[key];
-    return value != null ? String(value) : '';
+    if (value === null || value === undefined) {
+      return '';
+    }
+    return String(value);
   }
 
   // Método para obtener los items planos del datatable
