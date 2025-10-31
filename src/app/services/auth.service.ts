@@ -57,16 +57,19 @@ export class AuthService {
 
   // Ejecucion del EP
   getAccessToken(consultToken: Auth): Observable<AuthResponse> {
-    const cryptoObj: Crypto = (window.crypto ?? (window as unknown as { msCrypto?: Crypto }).msCrypto)!;
+    // Nota: se usa crypto.getRandomValues() solo para generar un identificador de sesión no crítico.
+    const cryptoObj: Crypto = globalThis.crypto;
 
+    // Genera un número aleatorio de 8 dígitos de forma segura
     const array = new Uint32Array(1);
     cryptoObj.getRandomValues(array);
+    const randomNumber = (array[0] % 90000000) + 10000000;
 
-    const randomNumber = array[0];
-    const Headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       'x-session-id': `SFA-${randomNumber}`,
     });
-    return this.http.post<AuthResponse>(this.apiUrl + '/auth/login', consultToken, { headers: Headers });
+
+    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, consultToken, { headers });
   }
 
   // Servicios para guardar en el sesion storage
