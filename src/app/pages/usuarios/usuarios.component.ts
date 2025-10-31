@@ -224,6 +224,9 @@ export class UsuariosPageComponent implements OnInit {
         case 'name':
           this.validateNameField(input, value);
           break;
+        case 'lastname':
+          this.validateNameField(input, value);
+          break;
         case 'document':
           this.validateDocumentField(input, value);
           break;

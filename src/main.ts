@@ -5,21 +5,18 @@ import { routes } from './app/app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { loaderInterceptor } from './app/core/interceptors/loader.interceptor';
 
-(async () => {
-  try {
-    await bootstrapApplication(AppComponent, {
-      providers: [
-        provideRouter(
-          routes,
-          withInMemoryScrolling({
-            scrollPositionRestoration: 'enabled',
-            anchorScrolling: 'enabled',
-          }),
-        ),
-        provideHttpClient(withInterceptors([loaderInterceptor])),
-      ],
-    });
-  } catch (err) {
-    console.error(err);
-  }
-})();
+// NOSONAR
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideRouter(
+      routes,
+      withInMemoryScrolling({
+        scrollPositionRestoration: 'enabled',
+        anchorScrolling: 'enabled',
+      })
+    ),
+    provideHttpClient(
+      withInterceptors([loaderInterceptor])
+    ),
+  ],
+}).catch((err) => console.error(err));
