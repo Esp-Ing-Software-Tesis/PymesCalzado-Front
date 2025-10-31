@@ -74,14 +74,14 @@
                       <ng-container [ngSwitch]="true">
                         <ng-container *ngSwitchCase="col.isState">
                           <div class="container_state">
-                            <label [ngClass]="['state', getOrderText(item[col.key])]">
+                            <label for="input-state" [ngClass]="['state', getOrderText(item[col.key])]">
                               {{ item[col.key] }}
                             </label>
                           </div>
                         </ng-container>
 
                         <ng-container *ngSwitchCase="col.isShowDetail && inputsConfigPage.isCreate">
-                          <label class="showDetail">
+                          <label for="input-detail" class="showDetail">
                             <button
                               *ngIf="getOrderText(item.state) === 'sin_tareas'"
                               (click)="openCreateEditPage(item, 'create')"
@@ -100,7 +100,7 @@
                         </ng-container>
 
                         <ng-container *ngSwitchCase="col.isShowDetail && inputsConfigPage.isView">
-                          <label class="showDetail">
+                          <label for="input-detail" class="showDetail">
                             <button class="buttonShowDetail" (click)="openShowTasks(item)">Ver Detalle</button>
                           </label>
                         </ng-container>

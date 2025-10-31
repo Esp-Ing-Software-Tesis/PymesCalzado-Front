@@ -173,7 +173,7 @@ export class CrearDisenosCalzadoPageComponent implements OnInit, AfterViewChecke
 
   // Manejar el cambio en el input de costo
   onCostChange(value: string, item: any) {
-    // limpiar todo lo que no sea número
+    // limpiar lo que no sea número
     const clean = value.replaceAll(/\D/g, '');
     item.costPerPair = clean;
     // recalcular producción
@@ -295,12 +295,10 @@ export class CrearDisenosCalzadoPageComponent implements OnInit, AfterViewChecke
   // Logica para manejar el input imagen
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      const file = input.files[0];
+    const file = input.files?.[0];
 
-      if (!this.validateImage(file)) {
-        return;
-      }
+    if (file) {
+      if (!this.validateImage(file)) return;
 
       const reader = new FileReader();
       reader.onload = () => {
@@ -315,12 +313,10 @@ export class CrearDisenosCalzadoPageComponent implements OnInit, AfterViewChecke
     event.preventDefault();
     event.stopPropagation();
 
-    if (event.dataTransfer?.files && event.dataTransfer.files[0]) {
-      const file = event.dataTransfer.files[0];
+    const file = event.dataTransfer?.files?.[0];
 
-      if (!this.validateImage(file)) {
-        return;
-      }
+    if (file) {
+      if (!this.validateImage(file)) return;
 
       const reader = new FileReader();
       reader.onload = () => {
@@ -441,7 +437,7 @@ export class CrearDisenosCalzadoPageComponent implements OnInit, AfterViewChecke
   }
 
   private countErrors() {
-    this.counterErrors = Object.values(this.shoeDesignErrors).filter((error) => error).length;
+    this.counterErrors = Object.values(this.shoeDesignErrors).filter(Boolean).length;
   }
 
   private hasNoErrors(): boolean {

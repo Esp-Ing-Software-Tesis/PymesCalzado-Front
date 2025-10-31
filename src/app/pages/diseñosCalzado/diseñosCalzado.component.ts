@@ -18,7 +18,7 @@ import { DetailConfigService } from '../../services/detailConfig.service';
   templateUrl: './diseñosCalzado.component.html',
   styleUrls: ['./diseñosCalzado.component.scss'],
 })
-export class DiseñosCalzadoPageComponent implements OnInit {
+export class DisenosCalzadoPageComponent implements OnInit {
   //Almacenar datos de entrada
   shoesDesign: ShoeDesignDTO[] = [];
 
