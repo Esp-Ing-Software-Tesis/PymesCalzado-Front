@@ -66,7 +66,7 @@ export class CrearEditarTareasComponent implements OnInit, AfterViewChecked {
     this.configTask = this.tasksSharedService.getTaskInfo();
 
     if (this.configTask) {
-      const foundDetail = this.configTask.tasksDetailDTO.find((detail) => detail.articleId === this.configTask?.articleTaskDTO.articleId);
+      const foundDetail = this.configTask?.tasksDetailDTO?.find((detail) => detail.articleId === this.configTask?.articleTaskDTO?.articleId);
       this.tasks = foundDetail ? foundDetail.tasksArticlesDTO.slice() : [];
       this.totalAmount = this.tasks.reduce((sum, task) => sum + (task.amount || 0), 0);
     }
@@ -121,7 +121,7 @@ export class CrearEditarTareasComponent implements OnInit, AfterViewChecked {
   onFormModal() {
     this.clearErrorsTask();
     this.totalAmount = this.tasks.reduce((sum, task) => sum + (task.amount || 0), 0);
-    if (!this.configTask || !this.configTask.articleTaskDTO) return;
+    if (!this.configTask?.articleTaskDTO) return;
     const maxValue = this.configTask.articleTaskDTO.amount;
 
     // Validar si se excede el total permitido
@@ -145,21 +145,21 @@ export class CrearEditarTareasComponent implements OnInit, AfterViewChecked {
     this.cleanErrors();
 
     // Validar campos obligatorios
-    this.formModalConfig.inputsConfig.forEach((i) => {
+    for (const i of this.formModalConfig.inputsConfig) {
       const value = values[i.key];
       if (i.obligatory && !value) {
         i.error = 'Este campo es obligatorio';
         this.numErrors++;
       }
-    });
+    }
 
     // Validar reglas de negocio
     this.validateErrorBusinessLogic(values);
 
     // Contar errores internos
-    this.formModalConfig.inputsConfig.forEach((i) => {
+    for (const i of this.formModalConfig.inputsConfig) {
       if (i.error) this.numErrors++;
-    });
+    }
 
     // Validar error global
     if (this.formModalConfig.error) this.numErrors++;
@@ -168,7 +168,7 @@ export class CrearEditarTareasComponent implements OnInit, AfterViewChecked {
     if (this.numErrors === 0) {
       const amountValue = Number(values['amount']);
 
-      if (!isNaN(amountValue) && amountValue > 0) {
+      if (!Number.isNaN(amountValue) && amountValue > 0) {
         // Crear nueva tarea
         const newTask: TasksArticlesDTO = {
           taskId: this.taskIdCounter,
@@ -190,9 +190,9 @@ export class CrearEditarTareasComponent implements OnInit, AfterViewChecked {
   // Limpiar los errores
   cleanErrors() {
     this.numErrors = 0;
-    this.formModalConfig.inputsConfig.forEach((i) => {
+    for (const i of this.formModalConfig.inputsConfig) {
       i.error = '';
-    });
+    }
   }
 
   // Validar dinámicamente los errores de lógica de negocio
@@ -207,26 +207,23 @@ export class CrearEditarTareasComponent implements OnInit, AfterViewChecked {
 
   // Errores de Logica de negocio
   validateErrorBusinessLogic(values: { [key: string]: string }) {
-    Object.entries(values).forEach(([key, value]) => {
+    for (const [key, value] of Object.entries(values)) {
       const input = this.formModalConfig.inputsConfig.find((i) => i.key === key);
 
       if (!input) {
         return;
       }
 
-      switch (key) {
-        case 'amount': {
-          if (!this.configTask || !this.configTask.articleTaskDTO) return;
-          const maxValue = this.configTask.articleTaskDTO.amount - this.totalAmount;
-          const inputValue = Number(value);
+      if (key === 'amount') {
+        if (!this.configTask?.articleTaskDTO) return;
+        const maxValue = this.configTask.articleTaskDTO.amount - this.totalAmount;
+        const inputValue = Number(value);
 
-          if (inputValue > maxValue || inputValue < 1) {
-            input.error = `Debe ingresar una cantidad entre 1 y ${maxValue}.`;
-          }
-          break;
+        if (inputValue > maxValue || inputValue < 1) {
+          input.error = `Debe ingresar una cantidad entre 1 y ${maxValue}.`;
         }
       }
-    });
+    }
   }
 
   // Cerrar el modal del formulario
@@ -242,7 +239,7 @@ export class CrearEditarTareasComponent implements OnInit, AfterViewChecked {
     this.clearErrorsTask();
     const newValue = Number(value);
 
-    if (isNaN(newValue) || newValue < 1) {
+    if (Number.isNaN(newValue) || newValue < 1) {
       this.taskErrors.amount_error = 'Debe ingresar una cantidad válida.';
       return;
     }
@@ -250,7 +247,7 @@ export class CrearEditarTareasComponent implements OnInit, AfterViewChecked {
     item.amount = newValue;
     this.totalAmount = this.tasks.reduce((sum, task) => sum + (task.amount || 0), 0);
 
-    if (!this.configTask || !this.configTask.articleTaskDTO) return;
+    if (!this.configTask?.articleTaskDTO) return;
 
     const maxValue = this.configTask.articleTaskDTO.amount;
 
@@ -269,7 +266,7 @@ export class CrearEditarTareasComponent implements OnInit, AfterViewChecked {
     const isCtrlV = (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'v';
     if (isCtrlV) return;
 
-    if (!/[0-9]/.test(event.key) && !allowedKeys.includes(event.key)) {
+    if (!/\d/.test(event.key) && !allowedKeys.includes(event.key)) {
       event.preventDefault();
     }
   }
@@ -313,7 +310,7 @@ export class CrearEditarTareasComponent implements OnInit, AfterViewChecked {
   onSendTasks() {
     this.clearErrorsTask();
     this.totalAmount = this.tasks.reduce((sum, task) => sum + (task.amount || 0), 0);
-    if (!this.configTask || !this.configTask.articleTaskDTO) return;
+    if (!this.configTask?.articleTaskDTO) return;
     const maxValue = this.configTask.articleTaskDTO.amount;
 
     // Validar si es menor a la cantidad total necesaria

@@ -97,12 +97,12 @@ export class CrearPedidosPageComponent implements OnInit, AfterViewChecked, OnDe
 
       // Si regresa al padre, verificamos si hay nuevo artículo
       if (!childRoute) {
-        const article = this.articlesSharedService.getArticlesList();
+        this.articlesSharedService.getArticlesList();
       }
     });
 
     // Escuchar el artículo cuando sea emitido por el hijo
-    this.subNewArticle = this.articlesSharedService.newArticle$.pipe(filter((article): article is ArticlesDTO => !!article)).subscribe((article) => {
+    this.subNewArticle = this.articlesSharedService.newArticle$.pipe(filter(Boolean)).subscribe((article) => {
       // Se ejecuta cuando el hijo hace sendNewArticle()
       this.newOrder.articles.push(article);
       // Limpia el valor para que no se vuelva a emitir al navegar
@@ -204,7 +204,7 @@ export class CrearPedidosPageComponent implements OnInit, AfterViewChecked, OnDe
     const isCtrlV = (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'v';
     if (isCtrlV) return;
 
-    if (!/[0-9]/.test(event.key) && !allowedKeys.includes(event.key)) {
+    if (!/\d/.test(event.key) && !allowedKeys.includes(event.key)) {
       event.preventDefault();
     }
   }
