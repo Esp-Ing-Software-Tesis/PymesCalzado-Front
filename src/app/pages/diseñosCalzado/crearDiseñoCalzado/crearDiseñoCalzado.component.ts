@@ -220,6 +220,10 @@ export class CrearDisenosCalzadoPageComponent implements OnInit, AfterViewChecke
     } else {
       this.validateDynamicField(key, value);
     }
+
+    if (key === 'category_id') {
+      this.openCategory = false;
+    }
   }
 
   private extractValue(eventOrValue: Event | number | string): any {
@@ -350,6 +354,7 @@ export class CrearDisenosCalzadoPageComponent implements OnInit, AfterViewChecke
       this.newShoeDesign.colors.splice(index, 1);
     }
     this.shoeDesignErrors.colors_error = this.newShoeDesign.colors.length ? '' : 'Debe seleccionar al menos una opción';
+    this.openColors = false;
   }
 
   // Mostrar nombres de los colores seleccionados
@@ -384,6 +389,7 @@ export class CrearDisenosCalzadoPageComponent implements OnInit, AfterViewChecke
       this.newShoeDesign.sizes.splice(index, 1);
     }
     this.shoeDesignErrors.sizes_error = this.newShoeDesign.sizes.length ? '' : 'Debe seleccionar al menos una opción';
+    this.openSizes = false;
   }
 
   // Mostrar nombres de las tallas seleccionadas
