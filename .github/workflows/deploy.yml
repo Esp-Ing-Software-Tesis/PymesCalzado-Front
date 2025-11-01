@@ -11,10 +11,6 @@ jobs:
     name: Build & Deploy to AWS S3 + CloudFront
     runs-on: ubuntu-latest
 
-    # Solo ejecuta si el análisis de seguridad fue exitoso
-    needs: security-analysis
-    if: ${{ needs.security-analysis.result == 'success' }}
-
     permissions:
       contents: read
       id-token: write
