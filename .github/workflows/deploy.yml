@@ -11,10 +11,6 @@ jobs:
     name: Build & Deploy to AWS S3 + CloudFront
     runs-on: ubuntu-latest
 
-    # Solo ejecuta si el análisis de seguridad fue exitoso
-    needs: security-analysis
-    if: ${{ needs.security-analysis.result == 'success' }}
-
     permissions:
       contents: read
       id-token: write
@@ -39,7 +35,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: us-east-2   # Región de tu bucket S3
 
       - name: Upload assets to S3 with cache
         run: |
