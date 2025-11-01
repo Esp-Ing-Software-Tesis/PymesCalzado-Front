@@ -1,4 +1,4 @@
-# flujo para ejecutar CodeQL y Dependabot
+# flujo para ejecutar CodeQL y SonarCloud
 name: Security Analysis
 
 on:
@@ -15,7 +15,7 @@ on:
 
 jobs:
   analyze:
-    name: Run CodeQL & Dependabot check
+    name: Run CodeQL analysis
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -33,12 +33,3 @@ jobs:
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3.27.3
-
-  dependabot:
-    name: Dependabot vulnerability check
-    runs-on: ubuntu-latest
-    steps:
-      - name: Dependabot metadata
-        uses: dependabot/fetch-metadata@v2.2.0
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
