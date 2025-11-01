@@ -10,11 +10,11 @@ on:
       - main
       - dev
   schedule:
-    - cron: '0 3 * * 1' # Corre todos los lunes a las 3 AM
+    - cron: '0 3 * * 1'
 
 jobs:
   analyze:
-    name: Run CodeQL Analysis
+    name: Run CodeQL & Dependabot check
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -23,21 +23,21 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@3df4fca0d53a73580b2d64a5d8f48b3c8799e9e7 # v4.1.1
+        uses: actions/checkout@3df4fca0d53a73580b2d64a5d8f48b3c8799e9e7
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@b398f31d7b4b9c1379fa3b6e4b9a3795c04b482e # v3.25.9
+        uses: github/codeql-action/init@e5d0fc5b8fb5b8f1e1c3c17a236e1d873582b1c1
         with:
           languages: javascript
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@b398f31d7b4b9c1379fa3b6e4b9a3795c04b482e # v3.25.9
+        uses: github/codeql-action/analyze@e5d0fc5b8fb5b8f1e1c3c17a236e1d873582b1c1
 
   dependabot:
     name: Dependabot vulnerability check
     runs-on: ubuntu-latest
     steps:
       - name: Dependabot metadata
-        uses: dependabot/fetch-metadata@7fbebd80565aa3cfc66e53ec6c8cc99a98c6f6d3 # v2.3.1
+        uses: dependabot/fetch-metadata@7fbebd80565aa3cfc66e53ec6c8cc99a98c6f6d3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
