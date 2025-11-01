@@ -1,3 +1,4 @@
+# flujo para ejecutar CodeQL y Dependabot
 name: Security Analysis
 
 on:
