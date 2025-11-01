@@ -34,7 +34,6 @@
 }
 
 .container-error {
-    width: 100%;
     height: auto;
     background-color: $beige;
     display: flex;
@@ -60,13 +59,6 @@
     font-style: normal;
 }
 
-.container-inputs {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: auto;
-    gap: 0.1em;
-}
 
 .container-text {
     display: flex;
@@ -121,10 +113,19 @@
   border-radius: 12px;
 }
 
-.password-container svg {
+.password-container button {
+  border: none;
+  background-color: transparent;
   position: absolute;
   right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
   cursor: pointer;
+}
+
+.password-container svg {
   width: 20px;
   height: 20px;
   fill: none;
@@ -132,67 +133,110 @@
 
 // Aquí se controla el select dinámico
 .container-inputs {
-  .custom-select {
-    position: relative;
-    width: 100%;
-    font-family: Inter, sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  gap: 0.1em;
 
-    .selected {
-      border: 1px solid $negro;
-      background-color: $background-color;
-      padding: 0.6em 1rem 0.6em 0.6em; // padding-right para el icono
-      height: auto;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      color: $negro;
+  .custom-select-container {
+        position: relative;
+        width: 100%;
 
-      &.placeholder {
-        color: rgba($negro, 0.5);
-      }
+        .custom-select-container-button {
+            width: 100%;
+            font-family: Inter, sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            background-color: transparent;
+            border: none;
 
-      svg.icon-arrow {
-        width: 14px;
-        height: 14px;
-        fill: currentColor;
-        margin-left: auto; // empuja el icono hasta la derecha
-        flex-shrink: 0;
-      }
+            .selected {
+            border: 1px solid $negro;
+            background-color: $background-color;
+            padding: 0.6em 2.5em 0.6em 0.6em; // espacio a la derecha para la flecha SVG
+            border-radius: 12px;
+            color: $negro;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .icon-arrow {
+            width: 14px;
+            height: 14px;
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            }
+
+            &.placeholder {
+            color: rgba($negro, 0.3);
+            }
+        }
+        }
+
+        .options {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            width: 100%;
+            border: 1px solid $negro;
+            border-radius: 12px;
+            background-color: $background-color;
+            max-height: 200px;
+            overflow-y: auto;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            z-index: 1000;
+
+            li {
+            padding: 0.6em;
+            cursor: pointer;
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+
+            &.active {
+                background-color: rgba($beige, 0.7);
+            }
+            }
+
+            .option-item {
+            padding: 0.6em;
+            cursor: pointer;
+            display: flex;
+            height: 40px;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+            .icon-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                svg {
+                width: 15px;
+                height: 15px;
+                }
+            }
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+
+            &.active {
+                background-color: rgba($beige, 0.7);
+            }
+            }
+        }
     }
-
-    .options {
-      position: absolute;
-      top: calc(100% + 4px);
-      left: 0;
-      width: 100%;
-      border: 1px solid $negro;
-      border-radius: 12px;
-      background-color: $background-color;
-      max-height: 200px;
-      overflow-y: auto;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      z-index: 1000;
-    }
-
-    .options li {
-      padding: 0.6em;
-      border-radius: 8px;
-      cursor: pointer;
-
-      &:hover {
-        background-color: rgba(0, 0, 0, 0.1);
-      }
-
-      &.active {
-        background-color: rgba($beige, 0.7);
-      }
-    }
-  }
 }
 
 .container-inputs .error {

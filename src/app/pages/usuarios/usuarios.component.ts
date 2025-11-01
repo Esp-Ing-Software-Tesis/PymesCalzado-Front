@@ -49,7 +49,7 @@ export class UsuariosPageComponent implements OnInit {
   //Datos ingresados desde el formulario
   setDataForm: { [key: string]: string } = {};
 
-  // contador de errores
+  // contador de erroresa
   numErrors: number = 0;
 
   constructor(
@@ -111,7 +111,7 @@ export class UsuariosPageComponent implements OnInit {
         productionLineSelect.options = dataLineaProduccion;
       }
       // borra si no se tiene nada
-      if (!this.setDataForm['productionLine']) {
+      if (this.setDataForm['productionLine'] === undefined || this.setDataForm['productionLine'] === '') {
         this.setDataForm['productionLine'] = '';
       }
     } else if (change.key === 'rol') {
@@ -126,62 +126,63 @@ export class UsuariosPageComponent implements OnInit {
 
   //Validar errores de los campos con el boton
   validateErrors(values: { [key: string]: string }) {
-    //eliminar error general si existe
+    this.clearGlobalError();
+    this.removeUnusedFields(values);
+    this.mergeFormValues(values);
+    this.cleanErrors();
+
+    this.validateRequiredFields();
+    this.validateErrorBusinessLogic(values);
+    this.countErrors();
+
+    if (this.numErrors === 0) {
+      this.createNewUser();
+    }
+  }
+
+  // --- Subfunciones privadas para reducir complejidad ---
+
+  private clearGlobalError() {
     if (this.formModalConfig.error) {
       this.formModalConfig.error = undefined;
     }
+  }
 
-    //Limpiar los campos que no esten si hay dependientes
-    Object.keys(this.setDataForm).forEach((key) => {
+  private removeUnusedFields(values: { [key: string]: string }) {
+    for (const key of Object.keys(this.setDataForm)) {
       if (!(key in values)) {
         delete this.setDataForm[key];
       }
-    });
+    }
+  }
 
-    // Almacenar data de forma dinamica
-    this.setDataForm = {
-      ...this.setDataForm,
-      ...values,
-    };
+  private mergeFormValues(values: { [key: string]: string }) {
+    this.setDataForm = { ...this.setDataForm, ...values };
+  }
 
-    // Limpiar errores
-    this.cleanErrors();
-
-    // Validar obligarotio
-    this.formModalConfig.inputsConfig.forEach((i) => {
-      if (i.obligatory) {
-        const visible = !i.dependsOn || this.setDataForm[i.dependsOn.key] === i.dependsOn.value;
-        if (visible) {
-          const value = this.setDataForm[i.key];
-          if (!value) {
-            i.error = 'Este campo es obligatorio';
-          }
-        }
+  private validateRequiredFields() {
+    for (const i of this.formModalConfig.inputsConfig) {
+      if (!i.obligatory) continue;
+      const visible = i.dependsOn ? this.setDataForm[i.dependsOn.key] === i.dependsOn.value : true;
+      if (visible && !this.setDataForm[i.key]) {
+        i.error = 'Este campo es obligatorio';
       }
-    });
+    }
+  }
 
-    // LLamar a errores de logica de negocio para confirmar
-    this.validateErrorBusinessLogic(values);
-
-    // Validar si hay errores
-    this.formModalConfig.inputsConfig.forEach((i) => {
-      if (i.error) {
-        this.numErrors++;
-      }
-    });
-
-    // Enviar a creacion
-    if (this.numErrors === 0) {
-      this.createNewUser();
+  private countErrors() {
+    this.numErrors = 0;
+    for (const i of this.formModalConfig.inputsConfig) {
+      if (i.error) this.numErrors++;
     }
   }
 
   // Limpiar los errores
   cleanErrors() {
     this.numErrors = 0;
-    this.formModalConfig.inputsConfig.forEach((i) => {
+    for (const i of this.formModalConfig.inputsConfig) {
       i.error = '';
-    });
+    }
   }
 
   // Validar dinamicamente los errores de logica de negocio
@@ -215,12 +216,15 @@ export class UsuariosPageComponent implements OnInit {
 
   // Errores de Logica de negocio
   validateErrorBusinessLogic(values: { [key: string]: string }) {
-    Object.entries(values).forEach(([key, value]) => {
+    for (const [key, value] of Object.entries(values)) {
       const input = this.formModalConfig.inputsConfig.find((i) => i.key === key);
-      if (!input) return;
+      if (!input) continue;
 
       switch (key) {
         case 'name':
+          this.validateNameField(input, value);
+          break;
+        case 'lastname':
           this.validateNameField(input, value);
           break;
         case 'document':
@@ -239,13 +243,13 @@ export class UsuariosPageComponent implements OnInit {
           this.validateConfirmPasswordField(input, values['password'], value);
           break;
       }
-    });
+    }
   }
 
   private validateNameField(input: any, value: string) {
     if (value.length < 5 || value.length > 100) {
       input.error = 'Debe tener entre 5 y 100 caracteres';
-    } else if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(value)) {
+    } else if (/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(value) === false) {
       input.error = 'El campo solo debe contener letras';
     } else {
       input.error = undefined;
@@ -255,7 +259,7 @@ export class UsuariosPageComponent implements OnInit {
   private validateDocumentField(input: any, value: string) {
     if (value.length < 6 || value.length > 10) {
       input.error = 'Debe tener entre 6 y 10 dígitos';
-    } else if (!/^[0-9]+$/.test(value)) {
+    } else if (/^\d+$/.test(value) === false) {
       input.error = 'El campo solo debe contener números';
     } else {
       input.error = undefined;
@@ -270,7 +274,7 @@ export class UsuariosPageComponent implements OnInit {
   private validatePhoneField(input: any, value: string) {
     if (value.length !== 10) {
       input.error = 'Debe tener 10 dígitos';
-    } else if (!/^[0-9]+$/.test(value)) {
+    } else if (/^\d+$/.test(value) === false) {
       input.error = 'El campo solo debe contener números';
     } else {
       input.error = undefined;
@@ -281,7 +285,7 @@ export class UsuariosPageComponent implements OnInit {
     const conditions: PasswordConditions = {
       length: value.length >= 8,
       uppercase: /[A-Z]/.test(value),
-      number: /[0-9]/.test(value),
+      number: /\d/.test(value),
       symbol: /[!@#$%^&*(),.?":{}|<>]/.test(value),
     };
     const isValid = Object.values(conditions).every(Boolean);
@@ -289,7 +293,7 @@ export class UsuariosPageComponent implements OnInit {
   }
 
   private validateConfirmPasswordField(input: any, password: string, confirmPassword: string) {
-    input.error = confirmPassword !== password ? 'Las contraseñas no coinciden' : undefined;
+    input.error = confirmPassword === password ? undefined : 'Las contraseñas no coinciden';
   }
 
   // Cerrar el modal del formulario

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Users, UserCreateDTO, UserUpdateDTO, UsersByProductionLine } from '../models/usuario.model';
 
 @Injectable({ providedIn: 'root' })
@@ -9,44 +9,23 @@ export class UsersService {
   // Mock de get Users
   getUsers(): Observable<Users[]> {
     const usersMock: Users[] = this.setMockUsersOptions();
-    //const usersMock: Users[] = [];
-    /*return throwError(() => ({
-        description: 'No se ha encontrado data'
-    }))*/
     return of(usersMock);
   }
 
   // Mock de update estado user
   updateUser(usuario: UserUpdateDTO): Observable<UserUpdateDTO> {
-    /*return throwError(() => ({
-
-    }))*/
-    /*return throwError(() => ({
-      description: 'Ya existe un administrador activo',
-    }));*/
     return of(usuario);
   }
 
   // Mock de create user
   postUser(usuario: UserCreateDTO): Observable<UserCreateDTO> {
     const nuevoUsuario = { ...usuario };
-    //return throwError(() => ({}))
-    /*return throwError(() => ({
-        description: 'Ya existe un administrador activo'
-    }))*/
-    /*return throwError(() => ({
-      description: 'Usuario ya existente',
-    }));*/
     return of(nuevoUsuario);
   }
 
   // Mock de get Users por linea de produccion
   getUsersByProductionLine(productionLine: string): Observable<UsersByProductionLine[]> {
     const usersMockProductionLine: UsersByProductionLine[] = this.setMockUsersByProductionLine(productionLine);
-    //const usersMock: Users[] = [];
-    /*return throwError(() => ({
-        description: 'No se ha encontrado data'
-    }))*/
     return of(usersMockProductionLine);
   }
 

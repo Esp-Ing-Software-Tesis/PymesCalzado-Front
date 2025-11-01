@@ -17,22 +17,33 @@
       <!-- Select Client -->
       <div class="container-client">
         <div class="container-text">
-          <label>Cliente</label>
+          <label for="input-client">Cliente</label>
           <span class="required"> *</span>
         </div>
-        <div class="custom-select-container" (click)="toggleCategory()">
-          <div class="selected" [class.placeholder]="!newOrder.customer_id">
-            {{ newOrder.client || 'Seleccione el cliente' }}
-            <svg class="icon-arrow">
-              <use xlink:href="assets/icons-sprite.svg#general-arrow_select"></use>
-            </svg>
-          </div>
+        <div class="custom-select-container">
+          <button
+            type="button"
+            class="custom-select-container-button"
+            aria-label="Desplegar clientes"
+            (click)="toggleClient()"
+            (keydown.enter)="toggleClient()"
+            (keydown.space)="toggleClient()"
+          >
+            <div class="selected" [class.placeholder]="!newOrder.customer_id">
+              {{ newOrder.client || 'Seleccione el cliente' }}
+              <svg class="icon-arrow">
+                <use xlink:href="assets/icons-sprite.svg#general-arrow_select"></use>
+              </svg>
+            </div>
+          </button>
 
           <ul class="options" *ngIf="openClient">
             <li
               *ngFor="let option of clients"
               [class.active]="option.customer_id === newOrder.customer_id"
               (click)="onFormChange(option.customer_id, 'customer_id')"
+              (keydown.enter)="onFormChange(option.customer_id, 'customer_id')"
+              (keydown.space)="onFormChange(option.customer_id, 'customer_id')"
             >
               {{ `${option.name} - ${option.customer_id}` }}
             </li>
@@ -52,7 +63,7 @@
       </div>
       <!-- tabla articulos -->
       <div class="container-articles" *ngIf="newOrder.articles.length > 0; else dataNotFound">
-        <label>Artículos</label>
+        <label for="input-client">Artículos</label>
         <div class="table-wrapper">
           <table>
             <colgroup>

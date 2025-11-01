@@ -52,27 +52,41 @@
                 [attr.required]="input.obligatory"
                 (input)="onInputChange($event, input.key)"
               />
-              <svg class="icon cursor-pointer" (click)="togglePasswordVisibility(input.key)">
-                <use
-                  [attr.xlink:href]="passwordVisible[input.key] ? 'assets/icons-sprite.svg#login-eye' : 'assets/icons-sprite.svg#login-eye-off'"
-                ></use>
-              </svg>
+              <button type="button" class="icon-button" aria-label="Mostrar u ocultar contraseña" (click)="togglePasswordVisibility(input.key)">
+                <svg class="icon" focusable="false" aria-hidden="true">
+                  <use
+                    [attr.xlink:href]="passwordVisible[input.key] ? 'assets/icons-sprite.svg#login-eye' : 'assets/icons-sprite.svg#login-eye-off'"
+                  ></use>
+                </svg>
+              </button>
             </div>
           </ng-container>
 
           <!-- Select custom general -->
-          <div class="custom-select" (click)="toggleSelect(input.key)" *ngIf="input.inputType === 'list'">
-            <div class="selected" [class.placeholder]="!formValues[input.key]">
-              {{ formValues[input.key] || 'Seleccione ' + input.article + ' ' + input.name.toLowerCase() }}
-              <svg class="icon-arrow">
-                <use xlink:href="assets/icons-sprite.svg#general-arrow_select"></use>
-              </svg>
-            </div>
+          <div class="custom-select-container" *ngIf="input.inputType === 'list'">
+            <button
+              type="button"
+              class="custom-select-container-button"
+              aria-label="Abrir lista de opciones"
+              (click)="toggleSelect(input.key)"
+              (keydown.enter)="toggleSelect(input.key)"
+              (keydown.space)="toggleSelect(input.key)"
+            >
+              <div class="selected" [class.placeholder]="!formValues[input.key]">
+                {{ formValues[input.key] || 'Seleccione ' + input.article + ' ' + input.name.toLowerCase() }}
+                <svg class="icon-arrow">
+                  <use xlink:href="assets/icons-sprite.svg#general-arrow_select"></use>
+                </svg>
+              </div>
+            </button>
+
             <ul class="options" *ngIf="openSelect === input.key">
               <li
                 *ngFor="let option of input.options; let j = index"
                 [class.active]="formValues[input.key] === option"
                 (click)="selectOption(input.key, option)"
+                (keydown.enter)="selectOption(input.key, option)"
+                (keydown.space)="selectOption(input.key, option)"
                 [id]="'option_' + input.key + '_' + j"
               >
                 {{ option }}

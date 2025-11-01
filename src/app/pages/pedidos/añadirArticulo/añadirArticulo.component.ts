@@ -4,8 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { TablaGeneralComponent } from '../../../shared/tablaGeneral/tablaGeneral.component';
 import { SinInformacionComponent } from '../../../shared/sinInformacion/sinInformacion.component';
 import { FormModalComponent } from '../../../shared/formModal/formModal.component';
-import { TABLA_GENERAL } from './añadirArticulo.config';
-import { FORMULARIO_CREACION_MODAL } from './añadirArticulo.config';
+import { FORMULARIO_CREACION_MODAL, TABLA_GENERAL } from './añadirArticulo.config';
 import { ShoeDesignDTO } from './añadirArticulo.interface';
 import { ValueChangedEvent } from '../../../shared/tablaGeneral/tablaGeneral.interface';
 import { ShoeDesignService } from '../../../services/diseñoCalzado.service';
@@ -21,7 +20,7 @@ import { map } from 'rxjs';
   templateUrl: './añadirArticulo.component.html',
   styleUrls: ['./añadirArticulo.component.scss'],
 })
-export class AñadirArticuloPageComponent implements OnInit {
+export class AnadirArticuloPageComponent implements OnInit {
   //Variable para manejar los diseños de calzado
   shoeDesings: ShoeDesignDTO[] = [];
   //Variables para manejar datos del diseño
@@ -68,23 +67,20 @@ export class AñadirArticuloPageComponent implements OnInit {
     }
     // Si recarga directamente o entra por URL manual
     if (context) {
-      const fallback = this.getFallbackRoute(context);
-      this.router.navigate(fallback);
+      this.router.navigateByUrl(this.getFallbackRoute(context));
     } else {
-      this.router.navigate(['/']);
+      this.router.navigateByUrl('/');
     }
   }
 
   //Devuelve la ruta a donde debe ir si se recarga o entra manualmente
-  getFallbackRoute(context: string | null): string[] {
-    switch (context) {
-      case 'ORDERGERENT':
-        localStorage.removeItem('lastContext');
-        return ['/pedidos'];
-      default:
-        localStorage.removeItem('lastContext');
-        return ['/'];
+  getFallbackRoute(context: string | null): string {
+    if (context === 'ORDERGERENT') {
+      localStorage.removeItem('lastContext');
+      return '/pedidos';
     }
+    localStorage.removeItem('lastContext');
+    return '/';
   }
 
   //Acción de volver manualmente
@@ -147,34 +143,33 @@ export class AñadirArticuloPageComponent implements OnInit {
     ) {
       this.formModalConfig.error =
         'Ya existe un artículo con esa referencia, color y talla en el pedido. Puede modificar la cantidad si lo necesita.';
-
     }
 
     // Limpiar errores
     this.cleanErrors();
 
     // Validar obligarotio
-    this.formModalConfig.inputsConfig.forEach((i) => {
+    for (const i of this.formModalConfig.inputsConfig) {
       if (i.obligatory) {
         const value = this.setDataForm[i.key];
         if (!value) {
           i.error = 'Este campo es obligatorio';
         }
       }
-    });
+    }
 
     // LLamar a errores de logica de negocio para confirmar
     this.validateErrorBusinessLogic(values);
 
     // Validar si hay errores internos
-    this.formModalConfig.inputsConfig.forEach((i) => {
+    for (const i of this.formModalConfig.inputsConfig) {
       if (i.error) {
         this.numErrors++;
       }
-    });
+    }
 
     //validar si hay error global
-    if(this.formModalConfig.error){
+    if (this.formModalConfig.error) {
       this.numErrors++;
     }
 
@@ -202,11 +197,11 @@ export class AñadirArticuloPageComponent implements OnInit {
   }
 
   // Limpiar los errores
-  cleanErrors() {
+  cleanErrors(): void {
     this.numErrors = 0;
-    this.formModalConfig.inputsConfig.forEach((i) => {
-      i.error = '';
-    });
+    for (const input of this.formModalConfig.inputsConfig) {
+      input.error = '';
+    }
   }
 
   // Logica para cambios en selects
@@ -238,21 +233,14 @@ export class AñadirArticuloPageComponent implements OnInit {
 
   // Errores de Logica de negocio
   validateErrorBusinessLogic(values: { [key: string]: string }) {
-    Object.entries(values).forEach(([key, value]) => {
+    for (const [key, value] of Object.entries(values)) {
       const input = this.formModalConfig.inputsConfig.find((i) => i.key === key);
+      if (!input) continue;
 
-      if (!input) {
-        return;
+      if (key === 'amount' && Number(value) < 1) {
+        input.error = 'Debe ingresar una cantidad válida mayor a 0';
       }
-
-      switch (key) {
-        case 'amount':
-          if (Number(value) < 1) {
-            input.error = 'Debe ingresar una cantidad válida mayor a 0';
-          }
-          break;
-      }
-    });
+    }
   }
 
   // Cerrar el modal del formulario
@@ -297,8 +285,7 @@ export class AñadirArticuloPageComponent implements OnInit {
         this.colors = res.colors;
         this.sizes = res.sizes.map((u) => '' + u.id);
       },
-      error: (err) => {
-      },
+      error: (err) => {},
     });
   }
 }

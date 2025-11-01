@@ -1,14 +1,5 @@
 @use 'variables' as *;
 
-.container-create-design {
-    display: flex;
-    flex-direction: column;
-    gap: 2em;
-    width: 100%;
-    height: auto;
-    overflow-x: hidden; 
-}
-
 .button-volver {
     display: flex;
     flex-direction: row;
@@ -47,7 +38,6 @@
 }
 
 .container-error {
-    width: 100%;
     height: auto;
     background-color: $beige;
     display: flex;
@@ -224,85 +214,84 @@
   background-color: $beige;
 }
 
-.container-upload-image{
-    .container-column-right{
-        display: flex;
-        flex-direction: column;
-        gap: 1em;
-        align-items: flex-start;
-        flex: 1;
-        
-        p {
-            font-family: Inter, sans-serif;
-            font-size: 20px;
-            font-style: normal;
-            font-weight: 700;
-        }
+.container-upload-image .container-column-right{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    align-items: flex-start;
+    flex: 1;
+    
+    p {
+        font-family: Inter, sans-serif;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 700;
+    }
 
-        .container-buttons {
-            margin-top: 5px ;
+    .container-buttons {
+        margin-top: 5px ;
+        display: flex;
+        flex-direction: row;
+        gap: 3em;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+
+        button {
+            height: 50px;
+            width: 150px;
+            border: none;
+            border-radius: 25px;
             display: flex;
-            flex-direction: row;
-            gap: 3em;
             justify-content: center;
             align-items: center;
-            width: 100%;
+            gap: 0.6em;
 
-            button {
-                height: 50px;
-                width: 150px;
-                border: none;
-                border-radius: 25px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap: 0.6em;
-
-                span {
-                    font-family: Inter, sans-serif;
-                    font-size: 16px;
-                    font-style: normal;
-                    font-weight: 700;
-                }
-
-                svg {
-                    height: 20px;
-                    width: 20px;
-                    fill: $verde-agua-marina;
-                }
+            span {
+                font-family: Inter, sans-serif;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 700;
             }
 
-            .cargar-imagen{
-                color: $background-color;
-                background-color: $verde-agua-marina;
-                transition: filter 0.3s ease;
-                cursor: pointer;
-            }
-
-            .cargar-imagen:hover{
-                filter: brightness(1.2);
-            }
-
-            .eliminar-imagen:disabled {
-                background-color: $gris-campo-deshabilitado;
-                color: $background-color;
-                cursor: not-allowed;
-            }
-
-            .eliminar-imagen {
-                background-color: $rojo-eliminar-rechazar;
-                color: $background-color;
-                cursor: pointer;
-                transition: filter 0.3s ease;
-            }
-
-            .eliminar-imagen:hover {
-                filter: brightness(1.2);
+            svg {
+                height: 20px;
+                width: 20px;
+                fill: $verde-agua-marina;
             }
         }
 
+        .cargar-imagen{
+            color: $background-color;
+            background-color: $verde-agua-marina;
+            transition: filter 0.3s ease;
+            cursor: pointer;
+        }
+
+        .cargar-imagen:hover{
+            filter: brightness(1.2);
+        }
+
+        .eliminar-imagen:disabled {
+            background-color: $gris-campo-deshabilitado;
+            color: $background-color;
+            cursor: not-allowed;
+        }
+
+        .eliminar-imagen {
+            background-color: $rojo-eliminar-rechazar;
+            color: $background-color;
+            cursor: pointer;
+            transition: filter 0.3s ease;
+        }
+
+        .eliminar-imagen:hover {
+            filter: brightness(1.2);
+        }
     }
+
 }
+
 
 /* la tabla no debe ocupar siempre 100% */
 .container-production-lines {
@@ -458,100 +447,110 @@ table {
 
 // Estilos del formulario de creación
 .container-create-design {
-
-  // Adaptación del select personalizado
-  .custom-select-container {
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
     width: 100%;
-    font-family: Inter, sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
+    height: auto;
+    overflow-x: hidden;
+    .custom-select-container {
+        position: relative;
+        width: 100%;
 
-    .selected {
-      border: 1px solid $negro;
-      background-color: $background-color;
-      padding: 0.6em 2.5em 0.6em 0.6em; // espacio a la derecha para la flecha SVG
-      border-radius: 12px;
-      color: $negro;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+        .custom-select-container-button {
+            width: 100%;
+            font-family: Inter, sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            background-color: transparent;
+            border: none;
 
-      .icon-arrow {
-        width: 14px;
-        height: 14px;
-        position: absolute;
-        right: 1rem;
-        top: 50%;
-        transform: translateY(-50%);
-        pointer-events: none;
-      }
+            .selected {
+            border: 1px solid $negro;
+            background-color: $background-color;
+            padding: 0.6em 2.5em 0.6em 0.6em; // espacio a la derecha para la flecha SVG
+            border-radius: 12px;
+            color: $negro;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
-      &.placeholder {
-        color: rgba($negro, 0.3);
-      }
+            .icon-arrow {
+            width: 14px;
+            height: 14px;
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            }
+
+            &.placeholder {
+            color: rgba($negro, 0.3);
+            }
+        }
+        }
+
+        .options {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            width: 100%;
+            border: 1px solid $negro;
+            border-radius: 12px;
+            background-color: $background-color;
+            max-height: 200px;
+            overflow-y: auto;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            z-index: 1000;
+
+            li {
+            padding: 0.6em;
+            cursor: pointer;
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+
+            &.active {
+                background-color: rgba($beige, 0.7);
+            }
+            }
+
+            .option-item {
+            padding: 0.6em;
+            cursor: pointer;
+            display: flex;
+            height: 40px;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+            .icon-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                svg {
+                width: 15px;
+                height: 15px;
+                }
+            }
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+
+            &.active {
+                background-color: rgba($beige, 0.7);
+            }
+            }
+        }
     }
-
-    .options {
-      position: absolute;
-      top: calc(100% + 4px);
-      left: 0;
-      width: 100%;
-      border: 1px solid $negro;
-      border-radius: 12px;
-      background-color: $background-color;
-      max-height: 200px;
-      overflow-y: auto;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      z-index: 1000;
-
-      li {
-        padding: 0.6em;
-        cursor: pointer;
-
-        &:hover {
-          background-color: rgba(0, 0, 0, 0.1);
-        }
-
-        &.active {
-          background-color: rgba($beige, 0.7);
-        }
-      }
-
-      .option-item {
-        padding: 0.6em;
-        cursor: pointer;
-        display: flex;
-        height: 40px;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-
-        .icon-container {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-
-          svg {
-            width: 15px;
-            height: 15px;
-          }
-        }
-
-        &:hover {
-          background-color: rgba(0, 0, 0, 0.1);
-        }
-
-        &.active {
-          background-color: rgba($beige, 0.7);
-        }
-      }
-    }
-  }
 }
 
 .container-colors .container-selected-colors {

@@ -15,8 +15,14 @@
         <td *ngFor="let col of inputsConfigTable().colums" [ngClass]="['col-' + col.align, col.position ? 'col-' + col.position : '']">
           <ng-container [ngSwitch]="true">
             <ng-container *ngSwitchCase="col.isUser && inputsConfigTable().context === 'USER'">
-              <label class="switch">
-                <input type="checkbox" [checked]="getStateUserValue(item, col.key)" (click)="setStateUserValue($event, item, col.key)" />
+              <label id="input-switch" class="switch">
+                <input
+                  type="checkbox"
+                  [checked]="getStateUserValue(item, col.key)"
+                  (click)="setStateUserValue($event, item, col.key)"
+                  (keydown.enter)="setStateUserValue($event, item, col.key)"
+                  (keydown.space)="setStateUserValue($event, item, col.key)"
+                />
                 <span class="slider round"></span>
               </label>
             </ng-container>
@@ -26,8 +32,8 @@
                 col.isImage && (inputsConfigTable().context === 'SHOEDESIGN' || inputsConfigTable().context === 'ORDERGERENT-ADDARTICLE')
               "
             >
-              <label class="image">
-                <img [src]="item[col.key]" alt="Imagen desde base64" />
+              <label for="input-image" class="image">
+                <img [src]="item[col.key]" alt="Base64" />
               </label>
             </ng-container>
 
@@ -35,30 +41,33 @@
               *ngSwitchCase="col.isState && (inputsConfigTable().context === 'ORDERGERENT' || inputsConfigTable().context === 'ORDERGERENTADMIN')"
             >
               <div class="container_state">
-                <label [ngClass]="['state', getStateClass(item[col.key])]">
+                <label for="input-state" [ngClass]="['state', getStateClass(item[col.key])]">
                   {{ item[col.key] }}
                 </label>
               </div>
             </ng-container>
 
             <ng-container
-              *ngSwitchCase="col.isProductionLine && (inputsConfigTable().context === 'ORDERGERENTADMIN-SHOW-TASKS'  || inputsConfigTable().context === 'TASKOPERATOR')"
+              *ngSwitchCase="
+                col.isProductionLine &&
+                (inputsConfigTable().context === 'ORDERGERENTADMIN-SHOW-TASKS' || inputsConfigTable().context === 'TASKOPERATOR')
+              "
             >
               <div class="container_state_production_line">
-                <label [ngClass]="['state_production_line', getStateProductionLine(item[col.key])]">
+                <label for="input-production-line" [ngClass]="['state_production_line', getStateProductionLine(item[col.key])]">
                   {{ item[col.key] }}
                 </label>
               </div>
             </ng-container>
 
             <ng-container *ngSwitchCase="col.isShowDetail">
-              <label class="showDetail">
+              <label for="input-detail" class="showDetail">
                 <button class="buttonShowDetail" (click)="setShowDetail($event, item, col.key)">Ver Detalle</button>
               </label>
             </ng-container>
 
             <ng-container *ngSwitchCase="col.isShowAddArticle">
-              <label class="addArticle">
+              <label for="input-add-article" class="addArticle">
                 <button class="buttonAddArticle" (click)="setShowDetail($event, item, col.key)">Añadir</button>
               </label>
             </ng-container>

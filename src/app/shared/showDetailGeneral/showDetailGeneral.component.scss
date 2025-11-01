@@ -54,7 +54,6 @@
 }
 
 .container-error {
-    width: 100%;
     height: auto;
     background-color: $beige;
     display: flex;
@@ -381,9 +380,4 @@ tbody .container_state {
     table {
         max-width: 450px;
     }
-
-    .button-volver {
-        margin: 0 auto;
-    }
-
 }

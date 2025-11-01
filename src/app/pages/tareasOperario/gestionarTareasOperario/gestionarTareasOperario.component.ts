@@ -42,23 +42,20 @@ export class GestionarTareasOperarioPageComponent implements OnInit {
     }
     // Si recarga directamente o entra por URL manual
     if (context) {
-      const fallback = this.getFallbackRoute(context);
-      this.router.navigate(fallback);
+      this.router.navigateByUrl(this.getFallbackRoute(context));
     } else {
       this.router.navigate(['/']);
     }
   }
 
   //Devuelve la ruta a donde debe ir si se recarga o entra manualmente
-  getFallbackRoute(context: string | null): string[] {
-    switch (context) {
-      case 'TASKOPERATOR':
-        localStorage.removeItem('lastContext');
-        return ['/tareas'];
-      default:
-        localStorage.removeItem('lastContext');
-        return ['/'];
+  getFallbackRoute(context: string | null): string {
+    if (context === 'TASKOPERATOR') {
+      localStorage.removeItem('lastContext');
+      return '/tareas';
     }
+    localStorage.removeItem('lastContext');
+    return '/';
   }
 
   //Acción de volver manualmente
@@ -70,12 +67,12 @@ export class GestionarTareasOperarioPageComponent implements OnInit {
   // Logica para manejar los textos de los estados
   getTextState(state?: string | null): string {
     if (!state) return '';
-    // Limpiar tildes, reemplazar espacios y volver todo en minuscula
+    // Limpiar tildes, reemplazar espacios y volver en minuscula
     return state
       .toString()
       .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/\s+/g, '_')
+      .replaceAll(/[\u0300-\u036f]/g, '')
+      .replaceAll(/\s+/g, '_')
       .toLowerCase();
   }
 
