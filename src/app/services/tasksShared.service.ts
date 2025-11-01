@@ -8,23 +8,23 @@ import { ManageTaskOperatorDTO } from '../pages/tareasOperario/gestionarTareasOp
 @Injectable({ providedIn: 'root' })
 export class TasksSharedService {
   // Estado inicial de la información de tareas (enviado desde el padre) para creacion o edicion
-  private taskInfoSubject = new BehaviorSubject<TaskDTO | null>(null);
+  private readonly taskInfoSubject = new BehaviorSubject<TaskDTO | null>(null);
   taskInfo$ = this.taskInfoSubject.asObservable();
 
   // Estado inicial de la información de tareas (enviado desde el padre) para ver detalle
-  private taskInfoSubjectShowDetail = new BehaviorSubject<TaskShowDatilDTO | null>(null);
+  private readonly taskInfoSubjectShowDetail = new BehaviorSubject<TaskShowDatilDTO | null>(null);
   taskInfoShowDetail$ = this.taskInfoSubjectShowDetail.asObservable();
 
   // Estado inicial de la información de tareas (enviado desde el padre) para gestionar la tarea
-  private taskInfoSubjectManage = new BehaviorSubject<ManageTaskDTO | null>(null);
+  private readonly taskInfoSubjectManage = new BehaviorSubject<ManageTaskDTO | null>(null);
   taskInfoManage$ = this.taskInfoSubjectManage.asObservable();
 
   // Respuesta de detalle de tareas (enviada desde el hijo)
-  private taskResponseSubject = new BehaviorSubject<TasksDetailDTO | null>(null);
+  private readonly taskResponseSubject = new BehaviorSubject<TasksDetailDTO | null>(null);
   taskResponse$ = this.taskResponseSubject.asObservable();
 
   // Estado inicial de la información de tareas (enviado desde el padre) para gestionar la tarea del operario
-  private taskInfoSubjectManageOperator = new BehaviorSubject<ManageTaskOperatorDTO | null>(null);
+  private readonly taskInfoSubjectManageOperator = new BehaviorSubject<ManageTaskOperatorDTO | null>(null);
   taskInfoManageOperator$ = this.taskInfoSubjectManageOperator.asObservable();
 
   // Logica para creacion o edicion de tareas

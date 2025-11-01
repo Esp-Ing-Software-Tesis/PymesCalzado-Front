@@ -22,7 +22,7 @@ import { ShoeDesignService } from '../../../services/diseñoCalzado.service';
   templateUrl: './crearDiseñoCalzado.component.html',
   styleUrls: ['./crearDiseñoCalzado.component.scss'],
 })
-export class CrearDiseñosCalzadoPageComponent implements OnInit, AfterViewChecked {
+export class CrearDisenosCalzadoPageComponent implements OnInit, AfterViewChecked {
   // Variable que contiene los datos ingresados en el formulario
   newShoeDesign: ShoeDesignCreateDTO = {
     name: '',
@@ -113,14 +113,12 @@ export class CrearDiseñosCalzadoPageComponent implements OnInit, AfterViewCheck
   }
 
   getFallbackRoute(context: string | null): string {
-    switch (context) {
-      case 'SHOEDESIGN':
-        localStorage.removeItem('lastContext');
-        return '/diseños-calzado';
-      default:
-        localStorage.removeItem('lastContext');
-        return '/';
+    if (context === 'SHOEDESIGN') {
+      localStorage.removeItem('lastContext');
+      return '/diseños-calzado';
     }
+    localStorage.removeItem('lastContext');
+    return '/';
   }
 
   // Logica para manejar la tabla de lineas de produccion y costos
@@ -132,7 +130,6 @@ export class CrearDiseñosCalzadoPageComponent implements OnInit, AfterViewCheck
       costPerPair: '',
       isObligatory: line.isObligatory,
     }));
-    this.newShoeDesign.productionLines;
   }
 
   // Logica para cuando se genere un error global lo lleve al mensaje
@@ -154,7 +151,7 @@ export class CrearDiseñosCalzadoPageComponent implements OnInit, AfterViewCheck
       .filter((item) => item.apply)
       .map((item) => ({
         id: item.id,
-        costPerPair: Number(item.costPerPair.replace(/\D/g, '')) || 0,
+        costPerPair: Number(item.costPerPair.replaceAll(/\D/g, '')) || 0,
       }));
 
     // calcular total
@@ -169,15 +166,15 @@ export class CrearDiseñosCalzadoPageComponent implements OnInit, AfterViewCheck
   formatCurrency(value: any): string {
     if (value == null || value === '') return '';
     // Si el valor ya viene como string con símbolos, limpiamos primero
-    const clean = String(value).replace(/\D/g, '');
+    const clean = String(value).replaceAll(/\D/g, '');
     if (!clean) return '';
     return '$' + new Intl.NumberFormat('es-CO').format(Number(clean));
   }
 
   // Manejar el cambio en el input de costo
   onCostChange(value: string, item: any) {
-    // limpiar todo lo que no sea número
-    const clean = value.replace(/\D/g, '');
+    // limpiar lo que no sea número
+    const clean = value.replaceAll(/\D/g, '');
     item.costPerPair = clean;
     // recalcular producción
     this.syncProductionLines();
@@ -187,7 +184,7 @@ export class CrearDiseñosCalzadoPageComponent implements OnInit, AfterViewCheck
   allowOnlyNumbers(event: KeyboardEvent) {
     const allowedKeys = ['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete', 'Enter'];
 
-    if (!/[0-9]/.test(event.key) && !allowedKeys.includes(event.key)) {
+    if (!/\d/.test(event.key) && !allowedKeys.includes(event.key)) {
       event.preventDefault();
     }
   }
@@ -222,6 +219,10 @@ export class CrearDiseñosCalzadoPageComponent implements OnInit, AfterViewCheck
     } else {
       this.validateDynamicField(key, value);
     }
+
+    if (key === 'category_id') {
+      this.openCategory = false;
+    }
   }
 
   private extractValue(eventOrValue: Event | number | string): any {
@@ -235,15 +236,19 @@ export class CrearDiseñosCalzadoPageComponent implements OnInit, AfterViewCheck
   }
 
   private validateDynamicField(key: keyof ShoeDesignCreateDTO, value: any): void {
-    const errorKey = `${key}_error` as keyof typeof this.shoeDesignErrors;
-    const currentError = this.shoeDesignErrors[errorKey];
+    const errorKey = `${key}_error`;
 
-    if (!currentError) return;
+    if (errorKey in this.shoeDesignErrors) {
+      const typedKey = errorKey as keyof typeof this.shoeDesignErrors;
+      const currentError = this.shoeDesignErrors[typedKey];
 
-    if (Array.isArray(value)) {
-      this.shoeDesignErrors[errorKey] = value.length ? '' : currentError;
-    } else if (value) {
-      this.shoeDesignErrors[errorKey] = '';
+      if (!currentError) return;
+
+      if (Array.isArray(value)) {
+        this.shoeDesignErrors[typedKey] = value.length ? '' : currentError;
+      } else if (value) {
+        this.shoeDesignErrors[typedKey] = '';
+      }
     }
   }
 
@@ -290,12 +295,10 @@ export class CrearDiseñosCalzadoPageComponent implements OnInit, AfterViewCheck
   // Logica para manejar el input imagen
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      const file = input.files[0];
+    const file = input.files?.[0];
 
-      if (!this.validateImage(file)) {
-        return;
-      }
+    if (file) {
+      if (!this.validateImage(file)) return;
 
       const reader = new FileReader();
       reader.onload = () => {
@@ -310,12 +313,10 @@ export class CrearDiseñosCalzadoPageComponent implements OnInit, AfterViewCheck
     event.preventDefault();
     event.stopPropagation();
 
-    if (event.dataTransfer?.files && event.dataTransfer.files[0]) {
-      const file = event.dataTransfer.files[0];
+    const file = event.dataTransfer?.files?.[0];
 
-      if (!this.validateImage(file)) {
-        return;
-      }
+    if (file) {
+      if (!this.validateImage(file)) return;
 
       const reader = new FileReader();
       reader.onload = () => {
@@ -352,6 +353,7 @@ export class CrearDiseñosCalzadoPageComponent implements OnInit, AfterViewCheck
       this.newShoeDesign.colors.splice(index, 1);
     }
     this.shoeDesignErrors.colors_error = this.newShoeDesign.colors.length ? '' : 'Debe seleccionar al menos una opción';
+    this.openColors = false;
   }
 
   // Mostrar nombres de los colores seleccionados
@@ -386,6 +388,7 @@ export class CrearDiseñosCalzadoPageComponent implements OnInit, AfterViewCheck
       this.newShoeDesign.sizes.splice(index, 1);
     }
     this.shoeDesignErrors.sizes_error = this.newShoeDesign.sizes.length ? '' : 'Debe seleccionar al menos una opción';
+    this.openSizes = false;
   }
 
   // Mostrar nombres de las tallas seleccionadas
@@ -434,7 +437,7 @@ export class CrearDiseñosCalzadoPageComponent implements OnInit, AfterViewCheck
   }
 
   private countErrors() {
-    this.counterErrors = Object.values(this.shoeDesignErrors).filter((error) => error).length;
+    this.counterErrors = Object.values(this.shoeDesignErrors).filter(Boolean).length;
   }
 
   private hasNoErrors(): boolean {

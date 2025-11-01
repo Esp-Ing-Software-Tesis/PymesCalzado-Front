@@ -17,7 +17,7 @@
       <!-- Input name -->
       <div class="container-name">
         <div class="container-text">
-          <label>Nombre</label>
+          <label for="input-name">Nombre</label>
           <span class="required"> *</span>
         </div>
         <input
@@ -35,22 +35,33 @@
       <!-- Select Categoría -->
       <div class="container-category">
         <div class="container-text">
-          <label>Categoría</label>
+          <label for="input-category">Categoría</label>
           <span class="required"> *</span>
         </div>
-        <div class="custom-select-container" (click)="toggleCategory()">
-          <div class="selected" [class.placeholder]="!newShoeDesign.category_id">
-            {{ getOptionName(shoeCategorys, newShoeDesign.category_id, 'Seleccione la categoría') }}
-            <svg class="icon-arrow">
-              <use xlink:href="assets/icons-sprite.svg#general-arrow_select"></use>
-            </svg>
-          </div>
+        <div class="custom-select-container">
+          <button
+            type="button"
+            class="custom-select-container-button"
+            aria-label="Desplegar categorías"
+            (click)="toggleCategory()"
+            (keydown.enter)="toggleCategory()"
+            (keydown.space)="toggleCategory()"
+          >
+            <div class="selected" [class.placeholder]="!newShoeDesign.category_id">
+              {{ getOptionName(shoeCategorys, newShoeDesign.category_id, 'Seleccione la categoría') }}
+              <svg class="icon-arrow">
+                <use xlink:href="assets/icons-sprite.svg#general-arrow_select"></use>
+              </svg>
+            </div>
+          </button>
 
           <ul class="options" *ngIf="openCategory">
             <li
               *ngFor="let option of shoeCategorys"
               [class.active]="option.id === newShoeDesign.category_id"
               (click)="onFormChange(option.id, 'category_id')"
+              (keydown.enter)="onFormChange(option.id, 'category_id')"
+              (keydown.space)="onFormChange(option.id, 'category_id')"
             >
               {{ option.nombre }}
             </li>
@@ -63,7 +74,7 @@
       <!-- Input Descripcion -->
       <div class="container-description">
         <div class="container-text">
-          <label>Descripción</label>
+          <label for="input-description">Descripción</label>
           <span class="required"> *</span>
         </div>
         <textarea
@@ -81,14 +92,14 @@
       <!-- Manejar Imagen -->
       <div class="container-image">
         <div class="container-text">
-          <label>Subir Imagen</label>
+          <label for="input-image">Subir Imagen</label>
           <span class="required"> *</span>
         </div>
         <div class="container-upload-image" (drop)="onDrop($event)" (dragover)="onDragOver($event)">
           <div class="container-column-left">
             <div class="container-preview-image" [ngClass]="{ 'has-image': newShoeDesign.image, 'no-image': !newShoeDesign.image }">
               <ng-container *ngIf="newShoeDesign.image; else svgPlaceholder">
-                <img [src]="newShoeDesign.image" alt="imagen preview" />
+                <img [src]="newShoeDesign.image" alt="Vista previa del diseño" />
               </ng-container>
 
               <ng-template #svgPlaceholder>
@@ -104,7 +115,7 @@
               <input type="file" accept="image/png, image/jpeg, image/jpg" hidden #fileInput (change)="onFileSelected($event)" />
 
               <div class="container-buttons">
-                <button class="cargar-imagen" (click)="fileInput.click()">
+                <button class="cargar-imagen" type="button" (click)="fileInput.click()">
                   <svg class="icon">
                     <use xlink:href="assets/icons-sprite.svg#shoeDesign-upload"></use>
                   </svg>
@@ -127,7 +138,7 @@
       </div>
       <!-- table lineas de produccion -->
       <div class="container-production-lines">
-        <label>Líneas de Producción y Costos</label>
+        <label for="input-production-lines">Líneas de Producción y Costos</label>
         <div class="table-container">
           <table>
             <colgroup>
@@ -213,16 +224,26 @@
       <!-- Select Colores -->
       <div class="container-colors">
         <div class="container-text">
-          <label>Colores</label>
+          <label for="input-colors">Colores</label>
           <span class="required"> *</span>
         </div>
-        <div class="custom-select-container" (click)="toggleColors()">
-          <div class="selected" [class.placeholder]="!newShoeDesign.colors.length">
-            {{ newShoeDesign.colors.length ? 'Puede seleccionar más colores' : 'Seleccione los colores' }}
-            <svg class="icon-arrow">
-              <use xlink:href="assets/icons-sprite.svg#general-arrow_select"></use>
-            </svg>
-          </div>
+        <div class="custom-select-container">
+          <button
+            type="button"
+            id="input_colors"
+            class="custom-select-container-button"
+            aria-label="Desplegar colores"
+            (click)="toggleColors()"
+            (keydown.enter)="toggleColors()"
+            (keydown.space)="toggleColors()"
+          >
+            <div class="selected" [class.placeholder]="!newShoeDesign.colors.length">
+              {{ newShoeDesign.colors.length ? 'Puede seleccionar más colores' : 'Seleccione los colores' }}
+              <svg class="icon-arrow">
+                <use xlink:href="assets/icons-sprite.svg#general-arrow_select"></use>
+              </svg>
+            </div>
+          </button>
 
           <ul class="options" *ngIf="openColors">
             <div
@@ -230,10 +251,10 @@
               *ngFor="let color of shoeColors"
               [class.active]="newShoeDesign.colors.includes(color.id)"
               (click)="toggleColor(color.id)"
+              (keydown.enter)="toggleColor(color.id)"
+              (keydown.space)="toggleColor(color.id)"
             >
-              <div class="option-name">
-                {{ color.nombre }}
-              </div>
+              <div class="option-name">{{ color.nombre }}</div>
               <div class="icon-container" *ngIf="newShoeDesign.colors.includes(color.id)">
                 <svg class="icon-check">
                   <use xlink:href="assets/icons-sprite.svg#shoeDesign-checkSelect"></use>
@@ -271,16 +292,26 @@
       <!-- Select Tallas -->
       <div class="container-sizes">
         <div class="container-text">
-          <label>Tallas</label>
+          <label for="input-sizes">Tallas</label>
           <span class="required"> *</span>
         </div>
-        <div class="custom-select-container" (click)="toggleSizes()">
-          <div class="selected" [class.placeholder]="!newShoeDesign.sizes.length">
-            {{ newShoeDesign.sizes.length ? 'Puede seleccionar más tallas' : 'Seleccione las tallas' }}
-            <svg class="icon-arrow">
-              <use xlink:href="assets/icons-sprite.svg#general-arrow_select"></use>
-            </svg>
-          </div>
+        <div class="custom-select-container">
+          <button
+            type="button"
+            id="input_sizes"
+            class="custom-select-container-button"
+            aria-label="Desplegar tallas"
+            (click)="toggleSizes()"
+            (keydown.enter)="toggleSizes()"
+            (keydown.space)="toggleSizes()"
+          >
+            <div class="selected" [class.placeholder]="!newShoeDesign.sizes.length">
+              {{ newShoeDesign.sizes.length ? 'Puede seleccionar más tallas' : 'Seleccione las tallas' }}
+              <svg class="icon-arrow">
+                <use xlink:href="assets/icons-sprite.svg#general-arrow_select"></use>
+              </svg>
+            </div>
+          </button>
 
           <ul class="options" *ngIf="openSizes">
             <div
@@ -288,10 +319,10 @@
               *ngFor="let size of shoeSizes"
               [class.active]="newShoeDesign.sizes.includes(size.id)"
               (click)="toggleSize(size.id)"
+              (keydown.enter)="toggleSize(size.id)"
+              (keydown.space)="toggleSize(size.id)"
             >
-              <div class="option-name">
-                {{ size.id }}
-              </div>
+              <div class="option-name">{{ size.id }}</div>
               <div class="icon-container" *ngIf="newShoeDesign.sizes.includes(size.id)">
                 <svg class="icon-check">
                   <use xlink:href="assets/icons-sprite.svg#shoeDesign-checkSelect"></use>

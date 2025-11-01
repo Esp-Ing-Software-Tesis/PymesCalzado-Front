@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import {
   TaskDetailArticlesMock,
   TaskDetailArticles,
@@ -10,9 +10,8 @@ import {
   NextStateTask,
   TasksByOperator,
   OperatorTasks,
-  TaskProductionLine,
 } from '../models/tareas.model';
-import { TaskDetailInfoDTO, TaskProductionLineDTO } from '../pages/tareasAdministrador/verTareas/gestionarTareasAdmin/gestionarTareasAdmin.interface';
+import { TaskDetailInfoDTO } from '../pages/tareasAdministrador/verTareas/gestionarTareasAdmin/gestionarTareasAdmin.interface';
 
 @Injectable({ providedIn: 'root' })
 export class TasksService {
@@ -25,8 +24,6 @@ export class TasksService {
     const taskDetailArticlesMock: TaskDetailArticlesMock[] = this.setMockTaskDetailArticlesOptions();
     const articleTasks = taskDetailArticlesMock.find((task) => task.articleId === articleId);
     if (!articleTasks) {
-      // Simular error
-      // return throwError(() => new Error('No se pudieron cargar las tareas del artículo.'));
       return of([]);
     }
     return of(articleTasks.taskDetailArticles);
@@ -45,22 +42,22 @@ export class TasksService {
     const flatDetails: TaskDetailInfoDTO[] = [];
 
     // Recorremos en orden fijo
-    this.ORDER.forEach((key) => {
+    for (const key of this.ORDER) {
       if (lineas[key]) {
-        lineas[key].forEach((detail: any) => {
+        for (const detail of lineas[key]) {
           flatDetails.push(this.mapToTableDTO(detail, key));
-        });
+        }
       }
-    });
+    }
 
     // Agregamos cualquier línea adicional que no esté en ORDER
-    Object.keys(lineas).forEach((key) => {
+    for (const key of Object.keys(lineas)) {
       if (!this.ORDER.includes(key)) {
-        lineas[key].forEach((detail: any) => {
+        for (const detail of lineas[key]) {
           flatDetails.push(this.mapToTableDTO(detail, key));
-        });
+        }
       }
-    });
+    }
 
     return of(flatDetails);
   }
@@ -81,32 +78,24 @@ export class TasksService {
   // Servicio Creacion de tareas
   postCreateTasks(createTasks: CreateTasks): Observable<CreateTasks> {
     const nuevoTask: CreateTasks = { ...createTasks };
-    /*return throwError(() => ({
-    }));*/
     return of(nuevoTask);
   }
 
   // Servicio Asignacion de tareas
   postAsignedTask(asignedTask: AsignedTask): Observable<AsignedTask> {
     const nuevoAsignedTask: AsignedTask = { ...asignedTask };
-    /*return throwError(() => ({
-    }));*/
     return of(nuevoAsignedTask);
   }
 
   // Servicio Rechazo de tareas
   postRejectTask(rejectTask: RejectTask): Observable<RejectTask> {
     const nuevoRejectTask: RejectTask = { ...rejectTask };
-    /*return throwError(() => ({
-        }));*/
     return of(nuevoRejectTask);
   }
 
   // Servicio Pasar a siguiente estado de tarea
   postNextStateTask(nextStateTask: NextStateTask): Observable<NextStateTask> {
     const nuevoNextStateTask: NextStateTask = { ...nextStateTask };
-    /*return throwError(() => ({
-        }));*/
     return of(nuevoNextStateTask);
   }
 
@@ -534,7 +523,7 @@ export class TasksService {
         ],
       },
 
-      // --- 2: Todo en Finalizado ---
+      // --- 2: Finalizado ---
       {
         task_id: 12,
         LineasProduccion: [

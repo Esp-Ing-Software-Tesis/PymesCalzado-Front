@@ -1,34 +1,33 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AuthResponse, Auth } from '../models/auth.model';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private userRole = new BehaviorSubject<string | null>(null);
+  private readonly http = inject(HttpClient);
+
+  private readonly userRole = new BehaviorSubject<string | null>(null);
   userRole$ = this.userRole.asObservable();
 
-  private username = new BehaviorSubject<string | null>(null);
+  private readonly username = new BehaviorSubject<string | null>(null);
   username$ = this.username.asObservable();
 
-  private userProductionLine = new BehaviorSubject<string | null>(null);
+  private readonly userProductionLine = new BehaviorSubject<string | null>(null);
   userProductionLine$ = this.userProductionLine.asObservable();
 
-  private sessionId = new BehaviorSubject<string | null>(null);
+  private readonly sessionId = new BehaviorSubject<string | null>(null);
   sessionId$ = this.sessionId.asObservable();
 
-  private token = new BehaviorSubject<string | null>(null);
+  private readonly token = new BehaviorSubject<string | null>(null);
   token$ = this.token.asObservable();
 
-  private userId = new BehaviorSubject<string | null>(null);
+  private readonly userId = new BehaviorSubject<string | null>(null);
   userId$ = this.userId.asObservable();
 
+  private readonly apiUrl = 'https://1mhslg7415.execute-api.us-east-1.amazonaws.com/production/api/v1';
 
-  private apiUrl = 'https://1mhslg7415.execute-api.us-east-1.amazonaws.com/production/api/v1';
-
-  constructor(
-    private http: HttpClient
-  ) {
+  constructor() {
     const storedRole = sessionStorage.getItem('role');
     const storedUsername = sessionStorage.getItem('username');
     const storedProductionLine = sessionStorage.getItem('productionLine');
@@ -58,11 +57,19 @@ export class AuthService {
 
   // Ejecucion del EP
   getAccessToken(consultToken: Auth): Observable<AuthResponse> {
-    const randomNumber = Math.floor(10000000 + Math.random() * 90000000);
-    const  Headers = new HttpHeaders({
-      'x-session-id': `SFA-${randomNumber}`
+    // Nota: se usa crypto.getRandomValues() solo para generar un identificador de sesión no crítico.
+    const cryptoObj: Crypto = globalThis.crypto;
+
+    // Genera un número aleatorio de 8 dígitos de forma segura
+    const array = new Uint32Array(1);
+    cryptoObj.getRandomValues(array);
+    const randomNumber = (array[0] % 90000000) + 10000000;
+
+    const headers = new HttpHeaders({
+      'x-session-id': `SFA-${randomNumber}`,
     });
-    return this.http.post<AuthResponse>(this.apiUrl + '/auth/login', consultToken, { headers: Headers });
+
+    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, consultToken, { headers });
   }
 
   // Servicios para guardar en el sesion storage

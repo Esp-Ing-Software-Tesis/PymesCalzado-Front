@@ -9,7 +9,7 @@ import { TasksDetailDTO } from '../../pages/tareasAdministrador/crearEditarTarea
 import { TasksSharedService } from '../../services/tasksShared.service';
 import { TasksService } from '../../services/tareas.service';
 import { CreateTasks } from '../../models/tareas.model';
-import { map, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -142,7 +142,10 @@ export class ShowDetailGeneralComponent implements OnInit, AfterViewChecked {
   // Extraer strings para llenar la tabla
   getValue(item: any, key: string): string {
     const value = item[key];
-    return value !== undefined ? String(value) : '';
+    if (value === null || value === undefined) {
+      return '';
+    }
+    return String(value);
   }
 
   // Método para obtener los items planos del datatable
@@ -198,7 +201,6 @@ export class ShowDetailGeneralComponent implements OnInit, AfterViewChecked {
     const context = localStorage.getItem('lastContext');
     localStorage.removeItem('lastContext');
     this.detailConfigService.clearConfig();
-    0;
     this.router.navigate([this.getFallbackRoute(context)]);
   }
 
@@ -206,12 +208,12 @@ export class ShowDetailGeneralComponent implements OnInit, AfterViewChecked {
   //Logica para organizar el texto
   getOrderText(state?: string): string {
     if (!state) return '';
-    // Limpiar tildes, reemplazar espacios y volver todo en minuscula
+    // Limpiar tildes, reemplazar espacios y volver en minuscula
     return state
       .toString()
       .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/\s+/g, '_')
+      .replaceAll(/[\u0300-\u036f]/g, '')
+      .replaceAll(/\s+/g, '_')
       .toLowerCase();
   }
 

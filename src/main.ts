@@ -5,6 +5,7 @@ import { routes } from './app/app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { loaderInterceptor } from './app/core/interceptors/loader.interceptor';
 
+// NOSONAR
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(

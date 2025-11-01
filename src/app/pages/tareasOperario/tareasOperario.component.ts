@@ -121,12 +121,12 @@ export class TareasOperarioPageComponent implements OnInit {
   // Logica para manejar los textos de los estados
   getTextState(state?: string): string {
     if (!state) return '';
-    // Limpiar tildes, reemplazar espacios y volver todo en minuscula
+    // Limpiar tildes, reemplazar espacios y volver en minuscula
     return state
       .toString()
       .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/\s+/g, '_')
+      .replaceAll(/[\u0300-\u036f]/g, '')
+      .replaceAll(/\s+/g, '_')
       .toLowerCase();
   }
 

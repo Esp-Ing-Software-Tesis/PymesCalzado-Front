@@ -2,10 +2,9 @@ import { FormModalComponent } from './../../../../shared/formModal/formModal.com
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ManageTaskDTO } from './gestionarTareasAdmin.interface';
 import { TasksService } from '../../../../services/tareas.service';
 import { TasksSharedService } from '../../../../services/tasksShared.service';
-import { TaskDetailInfoDTO, LastState, UsersByProductionLineDTO, AsignedTaskDTO } from './gestionarTareasAdmin.interface';
+import { TaskDetailInfoDTO, LastState, UsersByProductionLineDTO, AsignedTaskDTO, ManageTaskDTO } from './gestionarTareasAdmin.interface';
 import { TABLA_DETALLE_TAREAS, FORMULARIO_CREACION_MODAL, ALERTA_MODAL } from './gestionarTareasAdmin.config';
 import { AlertModalComponent } from '../../../../shared/alertModal/alertModal.component';
 import { AsignedTask, RejectTask, NextStateTask } from '../../../../models/tareas.model';
@@ -78,22 +77,20 @@ export class GestionarTareasAdminPageComponent implements OnInit {
     }
     // Si recarga directamente o entra por URL manual
     if (localStorage.getItem('lastContext')) {
-      const fallback = this.getFallbackRoute(context);
+      this.router.navigateByUrl(this.getFallbackRoute(context));
     } else {
       this.router.navigate(['/pedidos-tareas']);
     }
   }
 
   //Devuelve la ruta a donde debe ir si se recarga o entra manualmente
-  getFallbackRoute(context: string | null): string[] {
-    switch (context) {
-      case '':
-        localStorage.removeItem('lastContext');
-        return ['/pedidos-tareas'];
-      default:
-        localStorage.removeItem('lastContext');
-        return ['/'];
+  getFallbackRoute(context: string | null): string {
+    if (context === 'ORDERGERENTADMIN') {
+      localStorage.removeItem('lastContext');
+      return '/pedidos-tareas';
     }
+    localStorage.removeItem('lastContext');
+    return '/';
   }
 
   //Acción de volver manualmente
@@ -124,57 +121,42 @@ export class GestionarTareasAdminPageComponent implements OnInit {
     };
   }
 
-  // Logica para organizar los estados en clases validad para CSS
-  getStateClass(state: string | number | null | undefined): string {
-    if (state === null || state === undefined) return '';
-    return state
+  // Función privada reutilizable para normalizar cadenas
+  private normalizeValue(value: any): string {
+    return (value ?? '')
       .toString()
       .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/\s+/g, '_')
+      .replaceAll(/[\u0300-\u036f]/g, '')
+      .replaceAll(/\s+/g, '_')
       .toLowerCase();
   }
 
-  // Logica para resaltar la fila de la etapa de produccion activa
+  // Lógica para organizar los estados en clases válidas para CSS
+  getStateClass(state: string | number | null | undefined): string {
+    if (state === null || state === undefined) return '';
+    return this.normalizeValue(state);
+  }
+
+  // Lógica para resaltar la fila de la etapa de producción activa
   shouldHighlightRow(item: any): boolean {
-    const normalize = (str: any): string =>
-      (str ?? '')
-        .toString()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '') // elimina tildes
-        .replace(/\s+/g, '_') // reemplaza espacios por guion bajo
-        .toLowerCase(); // pasa todo a minúsculas
+    const lastProdLine = this.normalizeValue(this.lastState?.productionLine);
+    const lastState = this.normalizeValue(this.lastState?.lastState);
+    const itemProdLine = this.normalizeValue(item.productionLine);
 
-    const lastProdLine = normalize(this.lastState?.productionLine);
-    const lastState = normalize(this.lastState?.lastState);
-    const itemProdLine = normalize(item.productionLine);
-
-    // Si ambos son null
     if (!lastProdLine && !lastState) return false;
 
-    // Solo aplica a la fila que coincide con la línea del lastState
     const isSameLine = itemProdLine === lastProdLine;
-
-    // No resalta si toda la tarea fue finalizada
     const isForbiddenCombo = (lastProdLine === 'emplantillado' && lastState === 'finalizado') || (!lastProdLine && !lastState);
 
     return isSameLine && !isForbiddenCombo;
   }
 
-  // Lofica para manejar las acciones necesarias en base al estado de la linea de producccion actual
+  // Lógica para manejar las acciones necesarias en base al estado de la línea de producción actual
   logicActionsProductionLine(): string {
-    const normalize = (str: any): string =>
-      (str ?? '')
-        .toString()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '') // elimina tildes
-        .replace(/\s+/g, '_') // reemplaza espacios por guion bajo
-        .toLowerCase(); // pasa todo a minúsculas
+    const lastProdLine = this.normalizeValue(this.lastState?.productionLine);
+    const lastState = this.normalizeValue(this.lastState?.lastState);
 
-    const lastProdLine = normalize(this.lastState?.productionLine);
-    const lastState = normalize(this.lastState?.lastState);
-
-    if ((!lastProdLine && !lastState) || (lastProdLine != 'emplantillado' && lastState === 'finalizado')) {
+    if ((!lastProdLine && !lastState) || (lastProdLine !== 'emplantillado' && lastState === 'finalizado')) {
       return 'asignar';
     }
     if (lastProdLine && lastState === 'nuevo') {
@@ -201,19 +183,21 @@ export class GestionarTareasAdminPageComponent implements OnInit {
     } else if (option === 'asignar') {
       const currentLine = this.lastState?.productionLine ?? null;
 
-      if (!currentLine) {
-        // Si no hay línea previa, empezar en la primera válida (usualmente Corte)
-        targetLine = validLines[0] ?? 'Corte';
-      } else {
+      if (currentLine) {
         // Buscar índice actual dentro de ORDER
         const currentIndex = this.ORDER.indexOf(currentLine);
-        if (currentIndex !== -1) {
+
+        if (currentIndex === -1) {
+          // Si la línea actual no existe en el orden, usar la primera válida
+          targetLine = validLines[0] ?? 'Corte';
+        } else {
           // Buscar la siguiente línea válida que aparezca después de la actual
           const nextValidLine = validLines.find((line) => this.ORDER.indexOf(line) > currentIndex);
           targetLine = nextValidLine ?? currentLine;
-        } else {
-          targetLine = validLines[0] ?? 'Corte';
         }
+      } else {
+        // Si no hay línea previa, empezar en la primera válida (usualmente Corte)
+        targetLine = validLines[0] ?? 'Corte';
       }
     }
 
@@ -222,8 +206,8 @@ export class GestionarTareasAdminPageComponent implements OnInit {
       ? targetLine
           .toString()
           .normalize('NFD')
-          .replace(/[\u0300-\u036f]/g, '')
-          .replace(/\s+/g, '_')
+          .replaceAll(/[\u0300-\u036f]/g, '')
+          .replaceAll(/\s+/g, '_')
           .toLowerCase()
       : null;
 
@@ -262,21 +246,21 @@ export class GestionarTareasAdminPageComponent implements OnInit {
     this.cleanErrors();
 
     // Validar obligarotio
-    this.formModalConfig.inputsConfig.forEach((i) => {
+    for (const i of this.formModalConfig.inputsConfig) {
       if (i.obligatory) {
         const value = this.setDataForm[i.key];
         if (!value) {
           i.error = 'Este campo es obligatorio';
         }
       }
-    });
+    }
 
     // Validar si hay errores internos
-    this.formModalConfig.inputsConfig.forEach((i) => {
+    for (const i of this.formModalConfig.inputsConfig) {
       if (i.error) {
         this.numErrors++;
       }
-    });
+    }
 
     //validar si hay error global
     if (this.formModalConfig.error) {
@@ -296,9 +280,9 @@ export class GestionarTareasAdminPageComponent implements OnInit {
   // Limpiar los errores
   cleanErrors() {
     this.numErrors = 0;
-    this.formModalConfig.inputsConfig.forEach((i) => {
+    for (const i of this.formModalConfig.inputsConfig) {
       i.error = '';
-    });
+    }
   }
 
   // Logica para cambios en selects
