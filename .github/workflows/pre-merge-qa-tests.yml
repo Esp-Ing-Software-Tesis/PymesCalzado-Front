@@ -1,9 +1,10 @@
+#Ejecucion de priebas automatizadas
 name: Run QA tests before merge to main
 
 on:
   pull_request:
     branches:
-      - main  # se dispara al crear PR hacia main
+      - main # se dispara al crear PR hacia main
 
 jobs:
   run-qa-tests:
