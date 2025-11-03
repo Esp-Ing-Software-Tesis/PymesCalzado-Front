@@ -4,17 +4,18 @@ name: Run QA tests before merge to main
 on:
   pull_request:
     branches:
-      - main # se dispara al crear PR hacia main
+      - main # Se dispara al crear PR hacia main
 
 jobs:
   run-qa-tests:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout frontend repo
         uses: actions/checkout@v4
 
       - name: Trigger Cypress tests in automation repo
-        uses: peter-evans/workflow-dispatch@v2
+        uses: peter-evans/workflow-dispatch@v1
         with:
           token: ${{ secrets.GH_PAT }}
           repository: Esp-Ing-Software-Tesis/PymesCalzado-Automation-Test
