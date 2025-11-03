@@ -9,9 +9,17 @@
       <form action="" method="">
         <div class="inputs">
           <div class="input">
-            <input type="email" [(ngModel)]="inputDocument" id="user_email" name="user_email" class="user_email" placeholder="Email" required />
+            <input
+              type="document"
+              [(ngModel)]="inputDocument"
+              id="user_document"
+              name="user_document"
+              class="user_document"
+              placeholder="Documento"
+              required
+            />
             <svg class="icon">
-              <use xlink:href="assets/icons-sprite.svg#login-email"></use>
+              <use xlink:href="assets/icons-sprite.svg#headerAndFooter-user"></use>
             </svg>
           </div>
           <div class="input">
