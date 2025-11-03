@@ -5,7 +5,7 @@ export interface Auth {
 
 export interface AuthResponse {
   success: boolean;
-  message: string;
+  message: string[];
   data: {
     token: string;
   };
