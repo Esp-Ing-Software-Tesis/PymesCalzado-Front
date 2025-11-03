@@ -73,14 +73,3 @@ jobs:
 
       - name: Deployment summary
         run: echo "Deployment completed for ${{ steps.env.outputs.env }} environment!"
-
-      # 🔹 Disparar workflow de QA en repo de automatización (no bloqueante)
-      - name: Trigger Cypress tests in automation repo
-        if: github.ref == 'refs/heads/qa'
-        uses: peter-evans/workflow-dispatch@v2
-        continue-on-error: true
-        with:
-          token: ${{ secrets.GH_PAT }}
-          repository: Esp-Ing-Software-Tesis/PymesCalzado-Automation-Test
-          workflow: run-qa-tests.yml
-          ref: main
