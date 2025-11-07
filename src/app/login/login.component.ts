@@ -43,7 +43,6 @@ export class LoginPageComponent {
       .join(' ');
   }
 
-  // Comentario para hacer ejemplo de proceso de depsligue
   // Realizar Login
   login() {
     this.errorMessage = null;
@@ -77,6 +76,9 @@ export class LoginPageComponent {
         // Solo para pruebas
         if (userId === 1024575050) {
           productionLine = 'Corte';
+        }
+        if (userId === 1024575051) {
+          productionLine = 'Bordado';
         }
 
         // Guardar información en el servicio de autenticación
