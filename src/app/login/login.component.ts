@@ -77,6 +77,9 @@ export class LoginPageComponent {
         if (userId === 1024575050) {
           productionLine = 'Corte';
         }
+        if (userId === 1024575051) {
+          productionLine = 'Bordado';
+        }
 
         // Guardar información en el servicio de autenticación
         this.authservice.setRole(role);
